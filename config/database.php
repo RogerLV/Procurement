@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => 'purchase',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,20 +45,13 @@ return [
     */
 
     'connections' => [
-
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-        ],
-
-        'mysql' => [
+        'purchase' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('PURCHASE_DB_DATABASE'),
+            'username' => env('PURCHASE_DB_USERNAME'),
+            'password' => env('PURCHASE_DB_PASSWORD'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -66,18 +59,19 @@ return [
             'engine' => null,
         ],
 
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+        'basedata' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('BASEDATA_DB_DATABASE'),
+            'username' => env('BASEDATA_DB_USERNAME'),
+            'password' => env('BASEDATA_DB_PASSWORD'),
             'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
-            'schema' => 'public',
+            'strict' => false,
+            'engine' => null,
         ],
-
     ],
 
     /*
