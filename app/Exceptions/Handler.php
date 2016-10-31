@@ -45,6 +45,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof AppException)
+        {
+            $para = ['errorInfo' => $e->getMessage()];
+            if ($request->ajax()) {
+                return response()->json($para);
+            } else {
+                if ($e->getMessage() == ERROR_MESSAGE_SESSION_TIMEOUT) {
+                    return redirect('Location: http://'.env('PLATFORM_HOST').'/platform/index.php');
+                } else {
+                    return response()->view('errors.general', $para);
+                }
+            }
+        }
+
         return parent::render($request, $e);
     }
 }
