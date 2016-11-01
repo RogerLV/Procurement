@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('dummyEntry', function () {
+    return view('dummyEntry');
 });
+
+Route::get('test', function () {
+    throw new \App\Exceptions\AppException('a', 'b');
+});
+
+Route::group(['middleware' => ['welcome']], function () {
+
+    Route::match(['get', 'post'], 'welcome', 'WelcomeController@index')->name(ROUTE_NAME_WELCOME);
+});
+

@@ -40,7 +40,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">{{ $errorInfo or 'error' }}</div>
+        <div class="title">ERROR:<br>{{ $status." ".$errorInfo }}</div>
     </div>
 </div>
 </body>

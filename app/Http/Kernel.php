@@ -23,12 +23,24 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
+        // The welcome page receive info from outside page.
+        'welcome' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        ],
+
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+
+            // dont know why this middleware group setting would affect welcome group.
+            // so disable csrf token verifying for time being.
+            
+//            \App\Http\Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
@@ -46,7 +58,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];

@@ -2,6 +2,7 @@
 
 namespace App\Logic\LoginUser;
 
+use App\Exceptions\AppException;
 use App\Models\SystemRole;
 use App\Models\User;
 
@@ -28,6 +29,10 @@ class RoleHandler
         $ins = SystemRole::where('lanID', $userInfo->lanID)
                 ->orderBy('roleID', 'DESC')
                 ->first();
+
+        if (is_null($ins)) {
+            throw new AppException('ERR004', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
 
         self::setActiveRole($userInfo, $ins->id);
 

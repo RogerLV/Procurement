@@ -2,17 +2,16 @@
 
 namespace App\Logic\LoginUser;
 
-
-use App\Exceptions\AppException;
 use App\Logic\System\Util;
+use App\Exceptions\AppException;
 
 class LoginUserKeeper
 {
     private static $loginUser;
 
-    public static function setUser($lanID)
+    public static function initUser()
     {
-        if (!is_null($lanID)) {
+        if (!is_null($lanID = request()->input('LanID'))) {
             $lanID = strtoupper(base64_decode($lanID));
             session(['loginUser' => new LoginUser($lanID)]);
         }
@@ -35,12 +34,12 @@ class LoginUserKeeper
     {
         // empty session check
         if (is_null($sessionUser = session('loginUser'))){
-            throw new AppException(ERROR_MESSAGE_SESSION_TIMEOUT);
+            throw new AppException('ERR001', 'Session Time Out.');
         }
 
         // check if login user roleID is still valid
         if (!RoleHandler::isActive($sessionUser->getActiveRole())) {
-            throw new AppException(ERROR_MESSAGE_NOT_AUTHORIZED);
+            throw new AppException('ERR002', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
         // record footprints

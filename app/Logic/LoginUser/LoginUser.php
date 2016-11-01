@@ -2,6 +2,9 @@
 
 namespace App\Logic\LoginUser;
 
+use App\Models\User;
+use App\Models\SystemRole;
+use App\Models\Department;
 use App\Exceptions\AppException;
 
 class LoginUser
@@ -46,7 +49,7 @@ class LoginUser
     {
         if (!RoleHandler::activable($this->getUserInfo(), $id))
         {
-            throw new AppException('The specified role cannot be activated.');
+            throw new AppException('ERR003', 'The specified role cannot be activated.');
         }
 
         $this->activeRole = RoleHandler::setActiveRole($this->getUserInfo(), $id);
