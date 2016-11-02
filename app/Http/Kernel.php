@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         ],
 
-        'web' => [
+        'normal' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -39,8 +39,12 @@ class Kernel extends HttpKernel
 
             // dont know why this middleware group setting would affect welcome group.
             // so disable csrf token verifying for time being.
-            
-//            \App\Http\Middleware\VerifyCsrfToken::class,
+
+            \App\Http\Middleware\VerifyCsrfToken::class,
+        ],
+
+        'web' => [
+
         ],
 
         'api' => [

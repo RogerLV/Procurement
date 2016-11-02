@@ -45,3 +45,11 @@
 </div>
 </body>
 </html>
+
+<script type="text/javascript">
+    (function () {
+        if ("{{ $status }}" == "ERR001") {
+            window.location = 'http://'+'{{ env('PLATFORM_HOST') }}'+'/platform/index.php';
+        }
+    })();
+</script>

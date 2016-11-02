@@ -16,7 +16,15 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    throw new \App\Exceptions\AppException('a', 'b');
+    $data = \App\Models\SystemRole::find(100);
+    echo "<pre>"; var_dump($data);
+});
+
+Route::group(['middleware' => ['normal']], function () {
+    Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
+    Route::post('role/remove', 'RoleController@remove')->name(ROUTE_NAME_ROLE_REMOVE);
+    Route::post('role/add', 'RoleController@add')->name(ROUTE_NAME_ROLE_ADD);
+    Route::post('role/select', 'RoleController@select')->name(ROUTE_NAME_ROLE_SELECT);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

@@ -45,9 +45,16 @@ class RoleHandler
         return !is_null($DBins) && $DBins->active;
     }
 
-    public static function activable($userInfo, $newMapID)
+    public static function activable(User $userInfo, $newMapID)
     {
         $roleIns = SystemRole::find($newMapID);
         return !is_null($roleIns) && $roleIns->lanID == $userInfo->lanID && !$roleIns->active;
+    }
+
+    public static function getAllRoles(User $userInfo)
+    {
+        return SystemRole::where('lanID', $userInfo->lanID)
+                ->orderBy('roleID', 'DESC')->get();
+
     }
 }

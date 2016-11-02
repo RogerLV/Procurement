@@ -54,11 +54,7 @@ class Handler extends ExceptionHandler
             if ($request->ajax()) {
                 return response()->json($para);
             } else {
-                if ('ERR001' == $errorCode) {
-                    return redirect('Location: http://'.env('PLATFORM_HOST').'/platform/index.php');
-                } else {
-                    return response()->view('errors.general', $para);
-                }
+                return response()->view('errors.general', $para);
             }
         }
 
