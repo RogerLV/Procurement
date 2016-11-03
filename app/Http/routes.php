@@ -16,7 +16,7 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    $data = \App\Models\SystemRole::find(100);
+    $data = \App\Models\SystemRole::find(18);
     echo "<pre>"; var_dump($data);
 });
 

@@ -8,6 +8,12 @@ use App\Logic\Role\RoleFactory;
 
 class WelcomeController extends Controller
 {
+    public function __construct()
+    {
+        // As of start of the application, override parent
+        // constructor preventing user initialization.
+    }
+
     public function index()
     {
         $loginUser = LoginUserKeeper::initUser();

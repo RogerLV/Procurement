@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
-use App\Logic\LoginUser\LoginUserKeeper;
-use App\Logic\LoginUser\RoleHandler;
 use App\Logic\Role\RoleFactory;
 use App\Logic\System\Util;
 use App\Models\Department;
 use App\Models\SystemRole;
 use App\Models\User;
+use App\Models\UpdateLog as Log;
 
 class RoleController extends Controller
 {
@@ -61,6 +60,7 @@ class RoleController extends Controller
             throw new AppException('ERR008', 'Incorrect Role Info.');
         }
 
+        Log::logDelete($mapIns, $this->loginUser->getUserInfo()->lanID);
         $mapIns->delete();
 
         return response()->json(['status' => 'good']);
@@ -78,6 +78,17 @@ class RoleController extends Controller
             throw new AppException('ERR010', 'Incorrect Role Info.');
         }
 
+        // check existence
+        $result = SystemRole::where([
+            ['lanID', '=', $lanID],
+            ['dept', '=', $dept],
+            ['roleID', '=', $roleID],
+        ])->first();
+
+        if (!is_null($result)) {
+            throw new AppException('ERR011', 'Role Already Exists.');
+        }
+
         // add role
         $roleIns = new SystemRole();
         $roleIns->lanID = $lanID;
@@ -85,21 +96,18 @@ class RoleController extends Controller
         $roleIns->roleID = $roleID;
         $roleIns->save();
 
+        Log::logInsert($roleIns, $this->loginUser->getUserInfo()->lanID);
+
         return response()->json(['status' => 'good']);
     }
 
     public function select()
     {
-        $loginUser = LoginUserKeeper::getUser();
         if (empty($mapID = request()->input('mapid'))) {
             throw new AppException('ERR009', 'Data Error.');
         }
 
-        if (!RoleHandler::activable($loginUser->getUserInfo(), $mapID)) {
-            throw new AppException('ERR010', 'Role Info Error.');
-        }
-
-        RoleHandler::setActiveRole($loginUser->getUserInfo(), $mapID);
+        $this->loginUser->setActiveRole($mapID);
 
         return response()->json(['status' => 'good']);
     }

@@ -9,7 +9,7 @@ class SystemRole extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'SystemRoles';
+    public $table = 'SystemRoles';
 
     protected $dates = ['deleted_at'];
 }
