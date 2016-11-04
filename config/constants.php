@@ -35,6 +35,20 @@ define('ROUTE_NAME_ROLE_REMOVE', 'RoleRemove');
 define('ROUTE_NAME_ROLE_ADD', 'RoleAdd');
 define('ROUTE_NAME_ROLE_SELECT', 'RoleSelect');
 
+define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
+define('ROUTE_NAME_PROJECT_APPLY', 'ProjectApply');
+define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
+
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
+define('PAGE_NAME_PROJECT_APPLY', '发起采购');
+
+return [
+    // Purchase Scope
+    'purchaseScopeNames' => [
+        'goods' => '货物类',
+        'engineering' => '工程类',
+        'services' => '服务类',
+    ],
+];
 

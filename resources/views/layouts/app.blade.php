@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 
+    {{--File Upload Dependencies--}}
+    <link href="{{ asset('file-input/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+    <!-- the main fileinput plugin file -->
+    <script src="{{ asset('file-input/js/fileinput.min.js') }}" type="text/javascript"></script>
+    <!-- optionally if you need a theme like font awesome theme you can include
+        it as mentioned below -->
+    <script src="{{ asset('file-input/themes/fa/theme.js') }}" type="text/javascript"></script>
+    <!-- optionally if you need translation for your language then include
+        locale file as mentioned below -->
+    <script src="{{ asset('file-input/js/locales/zh.js') }}" type="text/javascript"></script>
+
     <title>{{ $title or APP_NAME_PURCHASE_SYSTEM }}</title>
 </head>
 
@@ -34,13 +45,26 @@
         text-align: left;
         vertical-align: middle;
     }
+
+    .outer {
+        display: block;
+        margin: auto;
+        position: relative;
+        width: 22%;
+    }
+
+    div.required > label:after {
+        content: '*';
+        /*font-size: 150%;*/
+        color: red;
+    }
 </style>
 
 @yield('CSSContent')
 
 <div class="container text-center">
     <button type="button" class="btn btn-default" style="display: block; width: 100%"
-            onclick="localtion.href='{{ route(ROUTE_NAME_WELCOME) }}'">
+            onclick="location.href='{{ route(ROUTE_NAME_WELCOME) }}'">
         <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
     </button>
 </div>

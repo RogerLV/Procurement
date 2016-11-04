@@ -11,9 +11,10 @@ abstract class AbstractRole
     protected $operable = true;
     protected $displayable = true;
     protected $assignDept = false;
-    protected $accessiblePages = [
+    protected $commonPages = [
         ROUTE_NAME_ROLE_LIST,
     ];
+    protected $roleSpecPages = [];
 
     abstract public function getCandidates();
 
@@ -40,7 +41,11 @@ abstract class AbstractRole
     public function getAccessiblePages()
     {
         $pageList = [];
-        foreach ($this->accessiblePages as $routeName) {
+        foreach ($this->roleSpecPages as $routeName) {
+            $pageList[] = PageFactory::create($routeName);
+        }
+
+        foreach ($this->commonPages as $routeName) {
             $pageList[] = PageFactory::create($routeName);
         }
 

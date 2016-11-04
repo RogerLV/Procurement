@@ -16,8 +16,7 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    $data = \App\Models\SystemRole::find(18);
-    echo "<pre>"; var_dump($data);
+    phpinfo();
 });
 
 Route::group(['middleware' => ['normal']], function () {
@@ -25,6 +24,10 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('role/remove', 'RoleController@remove')->name(ROUTE_NAME_ROLE_REMOVE);
     Route::post('role/add', 'RoleController@add')->name(ROUTE_NAME_ROLE_ADD);
     Route::post('role/select', 'RoleController@select')->name(ROUTE_NAME_ROLE_SELECT);
+
+    Route::get('project/apply', 'ProjectController@apply')->name(ROUTE_NAME_PROJECT_APPLY);
+    Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
+    Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

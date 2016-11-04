@@ -45,6 +45,7 @@
             <span class="glyphicon {{ $pageIns->icon }}"></span><br>
             {{ $pageIns->name }}
         </button>
+        &nbsp; &nbsp;
     @endforeach
 
 @endsection

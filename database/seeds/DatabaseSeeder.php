@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $testRole = [
+            ['1', 'LUC1', 'ITD'],
             ['2', 'LUC1', 'ITD'],
             ['3', 'LUC1', 'ITD'],
             ['4', 'LUC1', 'ITD'],
@@ -23,6 +24,10 @@ class DatabaseSeeder extends Seeder
             ['8', 'LUC1', 'ITD'],
             ['9', 'LUC1', 'ITD'],
             ['10', 'LUC1', 'ITD'],
+            ['10', 'ZLJ1', 'ITD'],
+            ['10', 'QSG1', 'ITD'],
+            ['9', 'QTN1', 'FMD'],
+            ['9', 'WHN1', 'FMD'],
         ];
 
         foreach ($testRole as $entry){

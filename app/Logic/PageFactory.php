@@ -12,6 +12,10 @@ class PageFactory
             'pageName' => PAGE_NAME_ROLE_LIST,
             'icon' => 'glyphicon-user',
         ],
+        ROUTE_NAME_PROJECT_APPLY => [
+            'pageName' => PAGE_NAME_PROJECT_APPLY,
+            'icon' => 'glyphicon-shopping-cart'
+        ],
     ];
     public static function create($routeName)
     {
