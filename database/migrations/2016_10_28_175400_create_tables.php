@@ -20,6 +20,7 @@ class CreateTables extends Migration
             $table->string('dept', 10);
             $table->string('scope', 20);
             $table->string('name', env('FIELD_MAX_LENGTH'));
+            $table->integer('stage');
             $table->string('background', env('FIELD_MAX_LENGTH'));
             $table->string('budget');
             $table->boolean('involveReview');

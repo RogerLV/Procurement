@@ -28,6 +28,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/apply', 'ProjectController@apply')->name(ROUTE_NAME_PROJECT_APPLY);
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
+    Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

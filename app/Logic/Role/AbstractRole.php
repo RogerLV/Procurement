@@ -13,6 +13,7 @@ abstract class AbstractRole
     protected $assignDept = false;
     protected $commonPages = [
         ROUTE_NAME_ROLE_LIST,
+        ROUTE_NAME_PROJECT_LIST,
     ];
     protected $roleSpecPages = [];
 

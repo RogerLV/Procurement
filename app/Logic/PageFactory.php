@@ -14,7 +14,11 @@ class PageFactory
         ],
         ROUTE_NAME_PROJECT_APPLY => [
             'pageName' => PAGE_NAME_PROJECT_APPLY,
-            'icon' => 'glyphicon-shopping-cart'
+            'icon' => 'glyphicon-shopping-cart',
+        ],
+        ROUTE_NAME_PROJECT_LIST => [
+            'pageName' => PAGE_NAME_PROJECT_LIST,
+            'icon' => 'glyphicon-list',
         ],
     ];
     public static function create($routeName)

@@ -7,6 +7,8 @@ use App\Logic\Document\SignedReport;
 use App\Logic\Stage\Initialization;
 use Gate;
 use Config;
+use App\Models\Project;
+use App\Models\Department;
 
 class ProjectController extends Controller
 {
@@ -61,6 +63,14 @@ class ProjectController extends Controller
                 'id' => $projectIns->id,
             ],
         ]);
+    }
+
+    public function listPage()
+    {
+        return view('project/list')
+                ->with('title', PAGE_NAME_PROJECT_LIST)
+                ->with('projects', Project::orderBy('id')->get())
+                ->with('deptInfo', Department::all()->keyBy('dept'));
     }
 
     public function display($id)

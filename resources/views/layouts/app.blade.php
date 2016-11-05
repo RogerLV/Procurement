@@ -85,7 +85,9 @@
 <div class="container">
     <div class="col-md-1"></div>
     <div class="col-md-10" id="main-container">
-        <h2>{{ $title or APP_NAME_PROCUREMENT_SYSTEM }}</h2>
+        <div class="page-header">
+            <h2>{{ $title or APP_NAME_PROCUREMENT_SYSTEM }}</h2>
+        </div>
         <br>
 
         @yield('HTMLContent')

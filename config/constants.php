@@ -71,10 +71,12 @@ define('ROUTE_NAME_ROLE_SELECT', 'RoleSelect');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 define('ROUTE_NAME_PROJECT_APPLY', 'ProjectApply');
 define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
+define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
 define('PAGE_NAME_PROJECT_APPLY', '发起采购');
+define('PAGE_NAME_PROJECT_LIST', '项目列表');
 
 return [
     // Procurement Scope
