@@ -21,7 +21,7 @@
         locale file as mentioned below -->
     <script src="{{ asset('file-input/js/locales/zh.js') }}" type="text/javascript"></script>
 
-    <title>{{ $title or APP_NAME_PURCHASE_SYSTEM }}</title>
+    <title>{{ $title or APP_NAME_PROCUREMENT_SYSTEM }}</title>
 </head>
 
 <body>
@@ -85,7 +85,7 @@
 <div class="container">
     <div class="col-md-1"></div>
     <div class="col-md-10" id="main-container">
-        <h2>{{ $title or APP_NAME_PURCHASE_SYSTEM }}</h2>
+        <h2>{{ $title or APP_NAME_PROCUREMENT_SYSTEM }}</h2>
         <br>
 
         @yield('HTMLContent')

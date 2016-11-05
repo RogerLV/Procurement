@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => 'purchase',
+    'default' => 'procurement',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,13 +45,13 @@ return [
     */
 
     'connections' => [
-        'purchase' => [
+        'procurement' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST'),
             'port' => env('DB_PORT'),
-            'database' => env('PURCHASE_DB_DATABASE'),
-            'username' => env('PURCHASE_DB_USERNAME'),
-            'password' => env('PURCHASE_DB_PASSWORD'),
+            'database' => env('PROCUREMENT_DB_DATABASE'),
+            'username' => env('PROCUREMENT_DB_USERNAME'),
+            'password' => base64_decode(env('PROCUREMENT_DB_PASSWORD')),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -65,7 +65,7 @@ return [
             'port' => env('DB_PORT'),
             'database' => env('BASEDATA_DB_DATABASE'),
             'username' => env('BASEDATA_DB_USERNAME'),
-            'password' => env('BASEDATA_DB_PASSWORD'),
+            'password' => base64_decode(env('BASEDATA_DB_PASSWORD')),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',

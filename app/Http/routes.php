@@ -16,8 +16,8 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    phpinfo();
-});
+    var_dump(base64_encode('root'));
+})->name('test');
 
 Route::group(['middleware' => ['normal']], function () {
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);

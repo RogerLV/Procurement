@@ -15,12 +15,13 @@ class CreateTables extends Migration
         Schema::create('Projects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('year');
+            $table->string('givenID')->nullable();
             $table->string('lanID', 20);
             $table->string('dept', 10);
             $table->string('scope', 20);
             $table->string('name', env('FIELD_MAX_LENGTH'));
             $table->string('background', env('FIELD_MAX_LENGTH'));
-            $table->float('amount');
+            $table->string('budget');
             $table->boolean('involveReview');
             $table->integer('memberAmount');
             $table->string('approach', 50);
@@ -53,9 +54,9 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->string('referenceTable');
             $table->integer('referenceID');
-            $table->string('type');
+            $table->integer('type');
             $table->string('name', env('FIELD_MAX_LENGTH'));
-            $table->string('address', env('FIELD_MAX_LENGTH'));
+            $table->string('subAddress', env('FIELD_MAX_LENGTH'));
 
             $table->timestamps();
             $table->softDeletes();
