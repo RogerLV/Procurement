@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
-use App\Logic\Document\SignedReport;
+use App\Logic\DocumentHandler;
 use App\Logic\Stage\Initialization;
+use App\Models\User;
 use Gate;
 use Config;
+use File;
 use App\Models\Project;
 use App\Models\Department;
 
@@ -55,7 +57,7 @@ class ProjectController extends Controller
         $projectIns = $initStage->getProject();
 
         // handle uploaded file
-        new SignedReport($projectIns, $signedReport);
+        DocumentHandler::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);
 
         return response()->json([
             'status' => 'good',
@@ -75,6 +77,31 @@ class ProjectController extends Controller
 
     public function display($id)
     {
+        $projectIns = Project::find($id);
+        if (is_null($projectIns)) {
+            throw new AppException('PRJ006', 'Incorrect Project ID.');
+        }
 
+        if (Gate::forUser($this->loginUser)->denies('project-visible', $projectIns)) {
+            throw new AppException('PRJ007', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
+        $basicInfoSegment = view('project/display/basicinfo')
+                            ->with('project', $projectIns)
+                            ->with('deptInfo', Department::where('dept', $projectIns->dept)->get()->keyBy('dept'))
+                            ->with('userInfo', User::where('lanID', $projectIns->lanID)->get()->keyBy('lanID'));
+
+        $documents = DocumentHandler::getByReferenceIns($projectIns);
+        $lanIDs = $documents->pluck('lanID')->toArray();
+
+        $documentsSegment = view('project/display/documents')
+                            ->with('documents', $documents)
+                            ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
+                            ->with('documentTypeNames', Config::get('constants.documentTypeNames'));
+
+        return view('project/display/display')
+                ->with('title', PAGE_NAME_PROJECT_DISPLAY)
+                ->with('basicInfo', $basicInfoSegment)
+                ->with('documents', $documentsSegment);
     }
 }

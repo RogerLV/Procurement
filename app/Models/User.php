@@ -18,4 +18,9 @@ class User extends Model
     {
         return $query->where('inService', true);
     }
+
+    public function getDualName()
+    {
+        return $this->uEngName.' '.$this->uCnName;
+    }
 }

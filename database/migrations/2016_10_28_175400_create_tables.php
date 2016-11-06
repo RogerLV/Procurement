@@ -56,8 +56,12 @@ class CreateTables extends Migration
             $table->string('referenceTable');
             $table->integer('referenceID');
             $table->integer('type');
-            $table->string('name', env('FIELD_MAX_LENGTH'));
+            $table->string('originalName', env('FIELD_MAX_LENGTH'));
             $table->string('subAddress', env('FIELD_MAX_LENGTH'));
+            $table->string('tempName');
+            $table->string('ext');
+            $table->string('mimeType');
+            $table->string('lanID');
 
             $table->timestamps();
             $table->softDeletes();

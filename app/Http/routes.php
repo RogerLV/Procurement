@@ -16,7 +16,11 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    var_dump(base64_encode('root'));
+//    $path = storage_path('logs/laravel-2016-11-05.log');
+//    $path = "/Users/chaolu/Desktop/Projects/File_Storage/Procurement/Projects/1/laravel-2016-11-05.log";
+    $path = "/Users/chaolu/Desktop/Projects/File_Storage/Procurement/Projects/1/eAppointment.pdf";
+
+    return response()->file($path);
 })->name('test');
 
 Route::group(['middleware' => ['normal']], function () {
@@ -29,6 +33,8 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
+
+    Route::get('document/display/{id}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

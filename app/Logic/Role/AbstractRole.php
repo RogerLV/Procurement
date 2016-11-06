@@ -57,4 +57,9 @@ abstract class AbstractRole
     {
         return $this->displayable;
     }
+
+    public function projectVisible($projectIns)
+    {
+        return true;
+    }
 }
