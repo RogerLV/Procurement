@@ -5,4 +5,6 @@
 <?=$basicInfo?>
         <br>
 <?=$documents?>
+        <br>
+<?=$stageLogList?>
 @endsection

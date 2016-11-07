@@ -25,6 +25,9 @@ define('ROLE_ID_REVIEW_DIRECTOR', 8);
 define('ROLE_ID_APP_ADMIN', 9);
 define('ROLE_ID_SYSTEM_ADMIN', 10);
 
+// Stage ID and Name
+define('STAGE_ID_INITIATE', 1);
+
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
 define('DOC_TYPE_PROCUREMENT_APPROACH_APPLICATION', 2);
@@ -68,10 +71,11 @@ define('ROUTE_NAME_ROLE_REMOVE', 'RoleRemove');
 define('ROUTE_NAME_ROLE_ADD', 'RoleAdd');
 define('ROUTE_NAME_ROLE_SELECT', 'RoleSelect');
 
-define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 define('ROUTE_NAME_PROJECT_APPLY', 'ProjectApply');
 define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
+
+define('ROUTE_NAME_STAGE_INITIATE', 'StageInitiate');
 
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
@@ -108,6 +112,11 @@ return [
         DOC_TYPE_PROCUREMENT_CONTRACT => '采购合同',
         DOC_TYPE_MEETING_MINUTES => '会议纪要',
         DOC_TYPE_OTHER_DOCS => '其他文档',
+    ],
+
+    // Stage Names
+    'stageNames' => [
+        STAGE_ID_INITIATE => '发起采购',
     ],
 ];
 

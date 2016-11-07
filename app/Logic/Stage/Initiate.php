@@ -7,10 +7,18 @@ use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\Project;
 use App\Models\UpdateLog as Log;
 
-class Initialization extends AbstractStage
+class Initiate extends AbstractStage
 {
-    public function __construct($paras)
+    protected $stageID = STAGE_ID_INITIATE;
+
+    public function __construct()
     {
+
+    }
+
+    public function operate($paras)
+    {
+        // create new project
         $this->project = new Project();
         $loginUser = LoginUserKeeper::getUser();
 

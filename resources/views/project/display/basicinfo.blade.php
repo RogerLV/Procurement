@@ -1,7 +1,7 @@
 <table>
     <tbody>
     <tr>
-        <td width="15%" valign="top"><h4>项目编号: </h4></td>
+        <td width="20%" valign="top"><h4>项目编号: </h4></td>
         <td>{{ $project->givenID }}</td>
     </tr>
     <tr>

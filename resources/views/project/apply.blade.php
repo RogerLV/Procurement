@@ -2,7 +2,7 @@
 
 
 @section('HTMLContent')
-    <form id="submit-project" action="{{ route(ROUTE_NAME_PROJECT_CREATE) }}" method="post" enctype="multipart/form-data">
+    <form id="submit-project" method="post" enctype="multipart/form-data">
         <div class="form-group required">
             <label for="applicant-department">采购部门:</label>
             <input type="text" class="form-control" name="applicant-department" required readonly value="{{ $deptInfo->deptCnName }}">
@@ -97,7 +97,7 @@
             form.append('involve-review', $("input[name=involve-review]").is(':checked'));
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '{{ route(ROUTE_NAME_PROJECT_CREATE) }}', true);
+            xhr.open('POST', '{{ route(ROUTE_NAME_STAGE_INITIATE) }}', true);
 
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.onload = function () {

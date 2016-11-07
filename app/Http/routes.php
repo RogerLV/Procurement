@@ -16,11 +16,8 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-//    $path = storage_path('logs/laravel-2016-11-05.log');
-//    $path = "/Users/chaolu/Desktop/Projects/File_Storage/Procurement/Projects/1/laravel-2016-11-05.log";
-    $path = "/Users/chaolu/Desktop/Projects/File_Storage/Procurement/Projects/1/eAppointment.pdf";
-
-    return response()->file($path);
+    $stage = new \App\Logic\Stage\Initiate();
+    echo $stage->getStageName();
 })->name('test');
 
 Route::group(['middleware' => ['normal']], function () {
@@ -30,9 +27,10 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('role/select', 'RoleController@select')->name(ROUTE_NAME_ROLE_SELECT);
 
     Route::get('project/apply', 'ProjectController@apply')->name(ROUTE_NAME_PROJECT_APPLY);
-    Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
+
+    Route::post('stage/init', 'StageController@initiate')->name(ROUTE_NAME_STAGE_INITIATE);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

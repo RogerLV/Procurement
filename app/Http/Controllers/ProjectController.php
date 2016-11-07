@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
 use App\Logic\DocumentHandler;
-use App\Logic\Stage\Initialization;
-use App\Models\User;
+use App\Models\ProjectStageLog;
 use Gate;
 use Config;
-use File;
 use App\Models\Project;
 use App\Models\Department;
+use App\Models\User;
 
 class ProjectController extends Controller
 {
@@ -25,46 +24,6 @@ class ProjectController extends Controller
                 ->with('deptInfo', $this->loginUser->getDepartmentInfo())
                 ->with('applicantInfo', $this->loginUser->getUserInfo())
                 ->with('procurementScopes', Config::get('constants.procurementScopeNames'));
-    }
-
-    public function create()
-    {
-        if (Gate::forUser($this->loginUser)->denies('apply-project')) {
-            throw new AppException('PRJ002', ERROR_MESSAGE_NOT_AUTHORIZED);
-        }
-
-        if (empty($applicantDept = trim(request()->input('applicant-dept')))
-            || empty($applicantLanID = trim(request()->input('applicant-lanid')))
-            || empty($para['procurementScope'] = trim(request()->input('procurement-scope')))
-            || empty($para['projectName'] = trim(request()->input('project-name')))
-            || empty($para['projectBackground'] = trim(request()->input('project-background')))
-            || empty($para['projectBudget'] = trim(request()->input('project-budget')))
-            || empty($signedReport = request()->file('signed-report'))
-            || empty($para['involveReview'] = trim(request()->input('involve-review')))) {
-            throw new AppException('PRJ003', 'Data Error.');
-        }
-
-        // check applicant lanid and dept info
-        if ($applicantLanID != $this->loginUser->getUserInfo()->lanID) {
-            throw new AppException('PRJ004', 'Incorrect User Info');
-        }
-        if ($applicantDept != $this->loginUser->getDepartmentInfo()->dept) {
-            throw new AppException('PRJ005', 'Incorrect User Info');
-        }
-
-        // create new project
-        $initStage = new Initialization($para);
-        $projectIns = $initStage->getProject();
-
-        // handle uploaded file
-        DocumentHandler::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);
-
-        return response()->json([
-            'status' => 'good',
-            'info' => [
-                'id' => $projectIns->id,
-            ],
-        ]);
     }
 
     public function listPage()
@@ -85,10 +44,11 @@ class ProjectController extends Controller
         if (Gate::forUser($this->loginUser)->denies('project-visible', $projectIns)) {
             throw new AppException('PRJ007', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
+        $deptInfo = Department::where('dept', $projectIns->dept)->get()->keyBy('dept');
 
         $basicInfoSegment = view('project/display/basicinfo')
                             ->with('project', $projectIns)
-                            ->with('deptInfo', Department::where('dept', $projectIns->dept)->get()->keyBy('dept'))
+                            ->with('deptInfo', $deptInfo)
                             ->with('userInfo', User::where('lanID', $projectIns->lanID)->get()->keyBy('lanID'));
 
         $documents = DocumentHandler::getByReferenceIns($projectIns);
@@ -100,9 +60,18 @@ class ProjectController extends Controller
                             ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
                             ->with('project', $projectIns);
 
+        $logList = ProjectStageLog::where('projectID', $projectIns->id)->orderBy('id')->get();
+        $lanIDs = $logList->pluck('lanID')->toArray();
+
+        $stageLogSegment = view('project/display/stageloglist')
+                            ->with('logList', $logList)
+                            ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
+                            ->with('stageNames', Config::get('constants.stageNames'));
+
         return view('project/display/display')
                 ->with('title', PAGE_NAME_PROJECT_DISPLAY)
                 ->with('basicInfo', $basicInfoSegment)
-                ->with('documents', $documentsSegment);
+                ->with('documents', $documentsSegment)
+                ->with('stageLogList', $stageLogSegment);
     }
 }

@@ -110,12 +110,13 @@ class CreateTables extends Migration
         });
 
 
-        Schema::create('ApproveLogs', function (Blueprint $table) {
+        Schema::create('ProjectStageLogs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('projectID');
-            $table->integer('fromPhase');
-            $table->integer('toPhase');
-            $table->string('approveBy', 20);
+            $table->integer('fromStage');
+            $table->integer('toStage');
+            $table->string('lanID', 20);
+            $table->string('comment', env('FIELD_MAX_LENGTH'))->nullable();
             $table->dateTime('timeAt');
         });
     }
@@ -135,6 +136,6 @@ class CreateTables extends Migration
         Schema::drop('ScoreItems');
         Schema::drop('Scores');
         Schema::drop('SystemRoles');
-        Schema::drop('ApproveLogs');
+        Schema::drop('ProjectStageLogs');
     }
 }

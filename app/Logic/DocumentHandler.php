@@ -40,7 +40,7 @@ class DocumentHandler
     {
         return Document::where('referenceTable', $referenceIns->table)
                     ->where('referenceID', $referenceIns->id)
-                    ->orderBy('id')
+                    ->orderBy('type')
                     ->get();
     }
 
