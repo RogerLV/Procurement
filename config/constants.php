@@ -80,6 +80,8 @@ define('ROUTE_NAME_STAGE_INITIATE', 'StageInitiate');
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
 
+define('ROUTE_NAME_CONVERSATION_ADD', 'ConversationAdd');
+
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
 define('PAGE_NAME_PROJECT_APPLY', '发起采购');

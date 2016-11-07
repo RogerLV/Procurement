@@ -34,6 +34,8 @@ class DocumentHandler
 
         $path =  env('STORAGE_PATH').'/'.$document->referenceTable.'/'.$document->referenceID;
         $fileIns->move($path, $tempName.'.'.$ext);
+
+        return $document;
     }
 
     public static function getByReferenceIns($referenceIns)

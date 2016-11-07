@@ -58,9 +58,16 @@ class DocumentController extends Controller
             throw new AppException('DOC005', 'Incorrect Doc Info.');
         }
 
-        DocumentHandler::storeFile($fileIns, $referenceIns, $fileType);
+        $documentIns = DocumentHandler::storeFile($fileIns, $referenceIns, $fileType);
 
-        return response()->json(['status' => 'good']);
+        return response()->json([
+            'status' => 'good',
+            'info' => [
+                'fileType' => Config::get('constants.documentTypeNames.'.$fileType),
+                'documentIns' => $documentIns,
+                'userInfo' => $this->loginUser->getUserInfo(),
+            ],
+        ]);
     }
 
 }

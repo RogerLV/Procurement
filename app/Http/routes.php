@@ -34,6 +34,8 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);
+
+    Route::post('conversation/add', 'ConversationController@add')->name(ROUTE_NAME_CONVERSATION_ADD);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

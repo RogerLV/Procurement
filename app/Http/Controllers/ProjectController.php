@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\Exceptions\AppException;
+use App\Logic\ConversationHandler;
 use App\Logic\DocumentHandler;
 use App\Models\ProjectStageLog;
 use Gate;
@@ -68,10 +70,19 @@ class ProjectController extends Controller
                             ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
                             ->with('stageNames', Config::get('constants.stageNames'));
 
+        $conversation = ConversationHandler::getByReferenceIns($projectIns);
+        $lanIDs = $conversation->pluck('lanID')->toArray();
+
+        $conversationSegment = view('project/display/conversation')
+                                ->with('conversation', $conversation)
+                                ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
+                                ->with('project', $projectIns);
+
         return view('project/display/display')
                 ->with('title', PAGE_NAME_PROJECT_DISPLAY)
                 ->with('basicInfo', $basicInfoSegment)
                 ->with('documents', $documentsSegment)
-                ->with('stageLogList', $stageLogSegment);
+                ->with('stageLogList', $stageLogSegment)
+                ->with('conversation', $conversationSegment);
     }
 }

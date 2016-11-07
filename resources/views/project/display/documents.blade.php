@@ -11,7 +11,7 @@
             <th>上传时间</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="document-list-body">
     <?php $i=1 ?>
     @foreach($documents as $document)
         <?php $user = $userInfo[$document->lanID] ?>
@@ -52,7 +52,29 @@
         });
 
         $('#upload-other-docs').on('fileuploaded', function(event, data) {
-            handleReturn(data.response);
+            handleReturn(data.response, function () {
+                var no = parseInt($('tr:last').find('td:first').html())+1;
+                var url = "{{ url('document/display') }}"
+                            +"/"+data.response.info.documentIns.id
+                            +'/'+data.response.info.documentIns.originalName;
+                var uploaderInfo = data.response.info.userInfo.uEngName
+                                    +" "+data.response.info.userInfo.uCnName
+                                    +" "+data.response.info.userInfo.IpPhone;
+
+                $('<tr/>').append($('<td/>', {
+                    text: no
+                })).append($('<td/>', {
+                    text: data.response.info.fileType
+                })).append($('<td/>').append($('<a/>', {
+                    href: url,
+                    target: '_blank',
+                    text: data.response.info.documentIns.originalName
+                }))).append($('<td/>', {
+                    text: uploaderInfo
+                })).append($('<td/>', {
+                    text: data.response.info.documentIns.created_at
+                })).appendTo($('#document-list-body'));
+            });
         });
     });
 </script>

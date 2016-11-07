@@ -119,6 +119,17 @@ class CreateTables extends Migration
             $table->string('comment', env('FIELD_MAX_LENGTH'))->nullable();
             $table->dateTime('timeAt');
         });
+
+        Schema::create('Conversation', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('referenceTable');
+            $table->integer('referenceID');
+            $table->string('lanID', 20);
+            $table->string('content', env('FIELD_MAX_LENGTH'));
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -137,5 +148,6 @@ class CreateTables extends Migration
         Schema::drop('Scores');
         Schema::drop('SystemRoles');
         Schema::drop('ProjectStageLogs');
+        Schema::drop('Conversation');
     }
 }

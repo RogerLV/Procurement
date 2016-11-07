@@ -7,4 +7,7 @@
 <?=$documents?>
         <br>
 <?=$stageLogList?>
+        <br>
+<?=$conversation?>
+        <br>
 @endsection
