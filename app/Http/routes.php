@@ -34,7 +34,8 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
 
-    Route::get('document/display/{id}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
+    Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
+    Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

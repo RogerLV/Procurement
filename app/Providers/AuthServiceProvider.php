@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Logic\DocumentHandler;
 use App\Logic\LoginUser\LoginUser;
-use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\Role\RoleFactory;
+use App\Models\Document;
 use App\Models\Project;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,14 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('project-visible', function (LoginUser $loginUser, Project $projectIns) {
             $roleIns = RoleFactory::create($loginUser->getActiveRole()->roleID);
             return $roleIns->projectVisible($projectIns);
+        });
+
+        $gate->define('document-visible', function (LoginUser $loginUser, Document $documentIns) {
+            $referenceIns = DocumentHandler::getReferenceIns($documentIns);
+            switch ($referenceIns->table) {
+                case 'Projects':
+                    return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
+            }
         });
 
         $this->registerPolicies($gate);

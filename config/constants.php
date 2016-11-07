@@ -74,6 +74,7 @@ define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
+define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
 
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');

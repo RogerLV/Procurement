@@ -77,8 +77,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('input.file-input').fileinput({
-            'language':'zh',
-            'showUpload': false
+            language:'zh',
+            showUpload: false,
+            maxFileCount: 1,
         });
 
         $('#submit-project').submit(function (event) {

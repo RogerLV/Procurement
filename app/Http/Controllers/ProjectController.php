@@ -97,7 +97,8 @@ class ProjectController extends Controller
         $documentsSegment = view('project/display/documents')
                             ->with('documents', $documents)
                             ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
-                            ->with('documentTypeNames', Config::get('constants.documentTypeNames'));
+                            ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
+                            ->with('project', $projectIns);
 
         return view('project/display/display')
                 ->with('title', PAGE_NAME_PROJECT_DISPLAY)
