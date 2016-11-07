@@ -2,12 +2,17 @@
 
 
 @section('HTMLContent')
-<?=$basicInfo?>
-        <br>
-<?=$documents?>
-        <br>
-<?=$stageLogList?>
-        <br>
-<?=$conversation?>
-        <br>
+
+    @include('project/display/basicinfo')
+    <br>
+
+    @include('project/display/documents')
+    <br>
+
+    @include('project/display/stageloglist')
+    <br>
+
+    @include('project/display/conversation')
+    <br>
+
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
 use App\Exceptions\AppException;
 use App\Logic\ConversationHandler;
 use App\Logic\DocumentHandler;
@@ -46,43 +45,28 @@ class ProjectController extends Controller
         if (Gate::forUser($this->loginUser)->denies('project-visible', $projectIns)) {
             throw new AppException('PRJ007', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
+
         $deptInfo = Department::where('dept', $projectIns->dept)->get()->keyBy('dept');
 
-        $basicInfoSegment = view('project/display/basicinfo')
-                            ->with('project', $projectIns)
-                            ->with('deptInfo', $deptInfo)
-                            ->with('userInfo', User::where('lanID', $projectIns->lanID)->get()->keyBy('lanID'));
-
         $documents = DocumentHandler::getByReferenceIns($projectIns);
-        $lanIDs = $documents->pluck('lanID')->toArray();
-
-        $documentsSegment = view('project/display/documents')
-                            ->with('documents', $documents)
-                            ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
-                            ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
-                            ->with('project', $projectIns);
-
         $logList = ProjectStageLog::where('projectID', $projectIns->id)->orderBy('id')->get();
-        $lanIDs = $logList->pluck('lanID')->toArray();
-
-        $stageLogSegment = view('project/display/stageloglist')
-                            ->with('logList', $logList)
-                            ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
-                            ->with('stageNames', Config::get('constants.stageNames'));
-
         $conversation = ConversationHandler::getByReferenceIns($projectIns);
-        $lanIDs = $conversation->pluck('lanID')->toArray();
 
-        $conversationSegment = view('project/display/conversation')
-                                ->with('conversation', $conversation)
-                                ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
-                                ->with('project', $projectIns);
+        $lanIDs = collect([$projectIns->lanID])
+                    ->merge($documents->pluck('lanID'))
+                    ->merge($logList->pluck('lanID'))
+                    ->merge($conversation->pluck('lanID'))
+                    ->unique()
+                    ->toArray();
 
         return view('project/display/display')
-                ->with('title', PAGE_NAME_PROJECT_DISPLAY)
-                ->with('basicInfo', $basicInfoSegment)
-                ->with('documents', $documentsSegment)
-                ->with('stageLogList', $stageLogSegment)
-                ->with('conversation', $conversationSegment);
+                ->with('project', $projectIns)
+                ->with('deptInfo', $deptInfo)
+                ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
+                ->with('documents', $documents)
+                ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
+                ->with('logList', $logList)
+                ->with('stageNames', Config::get('constants.stageNames'))
+                ->with('conversation', $conversation);
     }
 }
