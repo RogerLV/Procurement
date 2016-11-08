@@ -5,6 +5,7 @@ namespace App\Logic\Stage;
 
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\ProjectStageLog;
+use App\Models\Project;
 use Config;
 
 abstract class AbstractStage
@@ -16,6 +17,11 @@ abstract class AbstractStage
     abstract public function getNextStage();
     abstract public function renderFunctionArea();
     abstract public function renderInfoArea();
+
+    public function __construct(Project $projectIns)
+    {
+        $this->project = $projectIns;
+    }
 
     public function getProject()
     {
@@ -37,5 +43,10 @@ abstract class AbstractStage
     public function getStageName()
     {
         return Config::get('constants.stageNames.'.$this->stageID);
+    }
+
+    public function getStageID()
+    {
+        return $this->stageID;
     }
 }

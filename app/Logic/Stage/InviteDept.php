@@ -5,7 +5,7 @@ namespace App\Logic\Stage;
 
 class InviteDept extends AbstractStage
 {
-    protected $stageID = STAGE_ID_INITIATE;
+    protected $stageID = STAGE_ID_INVITE_DEPT;
 
     public function operate($params)
     {

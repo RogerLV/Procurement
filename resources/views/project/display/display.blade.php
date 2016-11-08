@@ -3,7 +3,7 @@
 
 @section('HTMLContent')
 
-    @include('project/display/basicinfo')
+    <?=$stageView?>
     <br>
 
     @include('project/display/documents')

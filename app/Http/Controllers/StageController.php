@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Document;
 use Gate;
 use App\Exceptions\AppException;
 use App\Logic\Stage\Initiate;
-use App\Logic\DocumentHandler;
+use App\Models\Project;
 
 class StageController extends Controller
 {
@@ -36,14 +37,12 @@ class StageController extends Controller
         }
 
         // create new project
-        $initStage = new Initiate();
-        $initStage->operate($para);
+        $projectIns = Project::createNew($para);
+        $initStage = new Initiate($projectIns);
         $initStage->logOperation();
-        $projectIns = $initStage->getProject();
-
 
         // handle uploaded file
-        DocumentHandler::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);
+        Document::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);
 
         return response()->json([
             'status' => 'good',

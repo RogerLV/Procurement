@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\AppException;
-use App\Logic\DocumentHandler;
 use App\Models\Document;
 use App\Models\Project;
 use Gate;
@@ -49,7 +48,7 @@ class DocumentController extends Controller
             throw new AppException('DOC005', 'Incorrect Doc Info.');
         }
 
-        $documentIns = DocumentHandler::storeFile($fileIns, $referenceIns, $fileType);
+        $documentIns = Document::storeFile($fileIns, $referenceIns, $fileType);
 
         return response()->json([
             'status' => 'good',

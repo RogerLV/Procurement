@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
+use App\Logic\Stage\StageHandler;
 use Gate;
 use Config;
 use App\Models\Project;
@@ -45,12 +46,14 @@ class ProjectController extends Controller
 
         // By using eloquent relationships, mutiple queries would be generated which can be optimized.
         // But due to resource consuming is acceptable, use this elegant way for time being
+        $stageView = StageHandler::renderStageView($projectIns);
         $documents = $projectIns->document()->with('uploader')->get();
         $log = $projectIns->log()->with('operator')->get();
         $conversation = $projectIns->conversation()->with('composer')->get();
 
         return view('project/display/display')
                 ->with('project', $projectIns)
+                ->with('stageView', $stageView)
                 ->with('documents', $documents)
                 ->with('logList', $log)
                 ->with('conversation', $conversation)
