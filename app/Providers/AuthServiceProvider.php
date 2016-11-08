@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Logic\DocumentHandler;
 use App\Logic\LoginUser\LoginUser;
 use App\Logic\Role\RoleFactory;
 use App\Models\Document;
@@ -41,10 +40,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->define('document-visible', function (LoginUser $loginUser, Document $documentIns) {
-            $referenceIns = DocumentHandler::getReferenceIns($documentIns);
-            switch ($referenceIns->table) {
-                case 'Projects':
-                    return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
+            $referenceIns = $documentIns->documentable;
+            if ($referenceIns instanceof Project) {
+                return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
             }
         });
 

@@ -53,8 +53,8 @@ class CreateTables extends Migration
 
         Schema::create('Documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('referenceTable');
-            $table->integer('referenceID');
+            $table->string('documentable_type');
+            $table->integer('documentable_id');
             $table->integer('type');
             $table->string('originalName', env('FIELD_MAX_LENGTH'));
             $table->string('subAddress', env('FIELD_MAX_LENGTH'));
@@ -109,10 +109,10 @@ class CreateTables extends Migration
             $table->softDeletes();
         });
 
-
         Schema::create('ProjectStageLogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('projectID');
+            $table->string('logable_type');
+            $table->integer('logable_id');
             $table->integer('fromStage');
             $table->integer('toStage');
             $table->string('lanID', 20);
@@ -122,8 +122,8 @@ class CreateTables extends Migration
 
         Schema::create('Conversation', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('referenceTable');
-            $table->integer('referenceID');
+            $table->string('conversable_type');
+            $table->integer('conversable_id');
             $table->string('lanID', 20);
             $table->string('content', env('FIELD_MAX_LENGTH'));
 

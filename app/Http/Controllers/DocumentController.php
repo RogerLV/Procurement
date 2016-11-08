@@ -8,8 +8,6 @@ use App\Logic\DocumentHandler;
 use App\Models\Document;
 use App\Models\Project;
 use Gate;
-use File;
-use Storage;
 use Config;
 
 class DocumentController extends Controller
@@ -26,14 +24,7 @@ class DocumentController extends Controller
             throw new AppException('DOC002', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        $fullPath = DocumentHandler::getFullPath($documentIns);
-
-        return response()->file($fullPath);
-    }
-
-    public function download($id)
-    {
-
+        return response()->file($documentIns->getFullPath());
     }
 
     public function upload()

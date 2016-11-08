@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Gate;
 use App\Exceptions\AppException;
 use App\Logic\Stage\Initiate;
@@ -39,6 +40,7 @@ class StageController extends Controller
         $initStage->operate($para);
         $initStage->logOperation();
         $projectIns = $initStage->getProject();
+
 
         // handle uploaded file
         DocumentHandler::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);

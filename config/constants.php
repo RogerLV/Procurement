@@ -27,6 +27,7 @@ define('ROLE_ID_SYSTEM_ADMIN', 10);
 
 // Stage ID and Name
 define('STAGE_ID_INITIATE', 1);
+define('STAGE_ID_INVITE_DEPT', 2);
 
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
@@ -119,6 +120,7 @@ return [
     // Stage Names
     'stageNames' => [
         STAGE_ID_INITIATE => '发起采购',
+        STAGE_ID_INVITE_DEPT => '邀请部门',
     ],
 ];
 

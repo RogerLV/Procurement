@@ -14,7 +14,6 @@
     <tbody id="document-list-body">
     <?php $i=1 ?>
     @foreach($documents as $document)
-        <?php $user = $userInfo[$document->lanID] ?>
         <tr>
             <td>{{ $i++ }}</td>
             <td>{{ $documentTypeNames[$document->type] }}</td>
@@ -23,7 +22,7 @@
                     {{ $document->originalName }}
                 </a>
             </td>
-            <td>{{ $user->getDualName() }} {{ $user->IpPhone }}</td>
+            <td>{{ $document->uploader->getTriName() }}</td>
             <td>{{ $document->created_at }}</td>
         </tr>
     @endforeach

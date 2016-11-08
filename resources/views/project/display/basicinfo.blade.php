@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td><h4>项目负责人: </h4></td>
-        <td>{{ $deptInfo[$project->dept]->deptCnName }}: {{ $userInfo[$project->lanID]->getDualName() }} {{ $userInfo[$project->lanID]->IpPhone }}</td>
+        <td>{{ $project->department->deptCnName }}: {{ $project->submitter->getTriName() }}</td>
     </tr>
     <tr>
         <td><h4>纳入采购评审: </h4></td>

@@ -23,4 +23,14 @@ class User extends Model
     {
         return $this->uEngName.' '.$this->uCnName;
     }
+
+    public function getTriName()
+    {
+        return $this->getDualName().' '.$this->IpPhone;
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'dept', 'dept');
+    }
 }

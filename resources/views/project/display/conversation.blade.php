@@ -5,9 +5,8 @@
 <ul class="list-group" id="conversation-list">
     @foreach($conversation as $entry)
         <li class="list-group-item">
-            <?php $user = $userInfo[$entry->lanID] ?>
             <h5 class="list-group-item-heading">
-                {{ $entry->created_at }} {{ $user->getDualName() }} {{ $user->IpPhone }}
+                {{ $entry->created_at }} {{ $entry->composer->getTriName() }}
             </h5>
             <p class="list-group-item-text">{{ $entry->content }}</p>
         </li>

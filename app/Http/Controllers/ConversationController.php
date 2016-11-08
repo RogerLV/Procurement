@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\AppException;
-use App\Logic\ConversationHandler;
+use App\Models\Conversation;
 use App\Models\Project;
 use Gate;
 
@@ -29,12 +29,17 @@ class ConversationController extends Controller
 
         }
 
-        $conversationIns = ConversationHandler::add($referenceIns, $content);
+        // add new conversation
+        $conversation = new Conversation();
+        $conversation->lanID = $this->loginUser->getUserInfo()->lanID;
+        $conversation->content = $content;
+        $referenceIns->conversation()->save($conversation);
+
 
         return response()->json([
             'status' => 'good',
             'info' => [
-                'conversationIns' => $conversationIns,
+                'conversationIns' => $conversation,
                 'userInfo' => $this->loginUser->getUserInfo(),
             ],
         ]);

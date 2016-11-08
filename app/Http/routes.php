@@ -16,8 +16,8 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    $stage = new \App\Logic\Stage\Initiate();
-    echo $stage->getStageName();
+    $doc = \App\Models\ProjectStageLog::with('operator')->find(1);
+    echo "<pre>"; var_dump($doc->operator);
 })->name('test');
 
 Route::group(['middleware' => ['normal']], function () {

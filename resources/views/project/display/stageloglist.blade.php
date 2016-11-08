@@ -5,8 +5,7 @@
 <ul class="list-group">
     @foreach($logList as $entry)
         <li class="list-group-item">
-            <?php $user = $userInfo[$entry->lanID] ?>
-            {{ $entry->timeAt }}: {{ $user->getDualName() }} {{ $user->IpPhone }} {{ $stageNames[$entry->toStage] }}
+            {{ $entry->timeAt }}: {{ $entry->operator->getTriName() }} {{ $stageNames[$entry->fromStage] }}
         </li>
     @endforeach
 </ul>

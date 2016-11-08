@@ -13,23 +13,25 @@ abstract class AbstractStage
     protected $stageID;
 
     abstract public function operate($params);
+    abstract public function getNextStage();
+    abstract public function renderFunctionArea();
+    abstract public function renderInfoArea();
 
     public function getProject()
     {
         return $this->project;
     }
 
-    public function logOperation($fromStage = null, $comment = null)
+    public function logOperation($toStage = null, $comment = null)
     {
         $log = new ProjectStageLog();
-        $log->projectID = $this->project->id;
-        $log->fromStage = is_null($fromStage) ? $this->stageID - 1 : $fromStage;
-        $log->toStage = $this->stageID;
+        $log->fromStage = $this->stageID;
+        $log->toStage = is_null($toStage) ? $this->stageID+1 : $toStage;
         $loginUser = LoginUserKeeper::getUser();
         $log->lanID = $loginUser->getUserInfo()->lanID;
         $log->comment = $comment;
         $log->timeAt = date('Y-m-d H:i:s');
-        $log->save();
+        $this->project->log()->save($log);
     }
 
     public function getStageName()

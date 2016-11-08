@@ -34,4 +34,19 @@ class Initiate extends AbstractStage
 
         Log::logInsert($this->project, $loginUser->getUserInfo()->lanID);
     }
+
+    public function renderFunctionArea()
+    {
+        return null;
+    }
+
+    public function renderInfoArea()
+    {
+        return null;
+    }
+
+    public function getNextStage()
+    {
+        return new InviteDept();
+    }
 }

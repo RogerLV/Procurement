@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
-use App\Logic\ConversationHandler;
-use App\Logic\DocumentHandler;
-use App\Models\ProjectStageLog;
 use Gate;
 use Config;
 use App\Models\Project;
 use App\Models\Department;
-use App\Models\User;
 
 class ProjectController extends Controller
 {
@@ -37,7 +33,8 @@ class ProjectController extends Controller
 
     public function display($id)
     {
-        $projectIns = Project::find($id);
+        $projectIns = Project::with('department', 'submitter')->find($id);
+
         if (is_null($projectIns)) {
             throw new AppException('PRJ006', 'Incorrect Project ID.');
         }
@@ -46,27 +43,18 @@ class ProjectController extends Controller
             throw new AppException('PRJ007', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        $deptInfo = Department::where('dept', $projectIns->dept)->get()->keyBy('dept');
-
-        $documents = DocumentHandler::getByReferenceIns($projectIns);
-        $logList = ProjectStageLog::where('projectID', $projectIns->id)->orderBy('id')->get();
-        $conversation = ConversationHandler::getByReferenceIns($projectIns);
-
-        $lanIDs = collect([$projectIns->lanID])
-                    ->merge($documents->pluck('lanID'))
-                    ->merge($logList->pluck('lanID'))
-                    ->merge($conversation->pluck('lanID'))
-                    ->unique()
-                    ->toArray();
+        // By using eloquent relationships, mutiple queries would be generated which can be optimized.
+        // But due to resource consuming is acceptable, use this elegant way for time being
+        $documents = $projectIns->document()->with('uploader')->get();
+        $log = $projectIns->log()->with('operator')->get();
+        $conversation = $projectIns->conversation()->with('composer')->get();
 
         return view('project/display/display')
                 ->with('project', $projectIns)
-                ->with('deptInfo', $deptInfo)
-                ->with('userInfo', User::whereIn('lanID', $lanIDs)->get()->keyBy('lanID'))
                 ->with('documents', $documents)
+                ->with('logList', $log)
+                ->with('conversation', $conversation)
                 ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
-                ->with('logList', $logList)
-                ->with('stageNames', Config::get('constants.stageNames'))
-                ->with('conversation', $conversation);
+                ->with('stageNames', Config::get('constants.stageNames'));
     }
 }

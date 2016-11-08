@@ -8,4 +8,9 @@ class Department extends Model
 {
     protected $table = 'Departments';
     protected $connection = 'basedata';
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User', 'dept', 'dept');
+    }
 }
