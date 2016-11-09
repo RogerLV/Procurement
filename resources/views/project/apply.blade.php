@@ -97,7 +97,7 @@
             form.append('involve-review', $("input[name=involve-review]").is(':checked'));
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '{{ route(ROUTE_NAME_STAGE_INITIATE) }}', true);
+            xhr.open('POST', '{{ route(ROUTE_NAME_PROJECT_CREATE) }}', true);
 
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.onload = function () {

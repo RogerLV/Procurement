@@ -9,6 +9,7 @@ class SystemAdmin extends AbstractRole
     protected $roleName = ROLE_NAME_SYSTEM_ADMIN;
     protected $operable = false;
     protected $displayable = false;
+    protected $operableStages = [];
 
     public function getCandidates()
     {

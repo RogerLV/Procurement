@@ -3,13 +3,15 @@
 namespace App\Logic\Stage;
 
 
+use Config;
+
 class Initiate extends AbstractStage
 {
     protected $stageID = STAGE_ID_INITIATE;
 
-    public function operate($paras)
+    protected function instantiateNextStage()
     {
-        return null;
+        return new InviteDept($this->project);
     }
 
     public function renderFunctionArea()
@@ -19,12 +21,18 @@ class Initiate extends AbstractStage
 
     public function renderInfoArea()
     {
-        return View('project/display/stage/basicinfo')
-                ->with('project', $this->project);
+        return view('project/display/stage/basicinfo')
+                ->with('project', $this->project)
+                ->with('stageNames', Config::get('constants.stageNames'));
     }
 
-    public function getNextStage()
+    public function canStageUp()
     {
-        return new InviteDept($this->project);
+        return true;
+    }
+
+    public function operate($paras)
+    {
+        return null;
     }
 }

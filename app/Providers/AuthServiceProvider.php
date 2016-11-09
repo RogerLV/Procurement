@@ -39,6 +39,11 @@ class AuthServiceProvider extends ServiceProvider
             return $roleIns->projectVisible($projectIns);
         });
 
+        $gate->define('project-operable', function (LoginUser $loginUser, Project $projectIns) {
+            $roleIns = RoleFactory::create($loginUser->getActiveRole()->roleID);
+            return $roleIns->projectOperable($projectIns);
+        });
+
         $gate->define('document-visible', function (LoginUser $loginUser, Document $documentIns) {
             $referenceIns = $documentIns->documentable;
             if ($referenceIns instanceof Project) {

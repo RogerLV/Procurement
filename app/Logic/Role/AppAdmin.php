@@ -14,4 +14,9 @@ class AppAdmin extends AbstractRole
     {
         return User::inService()->where('dept', 'FMD')->get();
     }
+
+    public function projectOperable($projectIns)
+    {
+        return true;
+    }
 }

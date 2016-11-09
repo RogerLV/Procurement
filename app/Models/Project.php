@@ -35,6 +35,11 @@ class Project extends Model
         return $this->hasOne('App\Models\Department', 'dept', 'dept');
     }
 
+    public function memberDepts()
+    {
+        return $this->hasMany('App\Models\ProjectRoleDepartment', 'projectID', 'id');
+    }
+
     public static function createNew($paras)
     {
         // create new project
@@ -46,7 +51,7 @@ class Project extends Model
         $project->dept = $loginUser->getDepartmentInfo()->dept;
         $project->scope = $paras['procurementScope'];
         $project->name = $paras['projectName'];
-        $project->stage = STAGE_ID_INVITE_DEPT;
+        $project->stage = STAGE_ID_INITIATE;
         $project->background = $paras['projectBackground'];
         $project->budget = $paras['projectBudget'];
         $project->involveReview = $paras['involveReview'];

@@ -3,52 +3,49 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Document;
+use App\Logic\Stage\StageHandler;
 use Gate;
 use App\Exceptions\AppException;
-use App\Logic\Stage\Initiate;
 use App\Models\Project;
+
+use DB;
 
 class StageController extends Controller
 {
-    public function initiate()
+    private $projectIns;
+    private $stageIns;
+
+    public function __construct()
     {
-        if (Gate::forUser($this->loginUser)->denies('apply-project')) {
-            throw new AppException('PRJ002', ERROR_MESSAGE_NOT_AUTHORIZED);
+        parent::__construct();
+
+        if (empty($projectID = request()->input('projectid'))) {
+            throw new AppException('STG001', 'Incorrect project info.');
         }
 
-        if (empty($applicantDept = trim(request()->input('applicant-dept')))
-            || empty($applicantLanID = trim(request()->input('applicant-lanid')))
-            || empty($para['procurementScope'] = trim(request()->input('procurement-scope')))
-            || empty($para['projectName'] = trim(request()->input('project-name')))
-            || empty($para['projectBackground'] = trim(request()->input('project-background')))
-            || empty($para['projectBudget'] = trim(request()->input('project-budget')))
-            || empty($signedReport = request()->file('signed-report'))
-            || empty($para['involveReview'] = trim(request()->input('involve-review')))) {
-            throw new AppException('PRJ003', 'Data Error.');
+        $this->projectIns = Project::find($projectID);
+
+        if (is_null($this->projectIns)) {
+            throw new AppException('STG002', 'Incorrect project info.');
         }
 
-        // check applicant lanid and dept info
-        if ($applicantLanID != $this->loginUser->getUserInfo()->lanID) {
-            throw new AppException('PRJ004', 'Incorrect User Info');
-        }
-        if ($applicantDept != $this->loginUser->getDepartmentInfo()->dept) {
-            throw new AppException('PRJ005', 'Incorrect User Info');
+        if (Gate::forUser($this->loginUser)->denies('project-operable', $this->projectIns)) {
+            throw new AppException('STG003', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        // create new project
-        $projectIns = Project::createNew($para);
-        $initStage = new Initiate($projectIns);
-        $initStage->logOperation();
-
-        // handle uploaded file
-        Document::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);
-
-        return response()->json([
-            'status' => 'good',
-            'info' => [
-                'id' => $projectIns->id,
-            ],
-        ]);
+        $this->stageIns = StageHandler::getStageIns($this->projectIns);
     }
+
+    public function inviteDept()
+    {
+        if (empty($para['memberCount'] = request()->input('membercount'))) {
+            throw new AppException('STG004', 'Data Error.');
+        }
+
+        $para['invitedDepts'] = request()->input('inviteddepts');
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+    }
+
 }

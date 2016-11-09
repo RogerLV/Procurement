@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $testRole = [
+            ['1', 'LUC1', 'FMD'],
             ['1', 'LUC1', 'ITD'],
             ['2', 'LUC1', 'ITD'],
             ['3', 'LUC1', 'ITD'],

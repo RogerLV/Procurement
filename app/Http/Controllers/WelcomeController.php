@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\LoginUser\RoleHandler;
 use App\Logic\Role\RoleFactory;
@@ -22,9 +23,10 @@ class WelcomeController extends Controller
 
         return view('welcome')
             ->with('userInfo', $loginUser->getUserInfo())
-            ->with('deptInfo', $loginUser->getDepartmentInfo())
+            ->with('userDeptInfo', $loginUser->getDepartmentInfo())
             ->with('pages', $userRoleIns->getAccessiblePages())
             ->with('userRoles', $userRoles)
-            ->with('selectedMapID', $loginUser->getActiveRole()->id);
+            ->with('selectedMapID', $loginUser->getActiveRole()->id)
+            ->with('deptInfo', DepartmentKeeper::getDeptInfo());
     }
 }

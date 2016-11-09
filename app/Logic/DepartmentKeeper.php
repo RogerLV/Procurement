@@ -25,6 +25,13 @@ class DepartmentKeeper
         }
     }
 
+    public static function getDeptKeys()
+    {
+        $departmentInfo = self::getDepartmentInfoStack();
+
+        return $departmentInfo->keys()->toArray();
+    }
+
     private static function getDepartmentInfoStack()
     {
         if (is_null(self::$departmentInfoStack)) {

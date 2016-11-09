@@ -9,6 +9,10 @@
         <td>{{ $project->name }}</td>
     </tr>
     <tr>
+        <td><h4>当前阶段:</h4></td>
+        <td>{{ $stageNames[$project->stage] }}</td>
+    </tr>
+    <tr>
         <td valign="top"><h4>项目背景: </h4></td>
         <td>{{ $project->background }}</td>
     </tr>
@@ -22,3 +26,7 @@
     </tr>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    var projectID = "{{ $project->id }}"
+</script>

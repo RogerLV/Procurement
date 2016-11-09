@@ -16,6 +16,7 @@ abstract class AbstractRole
         ROUTE_NAME_PROJECT_LIST,
     ];
     protected $roleSpecPages = [];
+    protected $operableStages= [];
 
     abstract public function getCandidates();
 
@@ -61,5 +62,10 @@ abstract class AbstractRole
     public function projectVisible($projectIns)
     {
         return true;
+    }
+
+    public function projectOperable($projectIns)
+    {
+        return in_array($projectIns->stage, $this->operableStages);
     }
 }

@@ -29,8 +29,10 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/apply', 'ProjectController@apply')->name(ROUTE_NAME_PROJECT_APPLY);
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
+    Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
 
-    Route::post('stage/init', 'StageController@initiate')->name(ROUTE_NAME_STAGE_INITIATE);
+//    Route::post('stage/init', 'StageController@initiate')->name(ROUTE_NAME_STAGE_INITIATE);
+    Route::post('stage/invite', 'StageController@inviteDept')->name(ROUTE_NAME_STAGE_INVITE_DEPT);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

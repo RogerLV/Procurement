@@ -21,8 +21,8 @@
 
 @section('HTMLContent')
     <h3>{{ $userInfo->uEngName }} {{ $userInfo->uCnName }}</h3>
-    <h3>{{ $deptInfo->deptEngName }}</h3>
-    <h3>{{ $deptInfo->deptCnName }}</h3>
+    <h3>{{ $userDeptInfo->deptEngName }}</h3>
+    <h3>{{ $userDeptInfo->deptCnName }}</h3>
     <br>
 
     <h4>请选择您在系统中的角色:</h4>
@@ -33,7 +33,7 @@
             @else
                 <a href="#" class="list-group-item role-selection" data-mapid="{{ $userRoleIns->id }}">
             @endif
-                {{ $deptInfo->deptCnName }}: {{ \App\Logic\Role\RoleFactory::create($userRoleIns->roleID)->getRoleName() }}
+                {{ $deptInfo[$userRoleIns->dept]->deptCnName }}: {{ \App\Logic\Role\RoleFactory::create($userRoleIns->roleID)->getRoleName() }}
             </a>
         @endforeach
         </div>
