@@ -31,6 +31,7 @@ class StageHandler
     {
         switch ($projectIns->stage) {
             case STAGE_ID_INVITE_DEPT: return new InviteDept($projectIns);
+            case STAGE_ID_ASSIGN_MAKER: return new AssignMaker($projectIns);
 
             default:
                 throw new AppException('STGHDL001', 'Data Error.');

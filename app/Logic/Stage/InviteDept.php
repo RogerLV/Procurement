@@ -4,7 +4,9 @@ namespace App\Logic\Stage;
 
 
 use App\Logic\DepartmentKeeper;
+use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\ProjectRoleDepartment;
+use App\Models\UpdateLog as Log;
 
 class InviteDept extends AbstractStage
 {
@@ -19,7 +21,8 @@ class InviteDept extends AbstractStage
     {
         return view('project/display/function/inviteDept')
                     ->with('title', $this->getStageName())
-                    ->with('deptInfo', DepartmentKeeper::getDeptInfo());
+                    ->with('deptInfo', DepartmentKeeper::getDeptInfo())
+                    ->with('projectIns', $this->project);
     }
 
     public function renderInfoArea()
@@ -37,17 +40,21 @@ class InviteDept extends AbstractStage
     {
         // add memberAmount info
         $this->project->memberAmount = $paras['memberCount'];
+        $oldVal = $this->project->getOriginal();
         $this->project->save();
+        Log::logUpdate($this->project, $oldVal);
 
-        // add project dept if not null
-        if (!is_null($paras['invitedDepts'])) {
-            $deptKeys = DepartmentKeeper::getDeptKeys();
-            foreach ($paras['invitedDepts'] as $dept) {
-                if (in_array($dept, $deptKeys)) {
-                    $memberDept = new ProjectRoleDepartment();
-                    $memberDept->dept = $dept;
-                    $this->project->memberDepts()->save($memberDept);
-                }
+        // add project dept
+        $userDept = LoginUserKeeper::getUser()->getDepartmentInfo()->dept;
+        $deptKeys = DepartmentKeeper::getDeptKeys();
+        $paras['invitedDepts'][] = $userDept;
+
+        foreach (array_unique($paras['invitedDepts']) as $dept) {
+            if (in_array($dept, $deptKeys)) {
+                $memberDept = new ProjectRoleDepartment();
+                $memberDept->dept = $dept;
+                $this->project->memberDepts()->save($memberDept);
+                Log::logInsert($memberDept);
             }
         }
 

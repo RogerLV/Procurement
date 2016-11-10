@@ -60,7 +60,7 @@ class RoleController extends Controller
             throw new AppException('ERR008', 'Incorrect Role Info.');
         }
 
-        Log::logDelete($mapIns, $this->loginUser->getUserInfo()->lanID);
+        Log::logDelete($mapIns);
         $mapIns->delete();
 
         return response()->json(['status' => 'good']);
@@ -96,7 +96,7 @@ class RoleController extends Controller
         $roleIns->roleID = $roleID;
         $roleIns->save();
 
-        Log::logInsert($roleIns, $this->loginUser->getUserInfo()->lanID);
+        Log::logInsert($roleIns);
 
         return response()->json(['status' => 'good']);
     }

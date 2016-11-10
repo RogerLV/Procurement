@@ -1,6 +1,16 @@
 @extends('project/display/function/frame')
 
 @section('stageFunction')
+
+    @if($projectIns->involveReview)
+        <ol>
+            <i><li>采购部门相关人员不得占到采购小组成员半数以上,原则上小组成员不少于3人。</li></i>
+            <i><li>20万新元(含)以上的项目,采购小组成员不应少于5人。</li></i>
+        </ol>
+    @else
+        <p><i>原则上至少2人参加或组成跨部门采购小组。</i></p>
+    @endif
+
     <div class="form-group">
         <label for="select-member-amounts">选择人数:</label>
         <select class="form-control" required id="select-member-amounts">

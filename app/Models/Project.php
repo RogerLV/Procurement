@@ -40,6 +40,17 @@ class Project extends Model
         return $this->hasMany('App\Models\ProjectRoleDepartment', 'projectID', 'id');
     }
 
+    public function roles()
+    {
+        return $this->hasManyThrough(
+            'App\Models\ProjectRole',
+            'App\Models\ProjectRoleDepartment',
+            'projectID',
+            'roleDeptID',
+            'id'
+        );
+    }
+
     public static function createNew($paras)
     {
         // create new project
@@ -54,10 +65,10 @@ class Project extends Model
         $project->stage = STAGE_ID_INITIATE;
         $project->background = $paras['projectBackground'];
         $project->budget = $paras['projectBudget'];
-        $project->involveReview = $paras['involveReview'];
+        $project->involveReview = $paras['involveReview'] ? 1 : 0;
         $project->save();
 
-        Log::logInsert($project, $loginUser->getUserInfo()->lanID);
+        Log::logInsert($project);
 
         return $project;
     }

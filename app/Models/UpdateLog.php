@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Logic\LoginUser\LoginUserKeeper;
 use Illuminate\Database\Eloquent\Model;
 
 class UpdateLog extends Model
@@ -9,17 +10,17 @@ class UpdateLog extends Model
     protected $table = 'UpdateLogs';
     protected $connection = 'basedata';
 
-    public function __construct($instance, $editBy)
+    public function __construct($instance, $editBy=null)
     {
         parent::__construct();
 
         $this->app = env('APP_NAME');
         $this->tableName = $instance->table;
         $this->idInTable = $instance->id;
-        $this->editBy = $editBy;
+        $this->editBy = is_null($editBy) ? LoginUserKeeper::getUser()->getUserInfo()->lanID : $editBy;
     }
 
-    public static function logInsert($instance, $editBy)
+    public static function logInsert($instance, $editBy=null)
     {
         $log = new UpdateLog($instance, $editBy);
         $log->newVal = $instance->toJson();
@@ -27,7 +28,7 @@ class UpdateLog extends Model
         $log->save();
     }
 
-    public static function logUpdate($instance, $editBy, $oldVal)
+    public static function logUpdate($instance, $oldVal, $editBy=null)
     {
         $log = new UpdateLog($instance, $editBy);
         $log->newVal = $instance->toJson();
@@ -36,7 +37,7 @@ class UpdateLog extends Model
         $log->save();
     }
 
-    public static function logDelete($instance, $editBy)
+    public static function logDelete($instance, $editBy=null)
     {
         $log = new UpdateLog($instance, $editBy);
         $log->oldVal = json_encode($instance->getOriginal());

@@ -16,8 +16,9 @@ Route::get('dummyEntry', function () {
 });
 
 Route::get('test', function () {
-    $doc = \App\Models\ProjectStageLog::with('operator')->find(1);
-    echo "<pre>"; var_dump($doc->operator);
+    $projectIns = \App\Models\Project::find(1);
+    $data = $projectIns->memberDepts()->pluck('dept')->toArray();
+    echo "<pre>"; var_dump($data);
 })->name('test');
 
 Route::group(['middleware' => ['normal']], function () {
@@ -31,8 +32,11 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
 
-//    Route::post('stage/init', 'StageController@initiate')->name(ROUTE_NAME_STAGE_INITIATE);
     Route::post('stage/invite', 'StageController@inviteDept')->name(ROUTE_NAME_STAGE_INVITE_DEPT);
+    Route::post('stage/assignmaker', 'StageController@assignMaker')->name(ROUTE_NAME_STAGE_ASSIGN_MAKER);
+
+    Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
+    Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

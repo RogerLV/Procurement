@@ -54,6 +54,7 @@ abstract class AbstractStage
         $log = new ProjectStageLog();
         $log->fromStage = $this->stageID;
         $log->toStage = $this->stageID;
+        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
         $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
         $log->comment = $comment;
         $log->timeAt = date('Y-m-d H:i:s');

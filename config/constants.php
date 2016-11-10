@@ -29,6 +29,7 @@ define('ROLE_ID_SYSTEM_ADMIN', 10);
 define('STAGE_ID_INITIATE', 1);
 define('STAGE_ID_INVITE_DEPT', 2);
 define('STAGE_ID_ASSIGN_MAKER', 3);
+define('STAGE_ID_SELECT_MODE', 4);
 
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
@@ -78,8 +79,12 @@ define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 
-define('ROUTE_NAME_STAGE_INITIATE', 'StageInitiate');
+//define('ROUTE_NAME_STAGE_INITIATE', 'StageInitiate');
 define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
+define('ROUTE_NAME_STAGE_ASSIGN_MAKER', 'StageAssignMaker');
+
+define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
+define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');
 
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
@@ -125,6 +130,7 @@ return [
         STAGE_ID_INITIATE => '发起采购',
         STAGE_ID_INVITE_DEPT => '邀请部门',
         STAGE_ID_ASSIGN_MAKER => '指派采购小组成员',
+        STAGE_ID_SELECT_MODE => '选择采购方式',
     ],
 ];
 

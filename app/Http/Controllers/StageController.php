@@ -12,8 +12,8 @@ use DB;
 
 class StageController extends Controller
 {
-    private $projectIns;
-    private $stageIns;
+    protected $projectIns;
+    protected $stageIns;
 
     public function __construct()
     {
@@ -44,6 +44,13 @@ class StageController extends Controller
 
         $para['invitedDepts'] = request()->input('inviteddepts');
         $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function assignMaker()
+    {
+        $this->stageIns->operate();
 
         return response()->json(['status' => 'good']);
     }
