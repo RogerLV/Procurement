@@ -101,6 +101,9 @@ define('PAGE_NAME_PROJECT_LIST', '项目列表');
 
 define('PAGE_NAME_PROJECT_DISPLAY', '项目浏览');
 
+// Others
+define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');
+
 return [
     // Procurement Scope
     'procurementScopeNames' => [

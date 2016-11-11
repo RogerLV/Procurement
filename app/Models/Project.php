@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\UpdateLog AS Log;
+use Config;
 
 class Project extends Model
 {
@@ -49,6 +50,19 @@ class Project extends Model
             'roleDeptID',
             'id'
         );
+    }
+
+    public function getProcurment()
+    {
+        $str = empty($this->approach)
+            ? PROCUREMENT_METHOD_NOT_SELECTED
+            : Config::get('constants.procurementMethods.'.$this->approach);
+
+        if ($this->selectVendors) {
+            $str .= " 选型入围";
+        }
+
+        return $str;
     }
 
     public static function createNew($paras)
