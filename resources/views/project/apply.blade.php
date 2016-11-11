@@ -54,6 +54,7 @@
         <div class="checkbox">
             <label><input type="checkbox" name="involve-review"><b>纳入采购评审</b></label>
         </div>
+
         <p><i>以下事项应纳入我行采购评审范围:</i></p>
         <ol>
             <i><li>单笔合同金额高于10万新元(含)的采购项目。定期支付款项的租约或服务合约,若签订具体合同的,按合同金额判定。若未涉及具体合同金额的,则按年租金或年费判定。</li></i>

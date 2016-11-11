@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Logic\Stage\StageHandler;
-use Gate;
 use App\Exceptions\AppException;
 use App\Models\Project;
-
+use Gate;
+use Config;
 use DB;
 
 class StageController extends Controller
@@ -51,6 +51,28 @@ class StageController extends Controller
     public function assignMaker()
     {
         $this->stageIns->operate();
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function selectMode()
+    {
+//        var_dump(request()->all()); exit;
+        if (empty($para['selectFromVendor'] = trim(request()->input('select-from-vendor')))
+            || empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
+            throw new AppException('STG005', 'Data Error');
+        }
+
+        if ($this->projectIns->involveReview
+            && empty($para['procurementMethodReport'] = request()->file('procurement-method-report'))) {
+            throw new AppException('STG006', 'Data Error');
+        }
+
+        if (!array_key_exists($para['procurementMethod'], Config::get('constants.procurementMethods'))) {
+            throw new AppException('STG007', 'Incorrect Info.');
+        }
+
+        $this->stageIns->operate($para);
 
         return response()->json(['status' => 'good']);
     }

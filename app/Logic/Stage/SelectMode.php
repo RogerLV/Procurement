@@ -3,18 +3,27 @@
 namespace App\Logic\Stage;
 
 
+use Config;
+use App\Models\Document;
+use App\Models\UpdateLog as Log;
+
 class SelectMode extends AbstractStage
 {
     protected $stageID = STAGE_ID_SELECT_MODE;
 
     protected function instantiateNextStage()
     {
-        return null;
+        return $this->project->involveReview
+                ? new Pretrial($this->project)
+                : new Record($this->project);
     }
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('project/display/function/selectmode')
+                ->with('title', $this->getStageName())
+                ->with('uploadReport', $this->project->involveReview)
+                ->with('procurementMethods', Config::get('constants.procurementMethods'));
     }
 
     public function renderInfoArea()
@@ -24,11 +33,27 @@ class SelectMode extends AbstractStage
 
     public function canStageUp()
     {
-        return false;
+        return !is_null($this->project->approach)
+                && !is_null($this->project->selectVendors);
     }
 
-    public function operate($paras = null)
+    public function operate($para)
     {
-        return null;
+        $this->project->approach = $para['procurementMethod'];
+        $this->project->selectVendors = $para['selectFromVendor'] == 'true';
+
+        $oldVal = $this->project->getOriginal();
+        $this->project->save();
+        Log::logUpdate($this->project, $oldVal);
+
+        if ($this->project->involveReview) {
+            Document::storeFile(
+                $para['procurementMethodReport'],
+                $this->project,
+                DOC_TYPE_PROCUREMENT_APPROACH_APPLICATION
+            );
+        }
+
+        $this->logOperation();
     }
 }

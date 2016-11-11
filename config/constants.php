@@ -30,6 +30,9 @@ define('STAGE_ID_INITIATE', 1);
 define('STAGE_ID_INVITE_DEPT', 2);
 define('STAGE_ID_ASSIGN_MAKER', 3);
 define('STAGE_ID_SELECT_MODE', 4);
+define('STAGE_ID_PRETRIAL', 5);
+define('STAGE_ID_PASS_SIGN', 6);
+define('STAGE_ID_RECORD', 7);
 
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
@@ -79,9 +82,9 @@ define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 
-//define('ROUTE_NAME_STAGE_INITIATE', 'StageInitiate');
 define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
 define('ROUTE_NAME_STAGE_ASSIGN_MAKER', 'StageAssignMaker');
+define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 
 define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
 define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');
@@ -104,6 +107,15 @@ return [
         'goods' => '货物类',
         'engineering' => '工程类',
         'services' => '服务类',
+    ],
+
+    // Procurement Method
+    'procurementMethods' => [
+        'OpenTender' => '公开招标',
+        'InviteTender' => '邀请招标',
+        'CompetitiveNegotiation' => '竞争性谈判',
+        'PriceEnquiry' => '询价',
+        'SingleSourcing' => '单一来源',
     ],
 
     // Document Type Names
@@ -131,6 +143,9 @@ return [
         STAGE_ID_INVITE_DEPT => '邀请部门',
         STAGE_ID_ASSIGN_MAKER => '指派采购小组成员',
         STAGE_ID_SELECT_MODE => '选择采购方式',
+        STAGE_ID_PRETRIAL => '秘书组预审',
+        STAGE_ID_PASS_SIGN => '委员会委员传签',
+        STAGE_ID_RECORD => '记录采购过程',
     ],
 ];
 

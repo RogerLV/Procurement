@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ['10', 'QSG1', 'ITD'],
             ['9', 'QTN1', 'FMD'],
             ['9', 'WHN1', 'FMD'],
+            ['1', 'CHOW', 'ITD'],
         ];
 
         foreach ($testRole as $entry){

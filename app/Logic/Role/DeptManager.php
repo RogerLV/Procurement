@@ -14,6 +14,7 @@ class DeptManager extends AbstractRole
     protected $operableStages = [
         STAGE_ID_INVITE_DEPT,
         STAGE_ID_ASSIGN_MAKER,
+        STAGE_ID_SELECT_MODE,
     ];
 
     public function getCandidates()
@@ -28,11 +29,11 @@ class DeptManager extends AbstractRole
             $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
             switch ($projectIns->stage) {
                 case STAGE_ID_INVITE_DEPT:
+                case STAGE_ID_SELECT_MODE:
                     return $userDept == $projectIns->dept;
 
                 case STAGE_ID_ASSIGN_MAKER:
-                    return $userDept == $projectIns->dept
-                            || in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
+                    return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
 
                 default:
                     return false;
@@ -40,5 +41,11 @@ class DeptManager extends AbstractRole
         }
 
         return false;
+    }
+
+    public function projectVisible($projectIns)
+    {
+        $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
+        return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
     }
 }

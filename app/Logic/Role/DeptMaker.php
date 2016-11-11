@@ -15,7 +15,8 @@ class DeptMaker extends AbstractRole
         ROUTE_NAME_PROJECT_APPLY,
     ];
     protected $operableStages = [
-        STAGE_ID_INVITE_DEPT
+        STAGE_ID_INVITE_DEPT,
+        STAGE_ID_SELECT_MODE,
     ];
 
     public function getCandidates()
@@ -29,7 +30,8 @@ class DeptMaker extends AbstractRole
 
             switch ($projectIns->stage) {
                 case STAGE_ID_INVITE_DEPT:
-                    return LoginUserKeeper::getUser()->getActiveRole()->dept == $projectIns->dept;
+                case STAGE_ID_SELECT_MODE:
+                    return LoginUserKeeper::getUser()->getUserInfo()->lanID == $projectIns->lanID;
 
                 default:
                     return false;
@@ -37,5 +39,12 @@ class DeptMaker extends AbstractRole
         }
 
         return false;
+    }
+
+    public function projectVisible($projectIns)
+    {
+        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        return in_array($loginUserLanID, $projectIns->roles()->get()->pluck('lanID')->toArray())
+                || $projectIns->lanID == $loginUserLanID;
     }
 }

@@ -24,10 +24,10 @@ class CreateTables extends Migration
             $table->string('background', env('FIELD_MAX_LENGTH'));
             $table->string('budget');
             $table->boolean('involveReview');
-            $table->integer('memberAmount');
-            $table->string('approach', 50);
-            $table->boolean('selectVendors');
-            $table->string('summary', env('FIELD_MAX_LENGTH'));
+            $table->integer('memberAmount')->nullable();
+            $table->string('approach', 50)->nullable();
+            $table->boolean('selectVendors')->nullable();
+            $table->string('summary', env('FIELD_MAX_LENGTH'))->nullable();
 
             $table->timestamps();
             $table->softDeletes();

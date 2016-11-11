@@ -65,7 +65,7 @@ class Project extends Model
         $project->stage = STAGE_ID_INITIATE;
         $project->background = $paras['projectBackground'];
         $project->budget = $paras['projectBudget'];
-        $project->involveReview = $paras['involveReview'] ? 1 : 0;
+        $project->involveReview = $paras['involveReview'] == 'true';
         $project->save();
 
         Log::logInsert($project);

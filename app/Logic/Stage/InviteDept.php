@@ -6,6 +6,7 @@ namespace App\Logic\Stage;
 use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\ProjectRoleDepartment;
+use App\Models\ProjectRole;
 use App\Models\UpdateLog as Log;
 
 class InviteDept extends AbstractStage
@@ -57,6 +58,15 @@ class InviteDept extends AbstractStage
                 Log::logInsert($memberDept);
             }
         }
+
+        // add project creator (not logging)
+        $responserMemberDeptIns = ProjectRoleDepartment::where([
+            ['projectID', '=', $this->project->id],
+            ['dept', '=', $userDept]
+        ])->first();
+        $responser = new ProjectRole();
+        $responser->lanID = $this->project->lanID;
+        $responserMemberDeptIns->role()->save($responser);
 
         $this->logOperation();
     }

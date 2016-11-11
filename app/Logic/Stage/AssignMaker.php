@@ -6,7 +6,6 @@ namespace App\Logic\Stage;
 use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\ProjectRoleDepartment;
-use App\Models\ProjectStageLog;
 use App\Models\User;
 
 class AssignMaker extends AbstractStage
@@ -25,7 +24,7 @@ class AssignMaker extends AbstractStage
         $projectRoles = $this->project->roles()->get();
         $userInfo = User::whereIn('lanID', $projectRoles->pluck('lanID'))->get()->keyBy('lanID');
 
-        $log = ProjectStageLog::where([
+        $log = $this->project->log()->where([
             ['fromStage', '=', $this->stageID],
             ['dept', '=', $userDept]
         ])->first();
