@@ -4,8 +4,19 @@
 
 <ul class="list-group">
     @foreach($logList as $entry)
-        <li class="list-group-item">
-            {{ $entry->timeAt }}: {{ $entry->operator->getTriName() }} {{ $stageNames[$entry->fromStage] }}
+        @if($entry->toStage > $entry->fromStage)
+            <li class="list-group-item list-group-item-info">
+        @elseif($entry->toStage < $entry->fromStage)
+            <li class="list-group-item list-group-item-danger">
+        @else
+            <li class="list-group-item list-group-item-default">
+        @endif
+            <h4 class="list-group-item-heading">
+                {{ $entry->timeAt }}: {{ $entry->operator->getTriName() }} {{ $stageNames[$entry->fromStage] }}
+            </h4>
+            @if(!empty($entry->comment))
+                <p class="list-group-item-text">{{ $entry->comment }}</p>
+            @endif
         </li>
     @endforeach
 </ul>

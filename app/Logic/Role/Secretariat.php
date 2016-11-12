@@ -9,6 +9,9 @@ class Secretariat extends AbstractRole
 {
     protected $roleID = 4;
     protected $roleName = ROLE_NAME_SECRETARIAT;
+    protected $operableStages= [
+        STAGE_ID_PRETRIAL
+    ];
 
     public function getCandidates()
     {

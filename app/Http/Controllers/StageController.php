@@ -57,7 +57,6 @@ class StageController extends Controller
 
     public function selectMode()
     {
-//        var_dump(request()->all()); exit;
         if (empty($para['selectFromVendor'] = trim(request()->input('select-from-vendor')))
             || empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
             throw new AppException('STG005', 'Data Error');
@@ -77,4 +76,21 @@ class StageController extends Controller
         return response()->json(['status' => 'good']);
     }
 
+    public function pretrial()
+    {
+        if (empty($para['operation'] = trim(request()->input('operation')))) {
+            throw new AppException('STG008', 'Data Error.');
+        }
+
+        if (!in_array($para['operation'], ['approve', 'reject'])) {
+            throw new AppException('STG009', 'Data Error.');
+        }
+
+        $para['comment'] = trim(request()->input('comment'));
+
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+
+    }
 }

@@ -34,7 +34,7 @@ class StageHandler
             case STAGE_ID_ASSIGN_MAKER: return new AssignMaker($projectIns);
             case STAGE_ID_SELECT_MODE: return new SelectMode($projectIns);
             case STAGE_ID_PRETRIAL: return new Pretrial($projectIns);
-
+            case STAGE_ID_PASS_SIGN: return new PassSign($projectIns);
             case STAGE_ID_RECORD: return new Record($projectIns);
 
             default:

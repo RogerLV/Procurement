@@ -28,6 +28,11 @@ class Document extends Model
             .$this->ext;
     }
 
+    public function getUrl()
+    {
+        return url('document/display')."/".$this->id."/".$this->originalName;
+    }
+
     public static function storeFile($fileIns, $referenceIns, $fileType)
     {
         $loginUser = LoginUserKeeper::getUser();

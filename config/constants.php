@@ -51,22 +51,6 @@ define('DOC_TYPE_PROCUREMENT_CONTRACT', 13);
 define('DOC_TYPE_MEETING_MINUTES', 14);
 define('DOC_TYPE_OTHER_DOCS', 15);
 
-//define('DOC_NAME_SIGNED_REPORT', '审批通过立项签报');
-//define('DOC_NAME_PROCUREMENT_APPROACH_APPLICATION', '采购方式申请报告');
-//define('DOC_NAME_CALL_FOR_BIDS', '公开招标招标公示');
-//define('DOC_NAME_TENDER_INVITATION', '邀请招标招标邀请书');
-//define('DOC_NAME_SIGNED_TENDER_FORM', '开标日投标书签字');
-//define('DOC_NAME_VENDOR_CLARIFICATION', '供应商澄清说明');
-//define('DOC_NAME_EVALUATION_REPORT', '项目评估报告');
-//define('DOC_NAME_VENDOR_INVITATION', '供应商邀请函');
-//define('DOC_NAME_REVIEW_REPORT', '上会报告');
-//define('DOC_NAME_PROJECT_INQUIRY', '项目询价函');
-//define('DOC_NAME_PROCUREMENT_SELECTION_SCHEMA', '采购小组选型方案');
-//define('DOC_NAME_DUE_DILIGENCE_REPORT', '尽职调查报告');
-//define('DOC_NAME_PROCUREMENT_CONTRACT', '采购合同');
-//define('DOC_NAME_MEETING_MINUTES', '会议纪要');
-//define('DOC_NAME_OTHER_DOCS', '其他文档');
-
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
 
@@ -85,6 +69,7 @@ define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
 define('ROUTE_NAME_STAGE_ASSIGN_MAKER', 'StageAssignMaker');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
+define('ROUTE_NAME_STAGE_PRETRIAL', 'StagePretrial');
 
 define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
 define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');

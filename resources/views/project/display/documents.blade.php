@@ -18,7 +18,7 @@
             <td>{{ $i++ }}</td>
             <td>{{ $documentTypeNames[$document->type] }}</td>
             <td>
-                <a href="{{ url('document/display')."/".$document->id."/".$document->originalName }}" target="_blank">
+                <a href="{{ $document->getUrl() }}" target="_blank">
                     {{ $document->originalName }}
                 </a>
             </td>
