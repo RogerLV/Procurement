@@ -46,7 +46,7 @@
         @if($uploadReport)
         <div class="form-group required">
             <label for="procurement-method-report">采购方式申请报告:</label>
-            <input type="file" class="file-input" name="procurement-method-report" required>
+            <input type="file" name="procurement-method-report" required>
         </div>
         @endif
 
@@ -60,7 +60,7 @@
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('input.file-input').fileinput({
+        $("input[name=procurement-method-report]").fileinput({
             language:'zh',
             showUpload: false,
             maxFileCount: 1,

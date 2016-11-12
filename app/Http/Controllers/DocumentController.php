@@ -38,9 +38,17 @@ class DocumentController extends Controller
         switch ($reference) {
             case 'Projects':
                 $referenceIns = Project::find($referenceID);
-                if (Gate::forUser($this->loginUser)->denies('project-visible', $referenceIns)) {
-                    throw new AppException('DOC004', ERROR_MESSAGE_NOT_AUTHORIZED);
+
+                if (DOC_TYPE_OTHER_DOCS == $fileType) {
+                    if (Gate::forUser($this->loginUser)->denies('project-visible', $referenceIns)) {
+                        throw new AppException('DOC004', ERROR_MESSAGE_NOT_AUTHORIZED);
+                    }
+                } else {
+                    if (Gate::forUser($this->loginUser)->denies('project-operable', $referenceIns)) {
+                        throw new AppException('DOC006', ERROR_MESSAGE_NOT_AUTHORIZED);
+                    }
                 }
+
                 break;
         }
 

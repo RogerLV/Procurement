@@ -18,6 +18,7 @@ class DeptMaker extends AbstractRole
     protected $operableStages = [
         STAGE_ID_INVITE_DEPT,
         STAGE_ID_SELECT_MODE,
+        STAGE_ID_RECORD,
     ];
 
     public function getCandidates()
@@ -35,7 +36,7 @@ class DeptMaker extends AbstractRole
                     return LoginUserKeeper::getUser()->getUserInfo()->lanID == $projectIns->lanID;
 
                 default:
-                    return false;
+                    return true;
             }
         }
 

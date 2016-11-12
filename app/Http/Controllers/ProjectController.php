@@ -49,7 +49,7 @@ class ProjectController extends Controller
         // By using eloquent relationships, mutiple queries would be generated which can be optimized.
         // But due to resource consuming is acceptable, use this elegant way for time being
         $stageView = StageHandler::renderStageView($projectIns);
-        $documents = $projectIns->document()->with('uploader')->get();
+        $documents = $projectIns->document()->with('uploader')->orderBy('type')->get();
         $log = $projectIns->log()->with('operator')->get();
         $conversation = $projectIns->conversation()->with('composer')->get();
 

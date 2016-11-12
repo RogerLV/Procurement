@@ -5,11 +5,12 @@ namespace App\Logic\Stage;
 
 use App\Exceptions\AppException;
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Models\Project;
 use Gate;
 
 class StageHandler
 {
-    public static function renderStageView($projectIns)
+    public static function renderStageView(Project $projectIns)
     {
         $stage = new Initiate($projectIns);
 
@@ -27,7 +28,7 @@ class StageHandler
         return $infoView . $functionView;
     }
 
-    public static function getStageIns($projectIns)
+    public static function getStageIns(Project $projectIns)
     {
         switch ($projectIns->stage) {
             case STAGE_ID_INVITE_DEPT: return new InviteDept($projectIns);
@@ -36,6 +37,7 @@ class StageHandler
             case STAGE_ID_PRETRIAL: return new Pretrial($projectIns);
             case STAGE_ID_PASS_SIGN: return new PassSign($projectIns);
             case STAGE_ID_RECORD: return new Record($projectIns);
+            case STAGE_ID_SUMMARIZE: return new Summarize($projectIns);
 
             default:
                 throw new AppException('STGHDL001', 'Data Error.');

@@ -109,4 +109,23 @@ class StageController extends Controller
 
         return response()->json(['status' => 'good']);
     }
+
+    public function finishRecord()
+    {
+        $projectInquiry = $this->projectIns->document()->where('type', DOC_TYPE_PROJECT_INQUIRY)->first();
+        if (is_null($projectInquiry)) {
+            throw new AppException('STG012', 'Project inquiry not uploaded.');
+        }
+
+        if ($this->projectIns->involveReview) {
+            $reviewReport = $this->projectIns->document()->where('type', DOC_TYPE_REVIEW_REPORT)->first();
+            if (is_null($reviewReport)) {
+                throw new AppException('STG013', 'Review Report not uploaded');
+            }
+        }
+
+        $this->stageIns->operate(null);
+
+        return response()->json(['status' => 'good']);
+    }
 }

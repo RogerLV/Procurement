@@ -31,7 +31,7 @@
 
 <div class="form-group">
     <label for="upload-other-docs">上传其他文档:</label>
-    <input type="file" class="file-input" name="upload-doc" id="upload-other-docs">
+    <input type="file" name="upload-doc" id="upload-other-docs">
 </div>
 
 <script type="text/javascript">

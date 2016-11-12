@@ -33,6 +33,7 @@ define('STAGE_ID_SELECT_MODE', 4);
 define('STAGE_ID_PRETRIAL', 5);
 define('STAGE_ID_PASS_SIGN', 6);
 define('STAGE_ID_RECORD', 7);
+define('STAGE_ID_SUMMARIZE', 8);
 
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
@@ -71,6 +72,7 @@ define('ROUTE_NAME_STAGE_ASSIGN_MAKER', 'StageAssignMaker');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 define('ROUTE_NAME_STAGE_PRETRIAL', 'StagePretrial');
 define('ROUTE_NAME_STAGE_PASS_SIGN', 'StagePassSign');
+define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
 
 define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
 define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');
@@ -135,6 +137,7 @@ return [
         STAGE_ID_PRETRIAL => '秘书组预审',
         STAGE_ID_PASS_SIGN => '委员会委员传签',
         STAGE_ID_RECORD => '记录采购过程',
+        STAGE_ID_SUMMARIZE => '采购结果总结',
     ],
 
     // Pass Sign Values

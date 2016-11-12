@@ -16,6 +16,7 @@ class DeptManager extends AbstractRole
         STAGE_ID_INVITE_DEPT,
         STAGE_ID_ASSIGN_MAKER,
         STAGE_ID_SELECT_MODE,
+        STAGE_ID_RECORD,
     ];
 
     public function getCandidates()
@@ -37,7 +38,7 @@ class DeptManager extends AbstractRole
                     return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
 
                 default:
-                    return false;
+                    return true;
             }
         }
 
