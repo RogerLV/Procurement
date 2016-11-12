@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Models\User;
+use App\Models\Project;
 
 class AppAdmin extends AbstractRole
 {
@@ -15,7 +16,7 @@ class AppAdmin extends AbstractRole
         return User::inService()->where('dept', 'FMD')->get();
     }
 
-    public function projectOperable($projectIns)
+    public function projectOperable(Project $projectIns)
     {
         return true;
     }

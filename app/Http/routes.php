@@ -36,6 +36,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('stage/assignmaker', 'StageController@assignMaker')->name(ROUTE_NAME_STAGE_ASSIGN_MAKER);
     Route::post('stage/selectmode', 'StageController@selectMode')->name(ROUTE_NAME_STAGE_SELECT_MODE);
     Route::post('stage/pretrial', 'StageController@pretrial')->name(ROUTE_NAME_STAGE_PRETRIAL);
+    Route::post('stage/passsign', 'StageController@passSign')->name(ROUTE_NAME_STAGE_PASS_SIGN);
 
     Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
     Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);

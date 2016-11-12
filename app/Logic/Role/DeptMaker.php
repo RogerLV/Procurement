@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Models\Project;
 
 class DeptMaker extends AbstractRole
 {
@@ -24,7 +25,7 @@ class DeptMaker extends AbstractRole
         return [];
     }
 
-    public function projectOperable($projectIns)
+    public function projectOperable(Project $projectIns)
     {
         if (parent::projectOperable($projectIns)) {
 
@@ -41,7 +42,7 @@ class DeptMaker extends AbstractRole
         return false;
     }
 
-    public function projectVisible($projectIns)
+    public function projectVisible(Project $projectIns)
     {
         $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
         return in_array($loginUserLanID, $projectIns->roles()->get()->pluck('lanID')->toArray())

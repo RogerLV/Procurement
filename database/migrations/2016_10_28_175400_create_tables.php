@@ -115,6 +115,7 @@ class CreateTables extends Migration
             $table->integer('logable_id');
             $table->integer('fromStage');
             $table->integer('toStage');
+            $table->string('data1')->nullable();
             $table->string('dept')->nullable();
             $table->string('lanID', 20);
             $table->string('comment', env('FIELD_MAX_LENGTH'))->nullable();

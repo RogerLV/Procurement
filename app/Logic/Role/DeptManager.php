@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Models\User;
+use App\Models\Project;
 use App\Logic\LoginUser\LoginUserKeeper;
 
 class DeptManager extends AbstractRole
@@ -22,7 +23,7 @@ class DeptManager extends AbstractRole
         return User::inService()->orderBy('uEngName')->get();
     }
 
-    public function projectOperable($projectIns)
+    public function projectOperable(Project $projectIns)
     {
         if (parent::projectOperable($projectIns)) {
 
@@ -43,7 +44,7 @@ class DeptManager extends AbstractRole
         return false;
     }
 
-    public function projectVisible($projectIns)
+    public function projectVisible(Project $projectIns)
     {
         $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
         return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());

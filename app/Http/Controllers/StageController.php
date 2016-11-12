@@ -91,6 +91,22 @@ class StageController extends Controller
         $this->stageIns->operate($para);
 
         return response()->json(['status' => 'good']);
+    }
 
+    public function passSign()
+    {
+        if (empty($para['operation'] = trim(request()->input('operation')))) {
+            throw new AppException('STG010', 'Data Error');
+        }
+
+        if (!in_array($para['operation'], ['approve', 'reject'])) {
+            throw new AppException('STG011', 'Data Error.');
+        }
+
+        $para['comment'] = trim(request()->input('comment'));
+
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
     }
 }

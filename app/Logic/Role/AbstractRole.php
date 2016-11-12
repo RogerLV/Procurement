@@ -3,6 +3,7 @@
 namespace App\Logic\Role;
 
 use App\Logic\PageFactory;
+use App\Models\Project;
 
 abstract class AbstractRole
 {
@@ -59,12 +60,12 @@ abstract class AbstractRole
         return $this->displayable;
     }
 
-    public function projectVisible($projectIns)
+    public function projectVisible(Project $projectIns)
     {
         return true;
     }
 
-    public function projectOperable($projectIns)
+    public function projectOperable(Project $projectIns)
     {
         return in_array($projectIns->stage, $this->operableStages);
     }
