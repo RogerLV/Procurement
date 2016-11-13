@@ -3,6 +3,10 @@
 namespace App\Logic\Stage;
 
 
+use App\Logic\DocumentType\CallForBids;
+use App\Logic\DocumentType\EvaluationReport;
+use App\Logic\DocumentType\SignedTenderForm;
+use App\Logic\DocumentType\VendorClarification;
 use App\Models\Project;
 
 class RecordOpenTender extends Record
@@ -10,6 +14,15 @@ class RecordOpenTender extends Record
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;
+        $this->mandatoryDocTypes = [
+            new CallForBids(),
+            new SignedTenderForm(),
+            new EvaluationReport()
+        ];
+        $this->optionalDocTypes = [
+            new VendorClarification()
+        ];
+        $this->reviewDocTypes = [];
     }
 
     public function renderInfoArea()
@@ -19,11 +32,11 @@ class RecordOpenTender extends Record
 
     public function canStageUp()
     {
-        return false;
+        return true;
     }
 
     public function operate($para)
     {
-        return null;
+        $this->logOperation();
     }
 }

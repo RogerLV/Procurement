@@ -3,7 +3,7 @@
 
 <div class="form-group">
     <label for="upload-{{ $docTypeIns->getEngName() }}">上传{{ $docTypeIns->getCnName() }}:</label>
-    @if(in_array(DOC_TYPE_PROJECT_INQUIRY, $uploadedTypes))
+    @if(in_array($docTypeIns->getTypeID(), $uploadedTypes))
         <span class="glyphicon glyphicon-ok" style="color:green"></span>
     @endif
     <input type="file" name="upload-doc" id="upload-{{ $docTypeIns->getEngName() }}">

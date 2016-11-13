@@ -4,12 +4,21 @@ namespace App\Logic\Stage;
 
 
 use App\Models\Project;
+use App\Logic\DocumentType\ReviewReport;
+use App\Logic\DocumentType\VendorInvitation;
 
 class RecordSingleSourcing extends Record
 {
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;
+        $this->mandatoryDocTypes = [
+            new VendorInvitation()
+        ];
+        $this->optionalDocTypes = [];
+        $this->reviewDocTypes = [
+            new ReviewReport()
+        ];
     }
 
     public function renderInfoArea()
@@ -19,11 +28,11 @@ class RecordSingleSourcing extends Record
 
     public function canStageUp()
     {
-        return false;
+        return true;
     }
 
     public function operate($para)
     {
-        return null;
+        $this->logOperation();
     }
 }

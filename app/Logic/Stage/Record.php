@@ -15,6 +15,7 @@ class Record extends AbstractStage
     protected $reviewDocTypes = [];
     protected $uploadFileTypes = [];
     protected $toBeScore = true;
+    protected $toBeFiltNegotiations = false;
 
     public function __construct(Project $projectIns)
     {
