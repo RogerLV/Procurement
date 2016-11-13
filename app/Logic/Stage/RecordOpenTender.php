@@ -5,7 +5,7 @@ namespace App\Logic\Stage;
 
 use App\Models\Project;
 
-class RecordSingleSourcing extends Record
+class RecordOpenTender extends Record
 {
     public function __construct(Project $projectIns)
     {

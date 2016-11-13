@@ -3,6 +3,8 @@
 namespace App\Logic\Stage;
 
 
+use App\Logic\DocumentType\ProjectInquiry;
+use App\Logic\DocumentType\ReviewReport;
 use App\Models\Project;
 
 class RecordPriceEnquiry extends Record
@@ -10,20 +12,13 @@ class RecordPriceEnquiry extends Record
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;
-    }
-
-    public function renderFunctionArea()
-    {
-        $uploadedTypes = $this->project->document()->whereIn('type', [
-            DOC_TYPE_PROJECT_INQUIRY,
-            DOC_TYPE_REVIEW_REPORT
-        ])->get()->pluck('type')->unique()->toArray();
-
-        return view('project/display/function/recordpriceenquiry')
-            ->with('title', $this->getStageName())
-            ->with('uploadReviewReport', $this->project->involveReview)
-            ->with('uploadedTypes', $uploadedTypes)
-            ->with('showFinishButton', ($this->project->involveReview ? 2 : 1) == count($uploadedTypes));
+        $this->mandatoryDocTypes = [
+            new ProjectInquiry()
+        ];
+        $this->optionalDocTypes = [];
+        $this->reviewDocTypes = [
+            new ReviewReport()
+        ];
     }
 
     public function renderInfoArea()

@@ -5,16 +5,11 @@ namespace App\Logic\Stage;
 
 use App\Models\Project;
 
-class RecordTender extends Record
+class RecordInviteTender extends Record
 {
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;
-    }
-
-    public function renderFunctionArea()
-    {
-        return null;
     }
 
     public function renderInfoArea()
