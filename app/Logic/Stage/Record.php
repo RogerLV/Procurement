@@ -3,6 +3,8 @@
 namespace App\Logic\Stage;
 
 
+use App\Logic\LoginUser\LoginUserKeeper;
+use App\Logic\ScoreHandler;
 use App\Models\Project;
 
 class Record extends AbstractStage
@@ -95,6 +97,11 @@ class Record extends AbstractStage
         return true;
     }
 
+    public function getScorePhase()
+    {
+        return $this->toBeScore ? ScoreHandler::getPhase($this->project) : null;
+    }
+
     final public function canFinish()
     {
         return $this->instance->childCanFinish();
@@ -111,7 +118,10 @@ class Record extends AbstractStage
             ->with('title', $this->getStageName())
             ->with('renderDocType', $this->instance->getRenderDocTypes())
             ->with('uploadedTypes', $this->instance->getUploadedDocTypes())
-            ->with('showFinishButton', $this->canFinish());
+            ->with('showFinishButton', $this->canFinish())
+            ->with('scorePhase', $this->instance->getScorePhase())
+            ->with('project', $this->project)
+            ->with('userLanID', LoginUserKeeper::getUser()->getUserInfo()->lanID);
     }
 
     public function renderInfoArea()

@@ -77,6 +77,16 @@ define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
 define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
 define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');
 
+define('ROUTE_NAME_SCORE_EDIT_TEMPLATE', 'ScoreEditTemplate');
+define('ROUTE_NAME_SCORE_SELECT_TEMPLATE', 'ScoreSelectTemplate');
+define('ROUTE_NAME_SCORE_COMMIT_ITEMS', 'ScoreCommitItems');
+define('ROUTE_NAME_SCORE_PAGE', 'ScorePage');
+define('ROUTE_NAME_SCORE_SUBMIT_SCORE', 'ScoreSubmitScore');
+define('ROUTE_NAME_SCORE_OVERVIEW', 'ScoreOverview');
+
+define('ROUTE_NAME_VENDOR_ADD', 'VendorAdd');
+define('ROUTE_NAME_VENDOR_REMOVE', 'VendorRemove');
+
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
 
@@ -88,6 +98,9 @@ define('PAGE_NAME_PROJECT_APPLY', '发起采购');
 define('PAGE_NAME_PROJECT_LIST', '项目列表');
 
 define('PAGE_NAME_PROJECT_DISPLAY', '项目浏览');
+define('PAGE_NAME_SCORE_EDIT_TEMPLATE', '编辑评分模板');
+define('PAGE_NAME_SCORE_PAGE', '供应商打分');
+define('PAGE_NAME_SCORE_OVERVIEW', '供应商打分汇总');
 
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');

@@ -15,13 +15,15 @@ Route::get('dummyEntry', function () {
     return view('dummyEntry');
 });
 
-Route::get('test', function () {
-    $projectIns = \App\Models\Project::find(1);
-    $data = $projectIns->memberDepts()->pluck('dept')->toArray();
-    echo "<pre>"; var_dump($data);
-})->name('test');
 
 Route::group(['middleware' => ['normal']], function () {
+
+    Route::get('test', function () {
+        echo (86*20+90*20+81*30+95*30)/100;
+//    \Illuminate\Support\Facades\DB::enableQueryLog();
+//    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;
+    })->name('test');
+
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
     Route::post('role/remove', 'RoleController@remove')->name(ROUTE_NAME_ROLE_REMOVE);
     Route::post('role/add', 'RoleController@add')->name(ROUTE_NAME_ROLE_ADD);
@@ -41,6 +43,16 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
     Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);
+
+    Route::get('score/edittemplate/{id}', 'ScoreController@editTemplate')->name(ROUTE_NAME_SCORE_EDIT_TEMPLATE);
+    Route::post('score/selecttemplate', 'ScoreController@selectTemplate')->name(ROUTE_NAME_SCORE_SELECT_TEMPLATE);
+    Route::post('score/commititems', 'ScoreController@commitItems')->name(ROUTE_NAME_SCORE_COMMIT_ITEMS);
+    Route::get('score/page/{id}', 'ScoreController@scorePage')->name(ROUTE_NAME_SCORE_PAGE);
+    Route::post('score/submit', 'ScoreController@submitScore')->name(ROUTE_NAME_SCORE_SUBMIT_SCORE);
+    Route::get('score/overview/{id}', 'ScoreController@overview')->name(ROUTE_NAME_SCORE_SUBMIT_SCORE);
+
+    Route::post('vendor/add', 'VendorController@add')->name(ROUTE_NAME_VENDOR_ADD);
+    Route::post('vendor/remove', 'VendorController@remove')->name(ROUTE_NAME_VENDOR_REMOVE);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

@@ -43,6 +43,40 @@ class DatabaseSeeder extends Seeder
             $role->save();
         }
 
+        // Initialize template
+        $entries = DB::connection('backup')->table('ScoreTemplate')->get();
+        foreach ($entries as $entry) {
+            unset($entry->id);
+            \App\Models\ScoreTemplate::insert((array)$entry);
+        }
+
+        // add testing project
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'LUC1',
+            'dept' => 'ITD',
+            'scope' => 'goods',
+            'name' => 'Testing Project',
+            'stage' => STAGE_ID_RECORD,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 0,
+            'memberAmount' => 4,
+            'approach' => 'OpenTender',
+        ]);
+
+        \App\Models\ProjectRoleDepartment::insert([
+            'projectID' => 1,
+            'dept' => 'ITD',
+        ]);
+
+        \App\Models\ProjectRole::insert([
+            ['roleDeptID' => 1, 'lanID' => 'LUC1'],
+            ['roleDeptID' => 1, 'lanID' => 'ZLJ1'],
+            ['roleDeptID' => 1, 'lanID' => 'QSG1'],
+            ['roleDeptID' => 1, 'lanID' => 'JTA1'],
+        ]);
+
         echo "Seeding Finish.".PHP_EOL;
     }
 }

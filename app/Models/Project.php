@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\AppException;
 use Illuminate\Database\Eloquent\Model;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\UpdateLog AS Log;
@@ -36,9 +37,30 @@ class Project extends Model
         return $this->hasOne('App\Models\Department', 'dept', 'dept');
     }
 
+    public function vendors()
+    {
+        return $this->belongsToMany('App\Models\Vendor', 'ProjectVendorMapping', 'projectID', 'vendorID');
+    }
+
     public function memberDepts()
     {
         return $this->hasMany('App\Models\ProjectRoleDepartment', 'projectID', 'id');
+    }
+
+    public function scoreItems()
+    {
+        return $this->hasMany('App\Models\ScoreItem', 'projectID', 'id');
+    }
+
+    public function scores()
+    {
+        return $this->hasManyThrough(
+            'App\Models\Score',
+            'App\Models\ScoreItem',
+            'projectID',
+            'itemID',
+            'id'
+        );
     }
 
     public function roles()
@@ -63,6 +85,17 @@ class Project extends Model
         }
 
         return $str;
+    }
+
+    public static function getIns($projectID)
+    {
+        $projectIns = Project::find($projectID);
+
+        if (is_null($projectIns)) {
+            throw new AppException('PRJMDL001', 'Data Error');
+        }
+
+        return $projectIns;
     }
 
     public static function createNew($paras)

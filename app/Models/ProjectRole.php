@@ -14,4 +14,9 @@ class ProjectRole extends Model
     {
         return $this->belongsTo('App\Models\ProjectRoleDepartment', 'id', 'roleDeptID');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'lanID', 'lanID');
+    }
 }

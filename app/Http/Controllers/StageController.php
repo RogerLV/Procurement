@@ -23,11 +23,7 @@ class StageController extends Controller
             throw new AppException('STG001', 'Incorrect project info.');
         }
 
-        $this->projectIns = Project::find($projectID);
-
-        if (is_null($this->projectIns)) {
-            throw new AppException('STG002', 'Incorrect project info.');
-        }
+        $this->projectIns = Project::getIns($projectID);
 
         if (Gate::forUser($this->loginUser)->denies('project-operable', $this->projectIns)) {
             throw new AppException('STG003', ERROR_MESSAGE_NOT_AUTHORIZED);

@@ -72,6 +72,20 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+
+        'backup' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => 'Backup',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
     ],
 
     /*

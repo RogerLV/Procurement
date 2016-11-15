@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Logic\LoginUser\LoginUser;
 use App\Logic\Role\RoleFactory;
+use App\Logic\ScoreHandler;
 use App\Models\Document;
 use App\Models\Project;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -49,6 +50,16 @@ class AuthServiceProvider extends ServiceProvider
             if ($referenceIns instanceof Project) {
                 return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
             }
+        });
+
+        $gate->define('score-template-editable', function (LoginUser $loginUser, Project $projectIns) {
+            return $projectIns->lanID == $loginUser->getUserInfo()->lanID
+            && ScoreHandler::getPhase($projectIns) == 'ScoreStageEditTemplate';
+        });
+
+        $gate->define('scorable', function (LoginUser $loginUser, Project $projectIns) {
+            return $projectIns->roles->pluck('lanID')->contains($loginUser->getUserInfo()->lanID)
+                && ScoreHandler::getPhase($projectIns) == 'ScoreStageMemberScoring';
         });
 
         $this->registerPolicies($gate);

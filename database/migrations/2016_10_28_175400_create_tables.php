@@ -78,10 +78,26 @@ class CreateTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('ScoreTemplate', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->string('name');
+            $table->string('nameID');
+            $table->string('item');
+            $table->string('content', env('FIELD_MAX_LENGTH'));
+            $table->integer('bottom');
+            $table->integer('top');
+            $table->string('comment', env('FIELD_MAX_LENGTH'))->nullable();
+
+            $table->timestamps();
+        });
+
         Schema::create('ScoreItems', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('projectID');
+            $table->string('item');
             $table->string('content', env('FIELD_MAX_LENGTH'));
+            $table->string('comment', env('FIELD_MAX_LENGTH'))->nullable();
             $table->integer('weight');
 
             $table->timestamps();
@@ -90,6 +106,8 @@ class CreateTables extends Migration
 
         Schema::create('Scores', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('vendorID');
+            $table->string('lanID');
             $table->integer('itemID');
             $table->integer('score');
 
@@ -97,6 +115,20 @@ class CreateTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('Vendors', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->string('name', 500);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('ProjectVendorMapping', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('projectID');
+            $table->integer('vendorID');
+        });
 
         Schema::create('SystemRoles', function (Blueprint $table) {
             $table->increments('id');
@@ -146,8 +178,11 @@ class CreateTables extends Migration
         Schema::drop('ProjectRoles');
         Schema::drop('Documents');
         Schema::drop('DueDiligence');
+        Schema::drop('ScoreTemplate');
         Schema::drop('ScoreItems');
         Schema::drop('Scores');
+        Schema::drop('Vendors');
+        Schema::drop('ProjectVendorMapping');
         Schema::drop('SystemRoles');
         Schema::drop('ProjectStageLogs');
         Schema::drop('Conversation');
