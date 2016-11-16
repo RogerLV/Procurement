@@ -19,7 +19,9 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
-        echo (86*20+90*20+81*30+95*30)/100;
+        $project = \App\Models\Project::find(1);
+        var_dump($project->negotiations->max('roundNo')+1);
+
 //    \Illuminate\Support\Facades\DB::enableQueryLog();
 //    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;
     })->name('test');
@@ -49,10 +51,12 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('score/commititems', 'ScoreController@commitItems')->name(ROUTE_NAME_SCORE_COMMIT_ITEMS);
     Route::get('score/page/{id}', 'ScoreController@scorePage')->name(ROUTE_NAME_SCORE_PAGE);
     Route::post('score/submit', 'ScoreController@submitScore')->name(ROUTE_NAME_SCORE_SUBMIT_SCORE);
-    Route::get('score/overview/{id}', 'ScoreController@overview')->name(ROUTE_NAME_SCORE_SUBMIT_SCORE);
+    Route::get('score/overview/{id}', 'ScoreController@overview')->name(ROUTE_NAME_SCORE_OVERVIEW);
 
     Route::post('vendor/add', 'VendorController@add')->name(ROUTE_NAME_VENDOR_ADD);
     Route::post('vendor/remove', 'VendorController@remove')->name(ROUTE_NAME_VENDOR_REMOVE);
+
+    Route::post('negotiation/add', 'PriceNegotiationController@add')->name(ROUTE_NAME_NEGOTIATION_ADD);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

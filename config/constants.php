@@ -87,6 +87,8 @@ define('ROUTE_NAME_SCORE_OVERVIEW', 'ScoreOverview');
 define('ROUTE_NAME_VENDOR_ADD', 'VendorAdd');
 define('ROUTE_NAME_VENDOR_REMOVE', 'VendorRemove');
 
+define('ROUTE_NAME_NEGOTIATION_ADD', 'NegotiationAdd');
+
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
 

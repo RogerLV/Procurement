@@ -9,6 +9,8 @@ use App\Models\Project;
 
 class RecordCompetitiveNegotiation extends Record
 {
+    protected $toBeFilledUpNegotiations = true;
+
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;

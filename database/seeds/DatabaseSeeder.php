@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
             ['9', 'QTN1', 'FMD'],
             ['9', 'WHN1', 'FMD'],
             ['1', 'CHOW', 'ITD'],
+            ['1', 'ZLJ1', 'ITD'],
+            ['1', 'QSG1', 'ITD'],
+            ['1', 'JTA1', 'ITD'],
         ];
 
         foreach ($testRole as $entry){
@@ -62,7 +65,7 @@ class DatabaseSeeder extends Seeder
             'budget' => '80K SGD',
             'involveReview' => 0,
             'memberAmount' => 4,
-            'approach' => 'OpenTender',
+            'approach' => 'SingleSourcing',
         ]);
 
         \App\Models\ProjectRoleDepartment::insert([

@@ -52,6 +52,11 @@ class Project extends Model
         return $this->hasMany('App\Models\ScoreItem', 'projectID', 'id');
     }
 
+    public function negotiations()
+    {
+        return $this->hasMany('App\Models\Negotiation', 'projectID', 'id');
+    }
+
     public function scores()
     {
         return $this->hasManyThrough(

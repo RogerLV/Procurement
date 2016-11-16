@@ -6,21 +6,29 @@
         @include('documentsingleupload', ['docTypeIns' => $docTypeIns])
     @endforeach
 
+    @if($priceNegotiation)
+        @include('project/display/function/pricenegotiation')
+    @endif
+
     @if('ScoreStageEditTemplate' == $scorePhase && $project->lanID == $userLanID)
-        <button class="btn btn-primary"
+        <button class="btn btn-info"
                 onclick="location.href='{{ url('score/edittemplate') }}'+'/'+projectID">
             编辑评分模板
         </button>
     @elseif('ScoreStageMemberScoring' == $scorePhase && $project->roles->pluck('lanID')->contains($userLanID))
-        <button class="btn btn-primary"
+        <button class="btn btn-info"
                 onclick="location.href='{{ url('score/page') }}'+'/'+projectID">
             评分
         </button>
     @elseif('ScoreStageMemberScoreComplete' == $scorePhase)
-        <button class="btn btn-primary"
+        <button class="btn btn-info"
                 onclick="window.open('{{ url('score/overview') }}'+'/'+projectID, '_blank')">
             评分汇总
         </button>
+    @endif
+
+    @if($priceNegotiation)
+
     @endif
 
     @if($showFinishButton)
@@ -38,9 +46,7 @@
         @if($showFinishButton)
             $('#finish-record').click(function () {
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                    },
+                    headers: headers,
                     url: "{{ route(ROUTE_NAME_STAGE_FINISH_RECORD) }}",
                     data: {projectid: projectID},
                     type: 'POST',

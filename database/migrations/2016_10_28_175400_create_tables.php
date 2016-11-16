@@ -130,6 +130,20 @@ class CreateTables extends Migration
             $table->integer('vendorID');
         });
 
+        Schema::create('Negotiations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('projectID');
+            $table->integer('roundNo');
+            $table->string('time');
+            $table->string('venue');
+            $table->string('participants', 500);
+            $table->string('content', env('FIELD_MAX_LENGTH'));
+
+            $table->timestamps();
+        });
+
+
+
         Schema::create('SystemRoles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('roleID');

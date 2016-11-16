@@ -32,5 +32,8 @@
 </table>
 
 <script type="text/javascript">
-    var projectID = "{{ $project->id }}"
+    var projectID = "{{ $project->id }}";
+    var headers = {
+        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
+    };
 </script>

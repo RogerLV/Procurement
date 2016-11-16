@@ -9,6 +9,8 @@ use App\Logic\DocumentType\VendorInvitation;
 
 class RecordSingleSourcing extends Record
 {
+    protected $toBeFilledUpNegotiations = true;
+
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;

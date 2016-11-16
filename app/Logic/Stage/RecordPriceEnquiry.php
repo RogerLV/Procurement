@@ -9,6 +9,8 @@ use App\Models\Project;
 
 class RecordPriceEnquiry extends Record
 {
+    protected $toBeScored = false;
+
     public function __construct(Project $projectIns)
     {
         $this->project = $projectIns;

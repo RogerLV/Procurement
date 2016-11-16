@@ -16,8 +16,8 @@ class Record extends AbstractStage
     protected $optionalDocTypes = [];
     protected $reviewDocTypes = [];
     protected $uploadFileTypes = [];
-    protected $toBeScore = true;
-    protected $toBeFiltNegotiations = false;
+    protected $toBeScored = true;
+    protected $toBeFilledUpNegotiations = false;
 
     public function __construct(Project $projectIns)
     {
@@ -83,6 +83,12 @@ class Record extends AbstractStage
 
     public function childCanFinish()
     {
+        // user role check
+        if (LoginUserKeeper::getUser()->getUserInfo()->lanID != $this->project->lanID) {
+            return false;
+        }
+
+        // uploaded docs check
         $uploadDocTypes = $this->getUploadedDocTypes();
         $stageDocTypes = $this->project->involveReview ?
             array_merge($this->mandatoryDocTypes, $this->reviewDocTypes) :
@@ -94,12 +100,43 @@ class Record extends AbstractStage
             }
         }
 
+        // to be scored check
+        if ($this->toBeScored) {
+            $scoresCount = $this->project->scores->count();
+            $itemsCount = $this->project->scoreItems->filter(function ($item) {
+                return $item->weight != 0;
+            })->count();
+            $vendorsCount = $this->project->vendors()->count();
+            $membersCount = $this->project->roles->count();
+
+            if ($scoresCount < $itemsCount * $vendorsCount * $membersCount) {
+                return false;
+            }
+        }
+
+        // negotiation check
+        if ($this->toBeFilledUpNegotiations) {
+            if ($this->project->negotiations()->count() < 2) {
+                return false;
+            }
+        }
+
         return true;
     }
 
     public function getScorePhase()
     {
-        return $this->toBeScore ? ScoreHandler::getPhase($this->project) : null;
+        return $this->toBeScored ? ScoreHandler::getPhase($this->project) : null;
+    }
+
+    public function priceNegotiation()
+    {
+        return $this->toBeFilledUpNegotiations;
+    }
+
+    public function getNegotiations()
+    {
+        return $this->toBeFilledUpNegotiations ? $this->project->negotiations : [];
     }
 
     final public function canFinish()
@@ -119,9 +156,11 @@ class Record extends AbstractStage
             ->with('renderDocType', $this->instance->getRenderDocTypes())
             ->with('uploadedTypes', $this->instance->getUploadedDocTypes())
             ->with('showFinishButton', $this->canFinish())
-            ->with('scorePhase', $this->instance->getScorePhase())
             ->with('project', $this->project)
-            ->with('userLanID', LoginUserKeeper::getUser()->getUserInfo()->lanID);
+            ->with('userLanID', LoginUserKeeper::getUser()->getUserInfo()->lanID)
+            ->with('scorePhase', $this->instance->getScorePhase())
+            ->with('priceNegotiation', $this->instance->priceNegotiation())
+            ->with('negotiations', $this->instance->getNegotiations());
     }
 
     public function renderInfoArea()
