@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Logic\ScoreHandler;
 use App\Models\Project;
 use App\Models\Score;
 use App\Models\ScoreItem;
@@ -132,31 +133,13 @@ class ScoreController extends Controller
             throw new AppException('SCRCTL009', 'Cannot score at current phase.');
         }
 
-        $scoreItems = $project->scoreItems->keyBy('id');
-        $scoreMatrix = [];
-        $sumScoreMatrix = [];
-        foreach ($project->scores as $detail) {
-            $scoreMatrix[$detail->vendorID][$detail->itemID][$detail->lanID] = $detail->score;
-
-            $weighted = $detail->score * $scoreItems->get($detail->itemID)->weight / 100;
-
-            if (isset($sumScoreMatrix[$detail->vendorID][$detail->lanID])) {
-                $sumScoreMatrix[$detail->vendorID][$detail->lanID] += $weighted;
-            } else {
-                $sumScoreMatrix[$detail->vendorID][$detail->lanID] = $weighted;
-            }
-        }
-
-        $finalScores = [];
-        foreach ($sumScoreMatrix as $vendorID => $vendorScores) {
-            $finalScores[$vendorID] = array_sum($vendorScores) / count($vendorScores);
-        }
+        list($scoreMatrix, $sumScoreMatrix, $finalScores) = ScoreHandler::getScoreDetails($project);
 
         return view('score/overview')
                 ->with('title', PAGE_NAME_SCORE_OVERVIEW.": ".$project->name)
                 ->with('scoreMatrix', $scoreMatrix)
                 ->with('vendors', $project->vendors)
-                ->with('scoreItems', $scoreItems)
+                ->with('scoreItems', $project->scoreItems->keyBy('id'))
                 ->with('members', $project->roles()->with('user')->get())
                 ->with('sumScoreMatrix', $sumScoreMatrix)
                 ->with('finalScores', $finalScores);

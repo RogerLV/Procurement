@@ -27,14 +27,14 @@
                         <td>{!! $entry->content !!}</td>
                         <td>{{ $entry->weight }}</td>
                         <td data-item-id="{{ $entry->id }}" data-vendor-id="{{ $vendor->id }}">
-                            <input type="number" value="{{ mt_rand(80, 100) }}" style="width: 40px;" class="score-input">
+                            <input type="number" value="0" style="width: 40px;" class="score-input">
                         </td>
                         <td>{{ $entry->comment }}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <th colspan="4">总分</th>
-                    <th class="sum-score">{{ mt_rand(80, 100) }}</th>
+                    <th class="sum-score">0</th>
                     <th></th>
                 </tr>
                 </tbody>

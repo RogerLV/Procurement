@@ -142,8 +142,6 @@ class CreateTables extends Migration
             $table->timestamps();
         });
 
-
-
         Schema::create('SystemRoles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('roleID');

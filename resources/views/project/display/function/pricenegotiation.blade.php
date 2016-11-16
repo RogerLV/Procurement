@@ -20,7 +20,7 @@
     </table>
 @endforeach
 
-<button class="btn btn-info" data-toggle="modal" data-target="#add-price-negotiation-modal">
+<button class="btn btn-info btn-block" data-toggle="modal" data-target="#add-price-negotiation-modal">
     添加谈判记录
 </button>
 

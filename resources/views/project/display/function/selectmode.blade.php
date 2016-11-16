@@ -29,9 +29,9 @@
             4、价格透明度高且变化幅度小。<br><br>
         </div>
 
-        <div class="checkbox">
-            <label><input type="checkbox" name="select-from-vendor"><b>是否选型入围?</b></label>
-        </div>
+        {{--<div class="checkbox">--}}
+            {{--<label><input type="checkbox" name="select-from-vendor"><b>是否选型入围?</b></label>--}}
+        {{--</div>--}}
 
         <div class="form-group required">
             <label for="procurement-method-selector">选择采购方式:</label>
@@ -71,7 +71,6 @@
 
             var form = new FormData();
             form.append('_token', $("meta[name='csrf-token']").attr('content'));
-            form.append('select-from-vendor', $("input[name=select-from-vendor]").is(':checked'));
             form.append('procurement-method', $("select[name=procurement-method-selector]").val());
             form.append('projectid', projectID);
             @if($uploadReport)

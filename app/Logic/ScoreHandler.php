@@ -28,4 +28,29 @@ class ScoreHandler
 
         return 'ScoreStageMemberScoreComplete';
     }
+
+    public static function getScoreDetails(Project $project)
+    {
+        $scoreItems = $project->scoreItems->keyBy('id');
+        $scoreMatrix = [];
+        $sumScoreMatrix = [];
+        foreach ($project->scores as $detail) {
+            $scoreMatrix[$detail->vendorID][$detail->itemID][$detail->lanID] = $detail->score;
+
+            $weighted = $detail->score * $scoreItems->get($detail->itemID)->weight / 100;
+
+            if (isset($sumScoreMatrix[$detail->vendorID][$detail->lanID])) {
+                $sumScoreMatrix[$detail->vendorID][$detail->lanID] += $weighted;
+            } else {
+                $sumScoreMatrix[$detail->vendorID][$detail->lanID] = $weighted;
+            }
+        }
+
+        $finalScores = [];
+        foreach ($sumScoreMatrix as $vendorID => $vendorScores) {
+            $finalScores[$vendorID] = array_sum($vendorScores) / count($vendorScores);
+        }
+
+        return [$scoreMatrix, $sumScoreMatrix, $finalScores];
+    }
 }

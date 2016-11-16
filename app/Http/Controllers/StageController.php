@@ -53,8 +53,7 @@ class StageController extends Controller
 
     public function selectMode()
     {
-        if (empty($para['selectFromVendor'] = trim(request()->input('select-from-vendor')))
-            || empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
+        if (empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
             throw new AppException('STG005', 'Data Error');
         }
 

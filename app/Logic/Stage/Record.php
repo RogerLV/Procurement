@@ -129,6 +129,11 @@ class Record extends AbstractStage
         return $this->toBeScored ? ScoreHandler::getPhase($this->project) : null;
     }
 
+    public function toBeScored()
+    {
+        return $this->toBeScored;
+    }
+
     public function priceNegotiation()
     {
         return $this->toBeFilledUpNegotiations;
@@ -165,7 +170,13 @@ class Record extends AbstractStage
 
     public function renderInfoArea()
     {
-        return $this->instance->renderInfoArea();
+        list($a, $b, $vendorFinalScores) = ScoreHandler::getScoreDetails($this->project);
+        return view('project/display/stage/record')
+                ->with('toBeScore', $this->instance->toBeScored())
+                ->with('vendors', $this->project->vendors)
+                ->with('vendorFinalScores', $vendorFinalScores)
+                ->with('priceNegotiation', $this->instance->priceNegotiation())
+                ->with('negotiations', $this->instance->getNegotiations());
     }
 
     public function canStageUp()

@@ -33,14 +33,12 @@ class SelectMode extends AbstractStage
 
     public function canStageUp()
     {
-        return !is_null($this->project->approach)
-                && !is_null($this->project->selectVendors);
+        return !is_null($this->project->approach);
     }
 
     public function operate($para)
     {
         $this->project->approach = $para['procurementMethod'];
-        $this->project->selectVendors = $para['selectFromVendor'] == 'true';
 
         $oldVal = $this->project->getOriginal();
         $this->project->save();
