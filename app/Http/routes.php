@@ -20,7 +20,9 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
         $project = \App\Models\Project::find(1);
-        var_dump($project->negotiations->max('roundNo')+1);
+        $stage = new \App\Logic\Stage\Initiate($project);
+        echo $stage->renderInfoArea();
+//        var_dump($project->negotiations->max('roundNo')+1);
 
 //    \Illuminate\Support\Facades\DB::enableQueryLog();
 //    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;
@@ -42,6 +44,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('stage/pretrial', 'StageController@pretrial')->name(ROUTE_NAME_STAGE_PRETRIAL);
     Route::post('stage/passsign', 'StageController@passSign')->name(ROUTE_NAME_STAGE_PASS_SIGN);
     Route::post('stage/finishrecord', 'StageController@finishRecord')->name(ROUTE_NAME_STAGE_FINISH_RECORD);
+    Route::post('stage/summarize', 'StageController@summarize')->name(ROUTE_NAME_STAGE_SUMMARIZE);
 
     Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
     Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);

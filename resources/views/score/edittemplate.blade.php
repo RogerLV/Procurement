@@ -115,6 +115,9 @@
 <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var headers = {
+            'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
+        };
         $('#add-vendor-input').autocomplete({
             source: JSON.parse('{!! $vendorOptions !!}')
         });
@@ -122,9 +125,7 @@
         $('#select-template').change(function () {
             var nameid = $(this).val();
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                },
+                headers: headers,
                 url: "{{ route(ROUTE_NAME_SCORE_SELECT_TEMPLATE) }}",
                 data: {
                     nameid: nameid,
@@ -168,9 +169,7 @@
             var tr = $(this).parents('tr');
             var vendorID = tr.data('vendor-id');
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                },
+                headers: headers,
                 url: "{{ route(ROUTE_NAME_VENDOR_REMOVE) }}",
                 data: {
                     vendorid: vendorID,
@@ -190,9 +189,7 @@
         $('#add-vendor-button').click(function () {
             var vendorName = $('#add-vendor-input').val();
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                },
+                headers: headers,
                 url: "{{ route(ROUTE_NAME_VENDOR_ADD) }}",
                 data: {
                     projectid: "{{ $project->id }}",
@@ -237,9 +234,7 @@
             }
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                },
+                headers: headers,
                 url: "{{ route(ROUTE_NAME_SCORE_COMMIT_ITEMS) }}",
                 data: {
                     items: entries,

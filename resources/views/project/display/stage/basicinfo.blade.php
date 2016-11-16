@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td><h4>采购方式:</h4></td>
-        <td>{{ $project->getProcurment() }}</td>
+        <td>{{ $project->getProcurement() }}</td>
     </tr>
     <tr>
         <td><h4>纳入采购评审: </h4></td>

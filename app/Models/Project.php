@@ -79,17 +79,11 @@ class Project extends Model
         );
     }
 
-    public function getProcurment()
+    public function getProcurement()
     {
-        $str = empty($this->approach)
+        return empty($this->approach)
             ? PROCUREMENT_METHOD_NOT_SELECTED
             : Config::get('constants.procurementMethods.'.$this->approach);
-
-        if ($this->selectVendors) {
-            $str .= " 选型入围";
-        }
-
-        return $str;
     }
 
     public static function getIns($projectID)

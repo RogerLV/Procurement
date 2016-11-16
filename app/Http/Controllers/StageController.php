@@ -115,4 +115,15 @@ class StageController extends Controller
 
         return response()->json(['status' => 'good']);
     }
+
+    public function summarize()
+    {
+        if (empty($para['summary'] = trim(request()->input('summary')))) {
+            throw new AppException('STG013');
+        }
+
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+    }
 }
