@@ -69,4 +69,33 @@ abstract class AbstractStage
 
         $this->project->log()->save($log);
     }
+
+    protected function approve($operation, $comment)
+    {
+        // directly log down the operation rather than call log function
+        $log = new ProjectStageLog();
+        $log->fromStage = $this->stageID;
+        $log->toStage = $this->stageID;
+        if ('approve' == $operation) {
+            $nextStageID = $this->getNextStage()->getStageID();
+            $log->toStage = $nextStageID;
+            $this->project->stage = $nextStageID;
+        } elseif ('reject' == $operation) {
+            $previousStageID = $this->getPreviousStage()->getStageID();
+            $log->toStage = $previousStageID;
+            $this->project->stage = $previousStageID;
+        }
+        $this->project->save();
+
+        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
+        $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $log->comment = $comment;
+        $log->timeAt = date('Y-m-d H:i:s');
+        $this->project->log()->save($log);
+    }
+
+    protected function getPreviousStage()
+    {
+        return null;
+    }
 }

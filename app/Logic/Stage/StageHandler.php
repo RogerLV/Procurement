@@ -38,9 +38,10 @@ class StageHandler
             case STAGE_ID_PASS_SIGN: return new PassSign($projectIns);
             case STAGE_ID_RECORD: return new Record($projectIns);
             case STAGE_ID_SUMMARIZE: return new Summarize($projectIns);
+            case STAGE_ID_MANAGER_APPROVE: return new ManagerApprove($projectIns);
 
             default:
-                throw new AppException('STGHDL001', 'Data Error.');
+                throw new AppException('STGHDL001');
         }
     }
 }

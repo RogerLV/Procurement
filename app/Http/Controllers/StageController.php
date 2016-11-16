@@ -35,7 +35,7 @@ class StageController extends Controller
     public function inviteDept()
     {
         if (empty($para['memberCount'] = request()->input('membercount'))) {
-            throw new AppException('STG004', 'Data Error.');
+            throw new AppException('STG004');
         }
 
         $para['invitedDepts'] = request()->input('inviteddepts');
@@ -54,51 +54,17 @@ class StageController extends Controller
     public function selectMode()
     {
         if (empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
-            throw new AppException('STG005', 'Data Error');
+            throw new AppException('STG005');
         }
 
         if ($this->projectIns->involveReview
             && empty($para['procurementMethodReport'] = request()->file('procurement-method-report'))) {
-            throw new AppException('STG006', 'Data Error');
+            throw new AppException('STG006');
         }
 
         if (!array_key_exists($para['procurementMethod'], Config::get('constants.procurementMethods'))) {
             throw new AppException('STG007', 'Incorrect Info.');
         }
-
-        $this->stageIns->operate($para);
-
-        return response()->json(['status' => 'good']);
-    }
-
-    public function pretrial()
-    {
-        if (empty($para['operation'] = trim(request()->input('operation')))) {
-            throw new AppException('STG008', 'Data Error.');
-        }
-
-        if (!in_array($para['operation'], ['approve', 'reject'])) {
-            throw new AppException('STG009', 'Data Error.');
-        }
-
-        $para['comment'] = trim(request()->input('comment'));
-
-        $this->stageIns->operate($para);
-
-        return response()->json(['status' => 'good']);
-    }
-
-    public function passSign()
-    {
-        if (empty($para['operation'] = trim(request()->input('operation')))) {
-            throw new AppException('STG010', 'Data Error');
-        }
-
-        if (!in_array($para['operation'], ['approve', 'reject'])) {
-            throw new AppException('STG011', 'Data Error.');
-        }
-
-        $para['comment'] = trim(request()->input('comment'));
 
         $this->stageIns->operate($para);
 
@@ -121,6 +87,24 @@ class StageController extends Controller
         if (empty($para['summary'] = trim(request()->input('summary')))) {
             throw new AppException('STG013');
         }
+
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    // for stage pretrail, pass sign, manager approve
+    public function approve()
+    {
+        if (empty($para['operation'] = trim(request()->input('operation')))) {
+            throw new AppException('STG014');
+        }
+
+        if (!in_array($para['operation'], ['approve', 'reject'])) {
+            throw new AppException('STG015');
+        }
+
+        $para['comment'] = trim(request()->input('comment'));
 
         $this->stageIns->operate($para);
 

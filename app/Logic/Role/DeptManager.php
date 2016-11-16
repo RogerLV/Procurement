@@ -17,6 +17,7 @@ class DeptManager extends AbstractRole
         STAGE_ID_ASSIGN_MAKER,
         STAGE_ID_SELECT_MODE,
         STAGE_ID_RECORD,
+        STAGE_ID_MANAGER_APPROVE,
     ];
 
     public function getCandidates()

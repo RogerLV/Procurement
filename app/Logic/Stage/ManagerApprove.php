@@ -9,12 +9,17 @@ class ManagerApprove extends AbstractStage
 
     protected function instantiateNextStage()
     {
-        return null;
+        if ($this->project->involveReview) {
+            return new VPApprove($this->project);
+        } else  {
+            return new FileContract($this->project);
+        }
     }
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('project/display/function/managerapprove')
+                ->with('title', $this->getStageName());
     }
 
     public function renderInfoArea()
@@ -29,6 +34,11 @@ class ManagerApprove extends AbstractStage
 
     public function operate($para)
     {
-        return null;
+        $this->approve($para['operation'], $para['comment']);
+    }
+
+    protected function getPreviousStage()
+    {
+        return new Summarize($this->project);
     }
 }

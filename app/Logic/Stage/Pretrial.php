@@ -44,30 +44,10 @@ class Pretrial extends AbstractStage
 
     public function operate($para)
     {
-
-        // directly log down the operation rather than call log function
-        $log = new ProjectStageLog();
-        $log->fromStage = $this->stageID;
-        $log->toStage = $this->stageID;
-        if ('approve' == $para['operation']) {
-            $nextStageID = $this->getNextStage()->getStageID();
-            $log->toStage = $nextStageID;
-            $this->project->stage = $nextStageID;
-        } elseif ('reject' == $para['operation']) {
-            $previousStageID = $this->getPreviousStage()->getStageID();
-            $log->toStage = $previousStageID;
-            $this->project->stage = $previousStageID;
-        }
-        $this->project->save();
-
-        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
-        $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        $log->comment = $para['comment'];
-        $log->timeAt = date('Y-m-d H:i:s');
-        $this->project->log()->save($log);
+        $this->approve($para['operation'], $para['comment']);
     }
 
-    private function getPreviousStage()
+    protected function getPreviousStage()
     {
         return new SelectMode($this->project);
     }
