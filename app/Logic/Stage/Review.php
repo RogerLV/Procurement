@@ -3,13 +3,13 @@
 namespace App\Logic\Stage;
 
 
-class FileContract extends AbstractStage
+class Review extends AbstractStage
 {
-    protected $stageID = STAGE_ID_FILE_CONTRACT;
+    protected $stageID = STAGE_ID_REVIEW;
 
     protected function instantiateNextStage()
     {
-        return new Complete($this->project);
+        return new FileContract($this->project);
     }
 
     public function renderFunctionArea()

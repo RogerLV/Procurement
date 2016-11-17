@@ -3,18 +3,18 @@
 namespace App\Logic\Stage;
 
 
-class VPApprove extends AbstractStage
+class Audit extends AbstractStage
 {
-    protected $stageID = STAGE_ID_VP_APPROVE;
+    protected $stageID = STAGE_ID_AUDIT;
 
     protected function instantiateNextStage()
     {
-        return new Audit($this->project);
+        return new DueDiligence($this->project);
     }
 
     public function renderFunctionArea()
     {
-        return view('project/display/function/vpapprove')
+        return view('project/display/function/audit')
             ->with('title', $this->getStageName());
     }
 

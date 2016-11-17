@@ -36,8 +36,11 @@ define('STAGE_ID_RECORD', 7);
 define('STAGE_ID_SUMMARIZE', 8);
 define('STAGE_ID_MANAGER_APPROVE', 9);
 define('STAGE_ID_VP_APPROVE', 10);
-
+define('STAGE_ID_AUDIT', 11);
+define('STAGE_ID_DUE_DILIGENCE', 12);
+define('STAGE_ID_REVIEW', 13);
 define('STAGE_ID_FILE_CONTRACT', 14);
+define('STAGE_ID_COMPLETE', 15);
 
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
@@ -159,8 +162,11 @@ return [
         STAGE_ID_SUMMARIZE => '采购结果总结',
         STAGE_ID_MANAGER_APPROVE => '部门总经理审批',
         STAGE_ID_VP_APPROVE => '分管行领导审批',
-
+        STAGE_ID_AUDIT => '审核项目资料',
+        STAGE_ID_DUE_DILIGENCE => '尽职调查',
+        STAGE_ID_REVIEW => '采购评审',
         STAGE_ID_FILE_CONTRACT => '采购合同归档',
+        STAGE_ID_COMPLETE => '完成',
     ],
 
     // Pass Sign Values
