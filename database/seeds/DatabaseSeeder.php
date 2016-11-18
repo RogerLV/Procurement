@@ -61,10 +61,10 @@ class DatabaseSeeder extends Seeder
             'dept' => 'ITD',
             'scope' => 'goods',
             'name' => 'Testing Project',
-            'stage' => STAGE_ID_RECORD,
+            'stage' => STAGE_ID_DUE_DILIGENCE,
             'background' => 'some background',
             'budget' => '80K SGD',
-            'involveReview' => 0,
+            'involveReview' => 1,
             'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);

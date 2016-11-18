@@ -54,9 +54,9 @@ class AssignMaker extends AbstractStage
 
     public function canStageUp()
     {
-        $logCount = $this->project->log()->where('fromStage', $this->stageID)->count();
-        $memberDeptCount = $this->project->memberDepts()->count();
-        return $logCount == $memberDeptCount-1;
+        $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
+        $roleCount = $this->project->memberDepts()->where('dept', $userDept)->first()->role()->count();
+        return $roleCount !=0;
     }
 
     public function operate($paras = null)

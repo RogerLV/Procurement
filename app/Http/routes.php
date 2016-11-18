@@ -39,11 +39,11 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
 
     Route::post('stage/invite', 'StageController@inviteDept')->name(ROUTE_NAME_STAGE_INVITE_DEPT);
-    Route::post('stage/assignmaker', 'StageController@assignMaker')->name(ROUTE_NAME_STAGE_ASSIGN_MAKER);
     Route::post('stage/selectmode', 'StageController@selectMode')->name(ROUTE_NAME_STAGE_SELECT_MODE);
     Route::post('stage/finishrecord', 'StageController@finishRecord')->name(ROUTE_NAME_STAGE_FINISH_RECORD);
     Route::post('stage/summarize', 'StageController@summarize')->name(ROUTE_NAME_STAGE_SUMMARIZE);
     Route::post('stage/approve', 'StageController@approve')->name(ROUTE_NAME_STAGE_APPROVE);
+    Route::post('stage/complete', 'StageController@complete')->name(ROUTE_NAME_STAGE_COMPLETE);
 
     Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
     Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);
@@ -59,6 +59,10 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('vendor/remove', 'VendorController@remove')->name(ROUTE_NAME_VENDOR_REMOVE);
 
     Route::post('negotiation/add', 'PriceNegotiationController@add')->name(ROUTE_NAME_NEGOTIATION_ADD);
+
+    Route::post('duediligence/addrequest', 'DueDiligenceController@addRequest')->name(ROUTE_NAME_DUE_DILIGENCE_ADD_REQUEST);
+    Route::post('duediligence/removerequest', 'DueDiligenceController@removeRequest')->name(ROUTE_NAME_DUE_DILIGENCE_REMOVE_REQUEST);
+    Route::post('duediligence/answer', 'DueDiligenceController@answer')->name(ROUTE_NAME_DUE_DILIGENCE_ANSWER);
 
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);

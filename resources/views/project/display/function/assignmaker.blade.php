@@ -60,7 +60,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
                 },
-                url: "{{ route(ROUTE_NAME_STAGE_ASSIGN_MAKER) }}",
+                url: "{{ route(ROUTE_NAME_STAGE_COMPLETE) }}",
                 data: {
                     projectid: projectID
                 },

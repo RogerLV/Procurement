@@ -20,6 +20,7 @@ class DeptMaker extends AbstractRole
         STAGE_ID_SELECT_MODE,
         STAGE_ID_RECORD,
         STAGE_ID_SUMMARIZE,
+        STAGE_ID_DUE_DILIGENCE,
     ];
 
     public function getCandidates()
@@ -32,9 +33,11 @@ class DeptMaker extends AbstractRole
         if (parent::projectOperable($projectIns)) {
 
             switch ($projectIns->stage) {
+                // the following stages are handled by project owner
                 case STAGE_ID_INVITE_DEPT:
                 case STAGE_ID_SELECT_MODE:
                 case STAGE_ID_SUMMARIZE:
+                case STAGE_ID_DUE_DILIGENCE:
                     return LoginUserKeeper::getUser()->getUserInfo()->lanID == $projectIns->lanID;
 
                 default:

@@ -79,6 +79,11 @@ class Project extends Model
         );
     }
 
+    public function duediligence()
+    {
+        return $this->hasMany('App\Models\DueDiligence', 'projectID', 'id');
+    }
+
     public function getProcurement()
     {
         return empty($this->approach)

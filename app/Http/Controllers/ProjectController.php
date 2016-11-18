@@ -50,6 +50,15 @@ class ProjectController extends Controller
         // But due to resource consuming is acceptable, use this elegant way for time being
         $stageView = StageHandler::renderStageView($projectIns);
         $documents = $projectIns->document()->with('uploader')->orderBy('type')->get();
+
+        // document visibility filter
+        if (in_array($projectIns->stage, [STAGE_ID_DUE_DILIGENCE, STAGE_ID_REVIEW])
+            && $this->loginUser->getActiveRole()->roleID == ROLE_ID_DEPT_MAKER) {
+            $documents = $documents->filter(function ($doc) {
+                return $doc->type != DOC_TYPE_DUE_DILIGENCE_REPORT;
+            });
+        }
+
         $log = $projectIns->log()->with('operator')->get();
         $conversation = $projectIns->conversation()->with('composer')->get();
 

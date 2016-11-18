@@ -75,11 +75,11 @@ define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 
 define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
-define('ROUTE_NAME_STAGE_ASSIGN_MAKER', 'StageAssignMaker');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
 define('ROUTE_NAME_STAGE_SUMMARIZE', 'StageFinishRecord');
 define('ROUTE_NAME_STAGE_APPROVE', 'StageApprove');
+define('ROUTE_NAME_STAGE_COMPLETE', 'StageComplete');
 
 define('ROUTE_NAME_ASSIGN_MAKER_ADD', 'AssignMakerAdd');
 define('ROUTE_NAME_ASSIGN_MAKER_REMOVE', 'AssignMakerRemove');
@@ -95,6 +95,10 @@ define('ROUTE_NAME_VENDOR_ADD', 'VendorAdd');
 define('ROUTE_NAME_VENDOR_REMOVE', 'VendorRemove');
 
 define('ROUTE_NAME_NEGOTIATION_ADD', 'NegotiationAdd');
+
+define('ROUTE_NAME_DUE_DILIGENCE_ADD_REQUEST', 'DueDiligenceAddRequest');
+define('ROUTE_NAME_DUE_DILIGENCE_REMOVE_REQUEST', 'DueDiligenceRemoveRequest');
+define('ROUTE_NAME_DUE_DILIGENCE_ANSWER', 'DueDiligenceAnswer');
 
 define('ROUTE_NAME_DOCUMENT_DISPLAY', 'DocumentDisplay');
 define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');

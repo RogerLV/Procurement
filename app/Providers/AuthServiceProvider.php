@@ -48,6 +48,10 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('document-visible', function (LoginUser $loginUser, Document $documentIns) {
             $referenceIns = $documentIns->documentable;
             if ($referenceIns instanceof Project) {
+                if (in_array($referenceIns->stage, [STAGE_ID_DUE_DILIGENCE, STAGE_ID_REVIEW])
+                    && $loginUser->getActiveRole()->roleID == ROLE_ID_DEPT_MAKER) {
+                    return $documentIns->type != DOC_TYPE_DUE_DILIGENCE_REPORT;
+                }
                 return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
             }
         });

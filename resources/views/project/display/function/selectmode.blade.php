@@ -29,10 +29,6 @@
             4、价格透明度高且变化幅度小。<br><br>
         </div>
 
-        {{--<div class="checkbox">--}}
-            {{--<label><input type="checkbox" name="select-from-vendor"><b>是否选型入围?</b></label>--}}
-        {{--</div>--}}
-
         <div class="form-group required">
             <label for="procurement-method-selector">选择采购方式:</label>
             <select class="form-control" required name="procurement-method-selector">

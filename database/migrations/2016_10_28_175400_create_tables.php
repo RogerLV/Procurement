@@ -70,9 +70,8 @@ class CreateTables extends Migration
         Schema::create('DueDiligence', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('projectID');
-            $table->string('type', 1); // Q or A
-            $table->integer('QID');
-            $table->string('content', env('FIELD_MAX_LENGTH'));
+            $table->string('request', env('FIELD_MAX_LENGTH'));
+            $table->string('answer', env('FIELD_MAX_LENGTH'))->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -195,6 +194,7 @@ class CreateTables extends Migration
         Schema::drop('Scores');
         Schema::drop('Vendors');
         Schema::drop('ProjectVendorMapping');
+        Schema::drop('Negotiations');
         Schema::drop('SystemRoles');
         Schema::drop('ProjectStageLogs');
         Schema::drop('Conversation');
