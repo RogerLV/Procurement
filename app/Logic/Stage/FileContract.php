@@ -3,6 +3,8 @@
 namespace App\Logic\Stage;
 
 
+use App\Logic\DocumentType\ProcurementContract;
+
 class FileContract extends AbstractStage
 {
     protected $stageID = STAGE_ID_FILE_CONTRACT;
@@ -14,7 +16,10 @@ class FileContract extends AbstractStage
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('project/display/function/filecontract')
+                ->with('title', $this->getStageName())
+                ->with('docTypeIns', new ProcurementContract())
+                ->with('showFinishButton', $this->canStageUp());
     }
 
     public function renderInfoArea()
@@ -24,11 +29,12 @@ class FileContract extends AbstractStage
 
     public function canStageUp()
     {
-        return false;
+        $contractCount = $this->project->document()->where('type', DOC_TYPE_PROCUREMENT_CONTRACT)->count();
+        return $contractCount != 0;
     }
 
     public function operate($para)
     {
-        return null;
+        $this->logOperation();
     }
 }

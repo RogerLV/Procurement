@@ -21,6 +21,7 @@ class DeptMaker extends AbstractRole
         STAGE_ID_RECORD,
         STAGE_ID_SUMMARIZE,
         STAGE_ID_DUE_DILIGENCE,
+        STAGE_ID_FILE_CONTRACT
     ];
 
     public function getCandidates()
@@ -38,6 +39,7 @@ class DeptMaker extends AbstractRole
                 case STAGE_ID_SELECT_MODE:
                 case STAGE_ID_SUMMARIZE:
                 case STAGE_ID_DUE_DILIGENCE:
+                case STAGE_ID_FILE_CONTRACT:
                     return LoginUserKeeper::getUser()->getUserInfo()->lanID == $projectIns->lanID;
 
                 default:

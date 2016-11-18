@@ -18,6 +18,7 @@ class DeptManager extends AbstractRole
         STAGE_ID_SELECT_MODE,
         STAGE_ID_RECORD,
         STAGE_ID_MANAGER_APPROVE,
+        STAGE_ID_FILE_CONTRACT,
     ];
 
     public function getCandidates()
@@ -33,6 +34,7 @@ class DeptManager extends AbstractRole
             switch ($projectIns->stage) {
                 case STAGE_ID_INVITE_DEPT:
                 case STAGE_ID_SELECT_MODE:
+                case STAGE_ID_FILE_CONTRACT:
                     return $userDept == $projectIns->dept;
 
                 case STAGE_ID_ASSIGN_MAKER:
