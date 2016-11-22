@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Models\Department;
 use App\Models\Project;
 
 class DeputyCountryHead extends AbstractRole
@@ -26,5 +27,16 @@ class DeputyCountryHead extends AbstractRole
             $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
             return $projectIns->department->VPInCharge == $userLanID;
         }
+    }
+
+    public function listProject()
+    {
+        // get depts in charge
+        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $depts = Department::where('VPInCharge', $userLanID)->get()->pluck('dept')->toArray();
+
+        return Project::join('ProjectRoleDepartments', 'Projects.id', '=', 'ProjectRoleDepartments.projectID')
+                ->whereIn('ProjectRoleDepartments.dept', $depts)
+                ->get();
     }
 }

@@ -53,4 +53,13 @@ class DeptManager extends AbstractRole
         $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
         return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
     }
+
+    public function listProject()
+    {
+        $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
+
+        return Project::join('ProjectRoleDepartments', 'Projects.id', '=', 'ProjectRoleDepartments.projectID')
+                ->where('ProjectRoleDepartments.dept', $userDept)
+                ->get();
+    }
 }

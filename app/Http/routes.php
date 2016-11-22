@@ -19,10 +19,8 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
-        $project = \App\Models\Project::find(1);
-        $stage = new \App\Logic\Stage\Initiate($project);
-        echo $stage->renderInfoArea();
-//        var_dump($project->negotiations->max('roundNo')+1);
+        $projects = \App\Logic\Role\RoleFactory::create(1)->listProject();
+        echo "<pre>"; var_dump($projects->pluck('dept')->unique()->all()); exit;
 
 //    \Illuminate\Support\Facades\DB::enableQueryLog();
 //    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;

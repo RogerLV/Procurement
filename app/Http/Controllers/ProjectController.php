@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
+use App\Logic\Role\RoleFactory;
 use App\Logic\Stage\StageHandler;
 use App\Logic\Stage\Initiate;
 use Gate;
@@ -28,9 +29,11 @@ class ProjectController extends Controller
 
     public function listPage()
     {
+        $roleIns = RoleFactory::create($this->loginUser->getActiveRole()->roleID);
+
         return view('project/list')
                 ->with('title', PAGE_NAME_PROJECT_LIST)
-                ->with('projects', Project::orderBy('id')->get())
+                ->with('projects', $roleIns->listProject())
                 ->with('deptInfo', Department::all()->keyBy('dept'));
     }
 

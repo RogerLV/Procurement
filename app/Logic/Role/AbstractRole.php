@@ -69,4 +69,9 @@ abstract class AbstractRole
     {
         return in_array($projectIns->stage, $this->operableStages);
     }
+
+    public function listProject()
+    {
+        return Project::all();
+    }
 }

@@ -39,13 +39,24 @@
         </div>
     <br>
 
+    <h4>我的待办:</h4>
+    <div class="list-group">
+        @foreach($pendingProjects as $project)
+            <a href="{{ url('project/display').'/'.$project->id }}" target="_blank"
+                class="list-group-item list-group-item-info">
+                <h5>{{ $project->name }}</h5>
+            </a>
+            <br>
+        @endforeach
+    </div>
+    <br>
+
     <h4>您可以访问以下页面:</h4>
     @foreach($pages as $pageIns)
         <button target="_blank" class="page-link" onclick="window.open('{{ $pageIns->url }}')">
             <span class="glyphicon {{ $pageIns->icon }}"></span><br>
             {{ $pageIns->name }}
-        </button>
-        &nbsp; &nbsp;
+        </button>&nbsp;
     @endforeach
 
 @endsection

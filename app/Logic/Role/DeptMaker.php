@@ -56,4 +56,14 @@ class DeptMaker extends AbstractRole
         return in_array($loginUserLanID, $projectIns->roles()->get()->pluck('lanID')->toArray())
                 || $projectIns->lanID == $loginUserLanID;
     }
+
+    public function listProject()
+    {
+        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+
+        return Project::join('ProjectRoleDepartments', 'Projects.id', '=', 'ProjectRoleDepartments.projectID')
+                ->join('ProjectRoles', 'ProjectRoleDepartments.id', '=', 'ProjectRoles.roleDeptID')
+                ->where('ProjectRoles.lanID', $userLanID)
+                ->get();
+    }
 }

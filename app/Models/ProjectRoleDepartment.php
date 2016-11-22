@@ -17,4 +17,9 @@ class ProjectRoleDepartment extends Model
     {
         return $this->hasMany('App\Models\ProjectRole', 'roleDeptID', 'id');
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Models\Project', 'id', 'projectID');
+    }
 }
