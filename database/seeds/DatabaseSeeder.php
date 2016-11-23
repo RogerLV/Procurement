@@ -60,14 +60,133 @@ class DatabaseSeeder extends Seeder
             'lanID' => 'LUC1',
             'dept' => 'ITD',
             'scope' => 'goods',
-            'name' => 'Testing Project',
-            'stage' => STAGE_ID_DUE_DILIGENCE,
+            'name' => 'Testing Project 1',
+            'stage' => STAGE_ID_REVIEW,
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
             'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
+
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'ZLJ1',
+            'dept' => 'ITD',
+            'scope' => 'goods',
+            'name' => 'Testing Project 2',
+            'stage' => STAGE_ID_REVIEW,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 1,
+            'memberAmount' => 4,
+            'approach' => 'SingleSourcing',
+        ]);
+
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'QTN1',
+            'dept' => 'FMD',
+            'scope' => 'goods',
+            'name' => 'Testing Project 3',
+            'stage' => STAGE_ID_REVIEW,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 1,
+            'memberAmount' => 4,
+            'approach' => 'SingleSourcing',
+        ]);
+
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'LUC1',
+            'dept' => 'ITD',
+            'scope' => 'goods',
+            'name' => 'Testing Project 4',
+            'stage' => STAGE_ID_PASS_SIGN,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 1,
+            'memberAmount' => 4,
+            'approach' => 'SingleSourcing',
+        ]);
+
+        $project = \App\Models\Project::find(4);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'approve';
+        $log->lanID = 'LUC1';
+        $project->log()->save($log);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'approve';
+        $log->lanID = 'ZLJ1';
+        $project->log()->save($log);
+
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'ZLJ1',
+            'dept' => 'ITD',
+            'scope' => 'goods',
+            'name' => 'Testing Project 5',
+            'stage' => STAGE_ID_PASS_SIGN,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 1,
+            'memberAmount' => 4,
+            'approach' => 'SingleSourcing',
+        ]);
+
+        $project = \App\Models\Project::find(5);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'approve';
+        $log->lanID = 'LUC1';
+        $project->log()->save($log);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'reject';
+        $log->lanID = 'ZLJ1';
+        $project->log()->save($log);
+
+
+        \App\Models\Project::insert([
+            'year' => date('Y'),
+            'lanID' => 'QTN1',
+            'dept' => 'FMD',
+            'scope' => 'goods',
+            'name' => 'Testing Project 6',
+            'stage' => STAGE_ID_PASS_SIGN,
+            'background' => 'some background',
+            'budget' => '80K SGD',
+            'involveReview' => 1,
+            'memberAmount' => 4,
+            'approach' => 'SingleSourcing',
+        ]);
+
+        $project = \App\Models\Project::find(6);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'approve';
+        $log->lanID = 'LUC1';
+        $project->log()->save($log);
+
+        $log = new \App\Models\ProjectStageLog();
+        $log->fromStage = STAGE_ID_PASS_SIGN;
+        $log->toStage = STAGE_ID_PASS_SIGN;
+        $log->data1 = 'reject';
+        $log->lanID = 'ZLJ1';
+        $project->log()->save($log);
 
         \App\Models\ProjectRoleDepartment::insert([
             'projectID' => 1,

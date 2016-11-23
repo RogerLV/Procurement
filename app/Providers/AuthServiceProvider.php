@@ -7,6 +7,7 @@ use App\Logic\Role\RoleFactory;
 use App\Logic\ScoreHandler;
 use App\Models\Document;
 use App\Models\Project;
+use App\Models\ReviewMeeting;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Gate;
@@ -64,6 +65,24 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('scorable', function (LoginUser $loginUser, Project $projectIns) {
             return $projectIns->roles->pluck('lanID')->contains($loginUser->getUserInfo()->lanID)
                 && ScoreHandler::getPhase($projectIns) == 'ScoreStageMemberScoring';
+        });
+
+        $gate->define('review-meeting-visible', function (LoginUser $loginUser, ReviewMeeting $reviewMeetingIns) {
+            if ($reviewMeetingIns->stage == STAGE_ID_REVIEW_MEETING_INITIATE) {
+                return $loginUser->getActiveRole()->roleID == ROLE_ID_SECRETARIAT;
+            } else {
+                return in_array($loginUser->getActiveRole()->roleID, [
+                    ROLE_ID_SECRETARIAT,
+                    ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+                    ROLE_ID_SECRETARIAT_LEADER,
+                    ROLE_ID_REVIEW_DIRECTOR
+                ]);
+            }
+        });
+
+        $gate->define('review-meeting-operable', function (LoginUser $loginUser, ReviewMeeting $reviewMeetingIns) {
+            $roleIns = RoleFactory::create($loginUser->getActiveRole()->roleID);
+            return $roleIns->reviewMeetingOperable($reviewMeetingIns);
         });
 
         $this->registerPolicies($gate);

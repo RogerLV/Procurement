@@ -20,6 +20,10 @@ class PageFactory
             'pageName' => PAGE_NAME_PROJECT_LIST,
             'icon' => 'glyphicon-list',
         ],
+        ROUTE_NAME_REVIEW_APPLY => [
+            'pageName' => PAGE_NAME_REVIEW_APPLY,
+            'icon' => 'glyphicon-search'
+        ],
     ];
     public static function create($routeName)
     {

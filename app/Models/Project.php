@@ -84,6 +84,11 @@ class Project extends Model
         return $this->hasMany('App\Models\DueDiligence', 'projectID', 'id');
     }
 
+    public function topics()
+    {
+        return $this->morphMany('App\Models\ReviewTopic', 'topicable');
+    }
+
     public function getProcurement()
     {
         return empty($this->approach)
@@ -93,10 +98,10 @@ class Project extends Model
 
     public static function getIns($projectID)
     {
-        $projectIns = Project::find($projectID);
+        $projectIns = self::find($projectID);
 
         if (is_null($projectIns)) {
-            throw new AppException('PRJMDL001', 'Data Error');
+            throw new AppException('PRJMDL001');
         }
 
         return $projectIns;

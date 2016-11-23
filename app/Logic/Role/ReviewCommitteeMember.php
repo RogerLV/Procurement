@@ -11,6 +11,8 @@ class ReviewCommitteeMember extends AbstractRole
     protected $roleName = ROLE_NAME_REVIEW_COMMITTEE_MEMBER;
     protected $operableStages= [
         STAGE_ID_PASS_SIGN,
+        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM,
+        STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS,
     ];
 
     public function getCandidates()

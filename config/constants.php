@@ -42,6 +42,13 @@ define('STAGE_ID_REVIEW', 13);
 define('STAGE_ID_FILE_CONTRACT', 14);
 define('STAGE_ID_COMPLETE', 15);
 
+define('STAGE_ID_REVIEW_MEETING_INITIATE', 101);
+define('STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM', 102);
+define('STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES', 103);
+define('STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS', 104);
+define('STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE', 105);
+define('STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE', 106);
+
 // File Type and Name
 define('DOC_TYPE_SIGNED_REPORT', 1);
 define('DOC_TYPE_PROCUREMENT_APPROACH_APPLICATION', 2);
@@ -58,6 +65,7 @@ define('DOC_TYPE_DUE_DILIGENCE_REPORT', 12);
 define('DOC_TYPE_PROCUREMENT_CONTRACT', 13);
 define('DOC_TYPE_MEETING_MINUTES', 14);
 define('DOC_TYPE_OTHER_DOCS', 15);
+define('DOC_TYPE_PUT_RECORDS', 16);
 
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
@@ -105,6 +113,12 @@ define('ROUTE_NAME_DOCUMENT_UPLOAD', 'DocumentUpload');
 
 define('ROUTE_NAME_CONVERSATION_ADD', 'ConversationAdd');
 
+define('ROUTE_NAME_REVIEW_APPLY', 'ReviewApply');
+define('ROUTE_NAME_REVIEW_EDIT', 'ReviewEdit');
+
+define('ROUTE_NAME_TOPIC_ADD_PROJECT', 'TopicAddProject');
+define('ROUTE_NAME_TOPIC_ADD_PUT_RECORD', 'TopicAddPutRecord');
+
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
 define('PAGE_NAME_PROJECT_APPLY', '发起采购');
@@ -114,6 +128,8 @@ define('PAGE_NAME_PROJECT_DISPLAY', '项目浏览');
 define('PAGE_NAME_SCORE_EDIT_TEMPLATE', '编辑评分模板');
 define('PAGE_NAME_SCORE_PAGE', '供应商打分');
 define('PAGE_NAME_SCORE_OVERVIEW', '供应商打分汇总');
+
+define('PAGE_NAME_REVIEW_APPLY', '发起采购评审');
 
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');

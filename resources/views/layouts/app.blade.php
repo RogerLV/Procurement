@@ -116,6 +116,10 @@
             $("#alert-modal").modal('show');
         }
     }
+
+    var headers = {
+        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
+    };
 </script>
 
 @yield('javascriptContent')

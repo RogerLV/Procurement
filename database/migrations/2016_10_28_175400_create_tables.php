@@ -175,6 +175,38 @@ class CreateTables extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('ReviewMeetings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('year');
+            $table->string('givenID')->nullable();
+            $table->integer('stage');
+            $table->string('lanID');
+            $table->string('date')->nullable();
+            $table->string('time')->nullable();
+            $table->string('venue')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('ReviewTopics', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('reviewMeetingID');
+            $table->string('topicable_type');
+            $table->integer('topicable_id');
+            $table->string('type');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('PutRecords', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('content', 500);
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -198,5 +230,8 @@ class CreateTables extends Migration
         Schema::drop('SystemRoles');
         Schema::drop('ProjectStageLogs');
         Schema::drop('Conversation');
+        Schema::drop('ReviewMeetings');
+        Schema::drop('ReviewTopics');
+        Schema::drop('PutRecords');
     }
 }

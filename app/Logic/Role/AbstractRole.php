@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 use App\Logic\PageFactory;
 use App\Models\Project;
+use App\Models\ReviewMeeting;
 
 abstract class AbstractRole
 {
@@ -73,5 +74,10 @@ abstract class AbstractRole
     public function listProject()
     {
         return Project::all();
+    }
+
+    public function reviewMeetingOperable(ReviewMeeting $reviewMeetingIns)
+    {
+        return in_array($reviewMeetingIns->stage, $this->operableStages);
     }
 }

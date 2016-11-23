@@ -66,6 +66,12 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);
 
     Route::post('conversation/add', 'ConversationController@add')->name(ROUTE_NAME_CONVERSATION_ADD);
+
+    Route::get('review/apply/{id?}', 'ReviewController@apply')->name(ROUTE_NAME_REVIEW_APPLY);
+    Route::post('review/edit', 'ReviewController@edit')->name(ROUTE_NAME_REVIEW_EDIT);
+
+    Route::post('topic/addproject', 'TopicController@addProject')->name(ROUTE_NAME_TOPIC_ADD_PROJECT);
+    Route::post('topic/addputrecord', 'TopicController@addPutRecord')->name(ROUTE_NAME_TOPIC_ADD_PUT_RECORD);
 });
 
 Route::group(['middleware' => ['welcome']], function () {
