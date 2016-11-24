@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\Project;
 use App\Models\ReviewMeeting;
+use Config;
 use Gate;
 use App\Exceptions\AppException;
 
@@ -31,12 +32,15 @@ class ReviewController extends Controller
             ->get()->filter(function ($projectIns, $key) {
                 return $projectIns->log->where('data1', 'reject')->count() != 0;
             });
+        $topics = $reviewMeetingIns->topics()->with('topicable')->get();
 
         return view('review.apply')
                 ->with('title', PAGE_NAME_REVIEW_APPLY)
                 ->with('reviewMeetingIns', $reviewMeetingIns)
                 ->with('reviewOptions', Project::where('stage', STAGE_ID_REVIEW)->get())
-                ->with('selectModeOptions', $selectModeOptions);
+                ->with('selectModeOptions', $selectModeOptions)
+                ->with('topics', $topics)
+                ->with('topicTypeNames', Config::get('constants.TopicTypeNames'));
     }
 
     public function edit()

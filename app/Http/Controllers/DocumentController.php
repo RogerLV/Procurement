@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\AppException;
 use App\Models\Document;
 use App\Models\Project;
+use App\Models\PutRecord;
 use Gate;
 use Config;
 
@@ -19,8 +20,16 @@ class DocumentController extends Controller
         }
 
         // Check Visibility
-        if (Gate::forUser($this->loginUser)->denies('document-visible', $documentIns)) {
-            throw new AppException('DOC002', ERROR_MESSAGE_NOT_AUTHORIZED);
+        $referenceIns = $documentIns->documentable;
+        if ($referenceIns instanceof Project) {
+            if (Gate::forUser($this->loginUser)->denies('document-visible', $documentIns)) {
+                throw new AppException('DOC002', ERROR_MESSAGE_NOT_AUTHORIZED);
+            }
+        } elseif ($referenceIns instanceof PutRecord) {
+            $reviewMeeting = $referenceIns->topics->first()->reviewMeeting;
+            if (Gate::forUser($this->loginUser)->denies('review-meeting-visible', $reviewMeeting)) {
+                throw new AppException('DOC008', ERROR_MESSAGE_NOT_AUTHORIZED);
+            }
         }
 
         return response()->file($documentIns->getFullPath());
@@ -49,6 +58,15 @@ class DocumentController extends Controller
                     }
                 }
 
+                break;
+
+            case 'PutRecords':
+                $referenceIns = PutRecord::getIns($referenceID);
+                $reviewMeeting = $referenceIns->topics->first()->reviewMeeting;
+
+                if (Gate::forUser($this->loginUser)->denies('review-meeting-operable', $reviewMeeting)) {
+                    throw new AppException('DOC007', ERROR_MESSAGE_NOT_AUTHORIZED);
+                }
                 break;
         }
 

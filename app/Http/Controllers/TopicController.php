@@ -6,6 +6,7 @@ use App\Exceptions\AppException;
 use App\Models\Project;
 use App\Models\PutRecord;
 use App\Models\ReviewMeeting;
+use App\Models\ReviewTopic;
 use Gate;
 
 class TopicController extends Controller
@@ -22,6 +23,11 @@ class TopicController extends Controller
 
         $this->reviewMeetingIns = ReviewMeeting::getIns($reviewMeetingID);
 
+        // stage check
+        if (STAGE_ID_REVIEW_MEETING_INITIATE != $this->reviewMeetingIns->stage) {
+            throw new AppException('TPCCTL004', 'Incorrect Review Meeting Info');
+        }
+
         // operable check
         if (Gate::forUser($this->loginUser)->denies('review-meeting-operable', $this->reviewMeetingIns)) {
             throw new AppException('TPCCTL002', ERROR_MESSAGE_NOT_AUTHORIZED);
@@ -34,11 +40,6 @@ class TopicController extends Controller
         if (empty($type = trim(request()->input('type')))
             || empty($projectID = trim(request()->input('projectID')))) {
             throw new AppException('TPCCTL003');
-        }
-
-        // stage check
-        if (STAGE_ID_REVIEW_MEETING_INITIATE != $this->reviewMeetingIns->stage) {
-            throw new AppException('TPCCTL004', 'Incorrect Review Meeting Info');
         }
 
         // existence check
@@ -70,11 +71,6 @@ class TopicController extends Controller
             throw new AppException('TPCCTL006');
         }
 
-        // stage check
-        if (STAGE_ID_REVIEW_MEETING_INITIATE != $this->reviewMeetingIns->stage) {
-            throw new AppException('TPCCTL007', 'Incorrect Review Meeting Info');
-        }
-
         // create new put record and add relationship to the review meeting
         $putRecord = new PutRecord();
         $putRecord->content = $content;
@@ -83,6 +79,18 @@ class TopicController extends Controller
         $topic = $this->reviewMeetingIns->topics()->create([]);
         $topic->type = $type;
         $putRecord->topics()->save($topic);
+
+        return response()->json(['status'=>'good']);
+    }
+
+    public function remove()
+    {
+        if (empty($topicID = trim(request()->input('topicID')))) {
+            throw new AppException('TPCCTL008');
+        }
+
+        $topicIns = ReviewTopic::getIns($topicID);
+        $topicIns->delete();
 
         return response()->json(['status'=>'good']);
     }

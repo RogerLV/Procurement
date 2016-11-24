@@ -19,8 +19,8 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
-        $projects = \App\Logic\Role\RoleFactory::create(1)->listProject();
-        echo "<pre>"; var_dump($projects->pluck('dept')->unique()->all()); exit;
+        $ins = \App\Models\PutRecord::getIns(1);
+        echo "<pre>"; var_dump($ins);
 
 //    \Illuminate\Support\Facades\DB::enableQueryLog();
 //    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;
@@ -72,6 +72,7 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::post('topic/addproject', 'TopicController@addProject')->name(ROUTE_NAME_TOPIC_ADD_PROJECT);
     Route::post('topic/addputrecord', 'TopicController@addPutRecord')->name(ROUTE_NAME_TOPIC_ADD_PUT_RECORD);
+    Route::post('topic/remove', 'TopicController@remove')->name(ROUTE_NAME_TOPIC_REMOVE);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

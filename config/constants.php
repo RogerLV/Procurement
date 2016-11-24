@@ -118,6 +118,7 @@ define('ROUTE_NAME_REVIEW_EDIT', 'ReviewEdit');
 
 define('ROUTE_NAME_TOPIC_ADD_PROJECT', 'TopicAddProject');
 define('ROUTE_NAME_TOPIC_ADD_PUT_RECORD', 'TopicAddPutRecord');
+define('ROUTE_NAME_TOPIC_REMOVE', 'TopicRemove');
 
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
@@ -168,6 +169,7 @@ return [
         DOC_TYPE_PROCUREMENT_CONTRACT => '采购合同',
         DOC_TYPE_MEETING_MINUTES => '会议纪要',
         DOC_TYPE_OTHER_DOCS => '其他文档',
+        DOC_TYPE_PUT_RECORDS => '报备文档',
     ],
 
     // Stage Names
@@ -193,6 +195,12 @@ return [
     'passSignValues' => [
         'approve' => '同意',
         'reject' => '不同意',
+    ],
+
+    'TopicTypeNames' => [
+        'review' => '采购项目评审',
+        'discussion' => '采购方式预审',
+        'putRecord' => '报备',
     ],
 ];
 
