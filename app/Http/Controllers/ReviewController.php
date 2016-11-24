@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\Project;
 use App\Models\ReviewMeeting;
+use App\Models\SystemRole;
 use Config;
 use Gate;
 use App\Exceptions\AppException;
@@ -17,12 +17,12 @@ class ReviewController extends Controller
             $reviewMeetingIns = new ReviewMeeting();
             $reviewMeetingIns->stage = STAGE_ID_REVIEW_MEETING_INITIATE;
             $reviewMeetingIns->year = date('Y');
-            $reviewMeetingIns->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+            $reviewMeetingIns->lanID = $this->loginUser->getUserInfo()->lanID;
         } else {
             $reviewMeetingIns = ReviewMeeting::getIns($id);
         }
 
-        if (Gate::forUser(LoginUserKeeper::getUser())->denies('review-meeting-operable', $reviewMeetingIns)) {
+        if (Gate::forUser($this->loginUser)->denies('review-meeting-operable', $reviewMeetingIns)) {
             throw new AppException('RVWCTL001', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
@@ -33,14 +33,16 @@ class ReviewController extends Controller
                 return $projectIns->log->where('data1', 'reject')->count() != 0;
             });
         $topics = $reviewMeetingIns->topics()->with('topicable')->get();
+        $committee = SystemRole::with('user')->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get();
 
-        return view('review.apply')
+        return view('review.stage.apply')
                 ->with('title', PAGE_NAME_REVIEW_APPLY)
                 ->with('reviewMeetingIns', $reviewMeetingIns)
                 ->with('reviewOptions', Project::where('stage', STAGE_ID_REVIEW)->get())
                 ->with('selectModeOptions', $selectModeOptions)
                 ->with('topics', $topics)
-                ->with('topicTypeNames', Config::get('constants.TopicTypeNames'));
+                ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
+                ->with('committee', $committee);
     }
 
     public function edit()
@@ -59,7 +61,7 @@ class ReviewController extends Controller
             throw new AppException('RVWCTL003', 'Incorrect Review Meeting Info');
         }
 
-        if (Gate::forUser(LoginUserKeeper::getUser())->denies('review-meeting-operable', $reviewMeetingIns)) {
+        if (Gate::forUser($this->loginUser)->denies('review-meeting-operable', $reviewMeetingIns)) {
             throw new AppException('RVWCTL004', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 

@@ -207,6 +207,16 @@ class CreateTables extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('ReviewParticipants', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('reviewMeetingID');
+            $table->string('lanID');
+            $table->boolean('willAttend')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -233,5 +243,6 @@ class CreateTables extends Migration
         Schema::drop('ReviewMeetings');
         Schema::drop('ReviewTopics');
         Schema::drop('PutRecords');
+        Schema::drop('ReviewParticipants');
     }
 }

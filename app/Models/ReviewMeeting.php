@@ -24,4 +24,9 @@ class ReviewMeeting extends Model
     {
         return $this->hasMany('App\Models\ReviewTopic', 'reviewMeetingID', 'id');
     }
+
+    public function participants()
+    {
+        return $this->hasMany('App\Models\ReviewParticipant', 'reviewMeetingID', 'id');
+    }
 }

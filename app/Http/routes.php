@@ -73,6 +73,8 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('topic/addproject', 'TopicController@addProject')->name(ROUTE_NAME_TOPIC_ADD_PROJECT);
     Route::post('topic/addputrecord', 'TopicController@addPutRecord')->name(ROUTE_NAME_TOPIC_ADD_PUT_RECORD);
     Route::post('topic/remove', 'TopicController@remove')->name(ROUTE_NAME_TOPIC_REMOVE);
+
+    Route::post('participant/edit', 'ReviewParticipantController@edit')->name(ROUTE_NAME_REVIEW_PARTICIPANT_EDIT);
 });
 
 Route::group(['middleware' => ['welcome']], function () {

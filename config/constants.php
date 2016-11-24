@@ -120,6 +120,8 @@ define('ROUTE_NAME_TOPIC_ADD_PROJECT', 'TopicAddProject');
 define('ROUTE_NAME_TOPIC_ADD_PUT_RECORD', 'TopicAddPutRecord');
 define('ROUTE_NAME_TOPIC_REMOVE', 'TopicRemove');
 
+define('ROUTE_NAME_REVIEW_PARTICIPANT_EDIT', 'ReviewParticipantEdit');
+
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
 define('PAGE_NAME_PROJECT_APPLY', '发起采购');
