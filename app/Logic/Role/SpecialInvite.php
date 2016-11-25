@@ -24,7 +24,7 @@ class SpecialInvite extends AbstractRole
 
     public function listProject()
     {
-        return [];
+        return collect([]);
     }
 
     public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)

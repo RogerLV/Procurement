@@ -2,10 +2,6 @@
 
 namespace App\Logic\Stage;
 
-
-use App\Logic\LoginUser\LoginUserKeeper;
-use App\Models\ProjectStageLog;
-
 class Pretrial extends AbstractStage
 {
     protected $stageID = STAGE_ID_PRETRIAL;

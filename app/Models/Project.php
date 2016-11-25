@@ -24,7 +24,7 @@ class Project extends Model
 
     public function log()
     {
-        return $this->morphMany('App\Models\ProjectStageLog', 'logable');
+        return $this->morphMany('App\Models\StageLog', 'logable');
     }
 
     public function submitter()

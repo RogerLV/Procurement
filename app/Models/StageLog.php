@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectStageLog extends Model
+class StageLog extends Model
 {
-    protected $table = 'ProjectStageLogs';
+    protected $table = 'StageLogs';
 
     public $timestamps = false;
 

@@ -115,14 +115,14 @@ class DatabaseSeeder extends Seeder
 
         $project = \App\Models\Project::find(4);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'approve';
         $log->lanID = 'LUC1';
         $project->log()->save($log);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'approve';
@@ -145,14 +145,14 @@ class DatabaseSeeder extends Seeder
 
         $project = \App\Models\Project::find(5);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'approve';
         $log->lanID = 'LUC1';
         $project->log()->save($log);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'reject';
@@ -176,14 +176,14 @@ class DatabaseSeeder extends Seeder
 
         $project = \App\Models\Project::find(6);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'approve';
         $log->lanID = 'LUC1';
         $project->log()->save($log);
 
-        $log = new \App\Models\ProjectStageLog();
+        $log = new \App\Models\StageLog();
         $log->fromStage = STAGE_ID_PASS_SIGN;
         $log->toStage = STAGE_ID_PASS_SIGN;
         $log->data1 = 'reject';

@@ -6,7 +6,7 @@ namespace App\Logic\Stage;
 use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\SystemRole;
-use App\Models\ProjectStageLog;
+use App\Models\StageLog;
 use Config;
 
 class PassSign extends AbstractStage
@@ -70,7 +70,7 @@ class PassSign extends AbstractStage
 
     public function logOperation($para = null)
     {
-        $log = new ProjectStageLog();
+        $log = new StageLog();
         $log->fromStage = $this->stageID;
         $log->toStage = $this->stageID;
         $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;

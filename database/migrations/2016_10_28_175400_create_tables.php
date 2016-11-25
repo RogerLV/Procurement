@@ -152,7 +152,7 @@ class CreateTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('ProjectStageLogs', function (Blueprint $table) {
+        Schema::create('StageLogs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('logable_type');
             $table->integer('logable_id');
@@ -239,7 +239,7 @@ class CreateTables extends Migration
         Schema::drop('ProjectVendorMapping');
         Schema::drop('Negotiations');
         Schema::drop('SystemRoles');
-        Schema::drop('ProjectStageLogs');
+        Schema::drop('StageLogs');
         Schema::drop('Conversation');
         Schema::drop('ReviewMeetings');
         Schema::drop('ReviewTopics');

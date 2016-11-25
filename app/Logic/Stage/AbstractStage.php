@@ -4,7 +4,7 @@ namespace App\Logic\Stage;
 
 
 use App\Logic\LoginUser\LoginUserKeeper;
-use App\Models\ProjectStageLog;
+use App\Models\StageLog;
 use App\Models\Project;
 use Config;
 
@@ -51,7 +51,7 @@ abstract class AbstractStage
 
     public function logOperation($comment = null)
     {
-        $log = new ProjectStageLog();
+        $log = new StageLog();
         $log->fromStage = $this->stageID;
         $log->toStage = $this->stageID;
         $log->dept = LoginUserKeeper::getUser()->getActiveRole()->lanID;
@@ -73,7 +73,7 @@ abstract class AbstractStage
     protected function approve($operation, $comment)
     {
         // directly log down the operation rather than call log function
-        $log = new ProjectStageLog();
+        $log = new StageLog();
         $log->fromStage = $this->stageID;
         $log->toStage = $this->stageID;
         if ('approve' == $operation) {
