@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Models\User;
+use App\Models\ReviewMeeting;
 
 class Secretariat extends AbstractRole
 {
@@ -23,5 +24,10 @@ class Secretariat extends AbstractRole
     public function getCandidates()
     {
         return User::inService()->orderBy('uEngName')->get();
+    }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return true;
     }
 }

@@ -19,7 +19,8 @@ class ReviewParticipantController extends Controller
     {
         if (empty($reviewMeetingID = trim(request()->input('reviewMeetingID')))
             || empty($lanID = trim(request()->input('lanID')))
-            || empty($operation = trim(request()->input('operation')))) {
+            || empty($operation = trim(request()->input('operation')))
+            || empty($roleID = trim(request()->input('roleID')))) {
             throw new AppException('PTCPCTL001');
         }
 
@@ -34,22 +35,27 @@ class ReviewParticipantController extends Controller
         }
 
         $existence = SystemRole::where([
-            ['roleID', '=', ROLE_ID_REVIEW_COMMITTEE_MEMBER],
-            ['lanID', '=', $lanID]
+            ['roleID', '=', $roleID],
+            ['lanID', '=', $lanID],
         ])->count();
         if (0 == $existence) {
             throw new AppException('PTCPCTL004', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
+        if (!in_array($roleID, [ROLE_ID_REVIEW_COMMITTEE_MEMBER, ROLE_ID_SPECIAL_INVITE])) {
+            throw new AppException('PTCPCTL005');
         }
 
         switch ($operation) {
             case 'add':
                 $participant = new ReviewParticipant();
                 $participant->lanID = $lanID;
+                $participant->roleID = $roleID;
                 $reviewMeetingIns->participants()->save($participant);
                 break;
 
             case 'remove':
-                $reviewMeetingIns->participants()->where('lanID', $lanID)->delete();
+                $reviewMeetingIns->participants()->where('lanID', $lanID)->where('roleID', $roleID)->delete();
                 break;
         }
 

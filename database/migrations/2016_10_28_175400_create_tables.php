@@ -212,6 +212,7 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->integer('reviewMeetingID');
             $table->string('lanID');
+            $table->integer('roleID');
             $table->boolean('willAttend')->nullable();
 
             $table->timestamps();

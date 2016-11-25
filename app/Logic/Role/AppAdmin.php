@@ -5,6 +5,7 @@ namespace App\Logic\Role;
 
 use App\Models\User;
 use App\Models\Project;
+use App\Models\ReviewMeeting;
 
 class AppAdmin extends AbstractRole
 {
@@ -17,6 +18,16 @@ class AppAdmin extends AbstractRole
     }
 
     public function projectOperable(Project $projectIns)
+    {
+        return true;
+    }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return true;
+    }
+
+    public function reviewMeetingOperable(ReviewMeeting $reviewMeetingIns)
     {
         return true;
     }

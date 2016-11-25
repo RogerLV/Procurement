@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Models\User;
+use App\Models\ReviewMeeting;
 
 class ReviewCommitteeMember extends AbstractRole
 {
@@ -18,5 +19,10 @@ class ReviewCommitteeMember extends AbstractRole
     public function getCandidates()
     {
         return User::inService()->orderBy('uEngName')->get();
+    }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return STAGE_ID_REVIEW_MEETING_INITIATE != $reviewMeeting->stage;
     }
 }

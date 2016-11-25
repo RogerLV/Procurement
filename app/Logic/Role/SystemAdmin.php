@@ -3,6 +3,8 @@
 namespace App\Logic\Role;
 
 
+use App\Models\ReviewMeeting;
+
 class SystemAdmin extends AbstractRole
 {
     protected $roleID = 10;
@@ -14,5 +16,10 @@ class SystemAdmin extends AbstractRole
     public function getCandidates()
     {
         return [];
+    }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return true;
     }
 }

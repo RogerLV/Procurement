@@ -16,6 +16,7 @@ class RoleFactory
         ROLE_ID_REVIEW_DIRECTOR,
         ROLE_ID_APP_ADMIN,
         ROLE_ID_SYSTEM_ADMIN,
+        ROLE_ID_SPECIAL_INVITE,
     ];
 
     public static function create($roleID)
@@ -31,7 +32,7 @@ class RoleFactory
             case ROLE_ID_REVIEW_DIRECTOR: return new ReviewDirector();
             case ROLE_ID_APP_ADMIN: return new AppAdmin();
             case ROLE_ID_SYSTEM_ADMIN: return new SystemAdmin();
+            case ROLE_ID_SPECIAL_INVITE: return new SpecialInvite();
         }
-
     }
 }

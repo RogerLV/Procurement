@@ -13,6 +13,7 @@ define('ROLE_NAME_SECRETARIAT_LEADER', '采购评审秘书组组长');
 define('ROLE_NAME_REVIEW_DIRECTOR', '采购评审主任');
 define('ROLE_NAME_APP_ADMIN', '应用管理员');
 define('ROLE_NAME_SYSTEM_ADMIN', '系统管理员');
+define('ROLE_NAME_SPECIAL_INVITE', '特邀列席');
 
 define('ROLE_ID_DEPT_MAKER', 1);
 define('ROLE_ID_DEPT_MANAGER', 2);
@@ -24,6 +25,7 @@ define('ROLE_ID_SECRETARIAT_LEADER', 7);
 define('ROLE_ID_REVIEW_DIRECTOR', 8);
 define('ROLE_ID_APP_ADMIN', 9);
 define('ROLE_ID_SYSTEM_ADMIN', 10);
+define('ROLE_ID_SPECIAL_INVITE', 11);
 
 // Stage ID and Name
 define('STAGE_ID_INITIATE', 1);

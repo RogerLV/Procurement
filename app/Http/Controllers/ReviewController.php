@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\ReviewMeeting;
+use App\Models\ReviewParticipant;
 use App\Models\SystemRole;
 use Config;
 use Gate;
@@ -34,6 +35,7 @@ class ReviewController extends Controller
             });
         $topics = $reviewMeetingIns->topics()->with('topicable')->get();
         $committee = SystemRole::with('user')->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get();
+        $specialInvite = SystemRole::with('user')->where('roleID', ROLE_ID_SPECIAL_INVITE)->get();
 
         return view('review.stage.apply')
                 ->with('title', PAGE_NAME_REVIEW_APPLY)
@@ -42,7 +44,9 @@ class ReviewController extends Controller
                 ->with('selectModeOptions', $selectModeOptions)
                 ->with('topics', $topics)
                 ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
-                ->with('committee', $committee);
+                ->with('committee', $committee)
+                ->with('specialInvites', $specialInvite)
+                ->with('invited', $reviewMeetingIns->participants);
     }
 
     public function edit()

@@ -80,4 +80,9 @@ abstract class AbstractRole
     {
         return in_array($reviewMeetingIns->stage, $this->operableStages);
     }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return false;
+    }
 }

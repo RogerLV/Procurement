@@ -4,6 +4,7 @@ namespace App\Logic\Role;
 
 
 use App\Models\User;
+use App\Models\ReviewMeeting;
 
 class SecretariatLeader extends AbstractRole
 {
@@ -16,5 +17,10 @@ class SecretariatLeader extends AbstractRole
     public function getCandidates()
     {
         return User::inService()->where('dept', 'FMD')->get();
+    }
+
+    public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
+    {
+        return STAGE_ID_REVIEW_MEETING_INITIATE != $reviewMeeting->stage;
     }
 }

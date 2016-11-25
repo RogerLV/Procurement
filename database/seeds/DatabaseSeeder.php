@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             ['10', 'LUC1', 'ITD'],
             ['10', 'ZLJ1', 'ITD'],
             ['10', 'QSG1', 'ITD'],
+            ['11', 'LUC1', 'ITD'],
+            ['11', 'QSG1', 'ITD'],
             ['9', 'QTN1', 'FMD'],
             ['9', 'WHN1', 'FMD'],
             ['1', 'CHOW', 'ITD'],
