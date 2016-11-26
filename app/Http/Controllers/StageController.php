@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Logic\Stage\StageHandler;
+use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 use App\Exceptions\AppException;
 use App\Models\Project;
 use Gate;
@@ -29,7 +29,7 @@ class StageController extends Controller
             throw new AppException('STG003', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        $this->stageIns = StageHandler::getStageIns($this->projectIns);
+        $this->stageIns = ProjectStageHandler::getProjectStageIns($this->projectIns);
     }
 
     public function inviteDept()
@@ -66,7 +66,7 @@ class StageController extends Controller
 
     public function finishRecord()
     {
-        if (!$this->stageIns->canFinish()) {
+        if (!$this->stageIns->canStageUp()) {
             throw new AppException('STG012', 'Stage finish conditions are not met.');
         }
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
 use App\Logic\Role\RoleFactory;
-use App\Logic\Stage\StageHandler;
-use App\Logic\Stage\Initiate;
+use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
+use App\Logic\Stage\ProjectStages\Initiate;
 use Gate;
 use Config;
 use App\Models\Document;
@@ -51,7 +51,7 @@ class ProjectController extends Controller
 
         // By using eloquent relationships, mutiple queries would be generated which can be optimized.
         // But due to resource consuming is acceptable, use this elegant way for time being
-        $stageView = StageHandler::renderStageView($projectIns);
+        $stageView = ProjectStageHandler::renderProjectStageView($projectIns);
         $documents = $projectIns->document()->with('uploader')->orderBy('type')->get();
 
         // document visibility filter
