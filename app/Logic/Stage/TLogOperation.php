@@ -13,7 +13,7 @@ trait TLogOperation
         $log = new StageLog();
         $log->fromStage = $this->stageID;
         $log->toStage = $this->stageID;
-        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->lanID;
+        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
         $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
         $log->comment = $comment;
         $log->timeAt = date('Y-m-d H:i:s');
@@ -26,14 +26,10 @@ trait TLogOperation
             $this->referrer->save();
         }
 
-        if (isset($para['operation'])) { // for stage pass sign
-            $log->data1 = $para['operation'];
-        }
-
         $this->referrer->log()->save($log);
     }
 
-    public function operate($paras = null)
+    public function operate($para = null)
     {
         $this->logOperation();
     }

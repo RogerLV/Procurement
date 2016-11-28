@@ -7,14 +7,13 @@ use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ProjectStage;
 use App\Logic\Stage\TLogOperation;
 use App\Models\SystemRole;
+use App\Models\StageLog;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\DepartmentKeeper;
 use Config;
 
-class PassSign extends ProjectStage implements IComplexOperation
+class PassSign extends ProjectStage
 {
-    use TLogOperation;
-
     protected $stageID = STAGE_ID_PASS_SIGN;
 
     public function getNextStage()
@@ -48,7 +47,7 @@ class PassSign extends ProjectStage implements IComplexOperation
         return null;
     }
 
-    public function canStageUp($para = null)
+    public function canPassSignStageUp($para = null)
     {
         if ('approve' == $para['operation']) {
             $approveCount = $this->referrer->log()->where([
@@ -60,5 +59,32 @@ class PassSign extends ProjectStage implements IComplexOperation
         }
 
         return false;
+    }
+
+    public function logOperation($para = null)
+    {
+        $log = new StageLog();
+        $log->fromStage = $this->stageID;
+        $log->toStage = $this->stageID;
+        $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
+        $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $log->comment = $para['comment'];
+        $log->timeAt = date('Y-m-d H:i:s');
+
+        if ($this->canPassSignStageUp($para)) {
+            $log->toStage = $this->getNextStage()->getStageID();
+
+            // stage up
+            $this->referrer->stage = $log->toStage;
+            $this->referrer->save();
+        }
+
+        $log->data1 = $para['operation']; // This attribute is different from parent
+        $this->referrer->log()->save($log);
+    }
+
+    public function operate($para = null)
+    {
+        $this->logOperation($para);
     }
 }

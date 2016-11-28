@@ -17,6 +17,13 @@ class Record extends ProjectStage implements IComplexOperation
     protected $stageID = STAGE_ID_RECORD;
     private $instance;
 
+    protected $mandatoryDocTypes = [];
+    protected $optionalDocTypes = [];
+    protected $reviewDocTypes = [];
+    protected $uploadFileTypes = [];
+    protected $toBeScored = true;
+    protected $toBeFilledUpNegotiations = false;
+
     public function __construct(Project $projectIns)
     {
         parent::__construct($projectIns);

@@ -19,8 +19,8 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
-        $ins = \App\Models\PutRecord::getIns(1);
-        echo "<pre>"; var_dump($ins);
+//        $ins = \App\Models\PutRecord::getIns(1);
+        echo "<pre>"; var_dump(route(ROUTE_NAME_STAGE_FINISH_RECORD));
 
 //    \Illuminate\Support\Facades\DB::enableQueryLog();
 //    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;

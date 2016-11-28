@@ -8,13 +8,6 @@ use App\Logic\ScoreHandler;
 
 trait TRecordChildMethods
 {
-    protected $mandatoryDocTypes = [];
-    protected $optionalDocTypes = [];
-    protected $reviewDocTypes = [];
-    protected $uploadFileTypes = [];
-    protected $toBeScored = true;
-    protected $toBeFilledUpNegotiations = false;
-
     public function getScorePhase()
     {
         return $this->toBeScored ? ScoreHandler::getPhase($this->referrer) : null;
@@ -97,7 +90,8 @@ trait TRecordChildMethods
             $vendorsCount = $this->referrer->vendors()->count();
             $membersCount = $this->referrer->roles->count();
 
-            if ($scoresCount < $itemsCount * $vendorsCount * $membersCount) {
+            if ($scoresCount < $itemsCount * $vendorsCount * $membersCount
+                || $scoresCount == 0) {
                 return false;
             }
         }

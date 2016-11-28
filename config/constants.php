@@ -87,7 +87,7 @@ define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
-define('ROUTE_NAME_STAGE_SUMMARIZE', 'StageFinishRecord');
+define('ROUTE_NAME_STAGE_SUMMARIZE', 'StageSummarize');
 define('ROUTE_NAME_STAGE_APPROVE', 'StageApprove');
 define('ROUTE_NAME_STAGE_COMPLETE', 'StageComplete');
 
