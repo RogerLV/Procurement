@@ -29,4 +29,9 @@ class ReviewMeeting extends Model
     {
         return $this->hasMany('App\Models\ReviewParticipant', 'reviewMeetingID', 'id');
     }
+
+    public function log()
+    {
+        return $this->morphMany('App\Models\StageLog', 'logable');
+    }
 }

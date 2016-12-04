@@ -68,7 +68,10 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('conversation/add', 'ConversationController@add')->name(ROUTE_NAME_CONVERSATION_ADD);
 
     Route::get('review/apply/{id?}', 'ReviewController@apply')->name(ROUTE_NAME_REVIEW_APPLY);
+    Route::get('review/display/{id}', 'ReviewController@display')->name(ROUTE_NAME_REVIEW_DISPLAY);
     Route::post('review/edit', 'ReviewController@edit')->name(ROUTE_NAME_REVIEW_EDIT);
+
+    Route::post('review/stage/complete', 'ReviewStageController@complete')->name(ROUTE_NAME_REVIEW_STAGE_COMPLETE);
 
     Route::post('topic/addproject', 'TopicController@addProject')->name(ROUTE_NAME_TOPIC_ADD_PROJECT);
     Route::post('topic/addputrecord', 'TopicController@addPutRecord')->name(ROUTE_NAME_TOPIC_ADD_PUT_RECORD);

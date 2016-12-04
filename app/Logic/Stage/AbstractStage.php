@@ -23,9 +23,4 @@ abstract class AbstractStage
     {
         return $this->stageID;
     }
-
-    protected function getPreviousStage()
-    {
-        return null;
-    }
 }

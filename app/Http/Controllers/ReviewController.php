@@ -76,4 +76,9 @@ class ReviewController extends Controller
 
         return response()->json(['status'=>'good']);
     }
+
+    public function display($id)
+    {
+
+    }
 }

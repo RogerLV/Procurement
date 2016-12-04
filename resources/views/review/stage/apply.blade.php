@@ -10,4 +10,7 @@
     <br>
     @include('review.stage.apply.invitemember')
     <br>
+    @include('review.stage.apply.submit')
+    <br>
+    <br>
 @endsection
