@@ -121,6 +121,7 @@ define('ROUTE_NAME_REVIEW_EDIT', 'ReviewEdit');
 define('ROUTE_NAME_REVIEW_DISPLAY', 'ReviewDisplay');
 
 define('ROUTE_NAME_REVIEW_STAGE_COMPLETE', 'ReviewStageComplete');
+define('ROUTE_NAME_REVIEW_STAGE_APPROVE', 'ReviewStageApprove');
 
 define('ROUTE_NAME_TOPIC_ADD_PROJECT', 'TopicAddProject');
 define('ROUTE_NAME_TOPIC_ADD_PUT_RECORD', 'TopicAddPutRecord');

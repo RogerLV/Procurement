@@ -29,6 +29,7 @@ class ReviewStageController extends Controller
 
         $this->stageIns = ReviewMeetingStageHandler::getReviewMeetingStageIns($this->reviewMeetingIns);
     }
+
     public function complete()
     {
         if (!$this->stageIns->canStageUp()) {
@@ -36,6 +37,23 @@ class ReviewStageController extends Controller
         }
 
         $this->stageIns->operate(null);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function approve()
+    {
+        if (empty($para['operation'] = trim(request()->input('operation')))) {
+            throw new AppException('RVWSTGCTL004');
+        }
+
+        if (!in_array($para['operation'], ['approve', 'reject'])) {
+            throw new AppException('RVWSTGCTL005');
+        }
+
+        $para['comment'] = trim(request()->input('comment'));
+
+        $this->stageIns->operate($para);
 
         return response()->json(['status' => 'good']);
     }
