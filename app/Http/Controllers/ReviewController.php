@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\DepartmentKeeper;
 use App\Models\Project;
 use App\Models\ReviewMeeting;
-use App\Models\ReviewParticipant;
 use App\Models\SystemRole;
 use Config;
 use Gate;
 use App\Exceptions\AppException;
+use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
 class ReviewController extends Controller
 {
@@ -46,7 +47,8 @@ class ReviewController extends Controller
                 ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
                 ->with('committee', $committee)
                 ->with('specialInvites', $specialInvite)
-                ->with('invited', $reviewMeetingIns->participants);
+                ->with('invited', $reviewMeetingIns->participants)
+                ->with('deptInfo', DepartmentKeeper::getDeptInfo());
     }
 
     public function edit()
@@ -79,6 +81,14 @@ class ReviewController extends Controller
 
     public function display($id)
     {
+        $reviewMeetingIns = ReviewMeeting::getIns($id);
+        $stageView = ReviewMeetingStageHandler::renderReviewMeetingStageView($reviewMeetingIns);
+        $logs = $reviewMeetingIns->log()->with('operator')->get();
 
+        return view('review.display')
+                ->with('reviewMeetingIns', $reviewMeetingIns)
+                ->with('stageView', $stageView)
+                ->with('logs', $logs)
+                ->with('stageNames', Config::get('constants.stageNames'));
     }
 }

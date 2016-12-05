@@ -9,7 +9,7 @@
                 checked
             @endif
             >
-            {{ $member->user->getTriName() }}
+            {{ $deptInfo->get($member->dept)->deptCnName." ".$member->user->getTriName() }}
         </label>
     </div>
 @endforeach

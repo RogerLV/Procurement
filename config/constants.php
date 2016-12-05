@@ -197,6 +197,14 @@ return [
         STAGE_ID_REVIEW => '采购评审',
         STAGE_ID_FILE_CONTRACT => '采购合同归档',
         STAGE_ID_COMPLETE => '完成',
+
+        STAGE_ID_REVIEW_MEETING_INITIATE => '发起采购评审',
+        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM => '委员确认',
+        STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES => '生成会议纪要',
+        STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员意见',
+        STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE => '审核会议纪要',
+        STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE => '签发会议纪要',
+        STAGE_ID_REVIEW_MEETING_COMPLETE => '完成',
     ],
 
     // Pass Sign Values
