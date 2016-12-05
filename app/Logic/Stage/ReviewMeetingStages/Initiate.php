@@ -8,6 +8,8 @@ use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ReviewMeetingStage;
 use App\Logic\Stage\TLogOperation;
 use Config;
+use App\Models\Project;
+use App\Models\SystemRole;
 
 class Initiate extends ReviewMeetingStage implements IComplexOperation
 {
@@ -22,7 +24,25 @@ class Initiate extends ReviewMeetingStage implements IComplexOperation
 
     public function renderFunctionArea()
     {
-        return null;
+        $selectModeOptions = Project::with('log')->where('Projects.stage', STAGE_ID_PASS_SIGN)
+            ->get()->filter(function ($projectIns, $key) {
+                return $projectIns->log->where('data1', 'reject')->count() != 0;
+            });
+        $topics = $this->referrer->topics()->with('topicable')->get();
+        $committee = SystemRole::with('user')->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get();
+        $specialInvite = SystemRole::with('user')->where('roleID', ROLE_ID_SPECIAL_INVITE)->get();
+
+        return view('review.display.function.initiate')
+                ->with('title', PAGE_NAME_REVIEW_APPLY)
+                ->with('reviewMeetingIns', $this->referrer)
+                ->with('reviewOptions', Project::where('stage', STAGE_ID_REVIEW)->get())
+                ->with('selectModeOptions', $selectModeOptions)
+                ->with('topics', $topics)
+                ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
+                ->with('committee', $committee)
+                ->with('specialInvites', $specialInvite)
+                ->with('invited', $this->referrer->participants)
+                ->with('deptInfo', DepartmentKeeper::getDeptInfo());
     }
 
     public function renderInfoArea()

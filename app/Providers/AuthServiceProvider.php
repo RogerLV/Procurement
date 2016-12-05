@@ -77,6 +77,10 @@ class AuthServiceProvider extends ServiceProvider
             return $roleIns->reviewMeetingOperable($reviewMeetingIns);
         });
 
+        $gate->define('apply-review-meeting', function (LoginUser $loginUser) {
+            return $loginUser->getActiveRole()->roleID == ROLE_ID_SECRETARIAT;
+        });
+
         $this->registerPolicies($gate);
     }
 }
