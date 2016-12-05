@@ -52,7 +52,7 @@
                     @endif
 
                 @elseif($topic->topicable instanceof \App\Models\PutRecord)
-                    <p>{{ $topic->topicable->content }}</p>
+                    <p>{{ $topic->topicable->name }}</p>
                     @foreach($documents as $idx => $doc)
                         报备文档{{ $idx+1 }}: <a href="{{ $doc->getUrl() }}" target="_blank">{{ $doc->originalName }}</a>
                         <br>

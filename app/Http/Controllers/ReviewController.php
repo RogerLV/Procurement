@@ -65,6 +65,10 @@ class ReviewController extends Controller
     public function display($id)
     {
         $reviewMeetingIns = ReviewMeeting::getIns($id);
+        if (Gate::forUser($this->loginUser)->denies('review-meeting-visible', $reviewMeetingIns)) {
+            throw new AppException('RVWCTL005', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
         $stageView = ReviewMeetingStageHandler::renderReviewMeetingStageView($reviewMeetingIns);
         $logs = $reviewMeetingIns->log()->with('operator')->get();
 

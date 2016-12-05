@@ -203,7 +203,7 @@ class CreateTables extends Migration
 
         Schema::create('PutRecords', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content', 500);
+            $table->string('name', 500);
 
             $table->timestamps();
         });
@@ -214,6 +214,32 @@ class CreateTables extends Migration
             $table->string('lanID');
             $table->integer('roleID');
             $table->boolean('willAttend')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('MeetingMinutesMetaInfo', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('reviewMeetingID');
+            $table->string('header');
+            $table->string('date');
+            $table->string('time');
+            $table->string('venue');
+            $table->string('host');
+            $table->string('attendance');
+            $table->string('recorder');
+            $table->string('sendTo');
+            $table->string('footer');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('MeetingMinutesContent', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('topicID');
+            $table->string('content', env('FIELD_MAX_LENGTH'));
 
             $table->timestamps();
             $table->softDeletes();
@@ -245,5 +271,7 @@ class CreateTables extends Migration
         Schema::drop('ReviewTopics');
         Schema::drop('PutRecords');
         Schema::drop('ReviewParticipants');
+        Schema::drop('MeetingMinutesMetaInfo');
+        Schema::drop('MeetingMinutesContent');
     }
 }

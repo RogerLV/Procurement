@@ -19,11 +19,8 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test', function () {
-//        $ins = \App\Models\PutRecord::getIns(1);
-        echo "<pre>"; var_dump(route(ROUTE_NAME_STAGE_FINISH_RECORD));
-
-//    \Illuminate\Support\Facades\DB::enableQueryLog();
-//    echo "<pre>"; var_dump(\Illuminate\Support\Facades\DB::getQueryLog()); exit;
+        $metaInfo = \App\Models\ReviewMeeting::getIns(1)->metaInfo;
+        var_dump(empty($metaInfo));
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
@@ -79,6 +76,9 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('topic/remove', 'TopicController@remove')->name(ROUTE_NAME_TOPIC_REMOVE);
 
     Route::post('participant/edit', 'ReviewParticipantController@edit')->name(ROUTE_NAME_REVIEW_PARTICIPANT_EDIT);
+
+    Route::post('meetingMinutes/add/meta', 'MeetingMinutesController@addMetaInfo')->name('MeetingMinutesAddMeta');
+    Route::post('meetingMinutes/add/content', 'MeetingMinutesController@addContent')->name('MeetingMinutesAddContent');
 });
 
 Route::group(['middleware' => ['welcome']], function () {

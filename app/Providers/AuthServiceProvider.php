@@ -81,6 +81,11 @@ class AuthServiceProvider extends ServiceProvider
             return $loginUser->getActiveRole()->roleID == ROLE_ID_SECRETARIAT;
         });
 
+        $gate->define('generate-meeting-minutes', function (LoginUser $loginUser, ReviewMeeting $reviewMeetingIns) {
+            return $loginUser->getActiveRole()->roleID == ROLE_ID_SECRETARIAT
+                    && $reviewMeetingIns->stage == STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES;
+        });
+
         $this->registerPolicies($gate);
     }
 }

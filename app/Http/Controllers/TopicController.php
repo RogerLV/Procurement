@@ -66,14 +66,14 @@ class TopicController extends Controller
     public function addPutRecord()
     {
         // parameter check, stage check, operable check, existence
-        if (empty($content = trim(request()->input('content')))
+        if (empty($name = trim(request()->input('name')))
             || empty($type = trim(request()->input('type')))) {
             throw new AppException('TPCCTL006');
         }
 
         // create new put record and add relationship to the review meeting
         $putRecord = new PutRecord();
-        $putRecord->content = $content;
+        $putRecord->name = $name;
         $putRecord->save();
 
         $topic = $this->reviewMeetingIns->topics()->create([]);

@@ -23,6 +23,11 @@ class ReviewTopic extends Model
         return $this->belongsTo('App\Models\ReviewMeeting', 'reviewMeetingID', 'id');
     }
 
+    public function meetingMinutesContent()
+    {
+        return $this->hasOne('App\Models\MeetingMinutesContent', 'topicID', 'id');
+    }
+
     public static function getIns($topicID)
     {
         $topicIns = self::find($topicID);

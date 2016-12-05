@@ -34,4 +34,9 @@ class ReviewMeeting extends Model
     {
         return $this->morphMany('App\Models\StageLog', 'logable');
     }
+
+    public function metaInfo()
+    {
+        return $this->hasOne('App\Models\MeetingMinutesMetaInfo', 'reviewMeetingID', 'id');
+    }
 }

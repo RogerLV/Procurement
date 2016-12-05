@@ -20,7 +20,11 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('review.display.function.generateminutes')
+                ->with('title', $this->getStageName())
+                ->with('reviewIns', $this->referrer)
+                ->with('metaInfo', $this->referrer->metaInfo)
+                ->with('topics', $this->referrer->topics()->with('topicable', 'meetingMinutesContent')->get());
     }
 
     public function renderInfoArea()
@@ -30,6 +34,10 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
 
     public function canStageUp()
     {
-        return false;
+        $emptyTopics = $this->referrer->topics()->with('meetingMinutesContent')->get()
+                        ->filter(function ($ins, $key) {
+                            return empty($ins->meetingMinutesContent);
+                        });
+        return !empty($this->referrer->metaInfo) && $emptyTopics->isEmpty();
     }
 }

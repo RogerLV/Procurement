@@ -32,9 +32,7 @@
             }
 
             $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-                },
+                headers: headers,
                 url: "{{ route(ROUTE_NAME_CONVERSATION_ADD) }}",
                 data: {
                     reference: 'Projects',

@@ -43,7 +43,7 @@
                         <br>
                         <div class="form-group">
                             <label>报备内容</label>
-                            <input type="text" class="form-control" id="record-content-input">
+                            <input type="text" class="form-control" id="record-name-input">
                         </div>
                     </div>
                 </div>
@@ -77,13 +77,13 @@
                     break;
 
                 case 'topic-type-put-records':
-                    var content = $.trim($('#record-content-input').val());
-                    if (0 == content.length) {
+                    var name = $.trim($('#record-name-input').val());
+                    if (0 == name.length) {
                         setAlertText('报备内容不能为空');
                         $('#alert-modal').modal('show');
                         return;
                     }
-                    data.content = content;
+                    data.name = name;
                     data.type = 'putRecord';
                     url = "{{ route(ROUTE_NAME_TOPIC_ADD_PUT_RECORD) }}";
                     break;
