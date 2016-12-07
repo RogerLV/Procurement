@@ -37,6 +37,7 @@ class StageHandler
             case STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS: return new MemberComments($reviewMeeting);
             case STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE: return new SecretariatLeaderApprove($reviewMeeting);
             case STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE: return new DirectorApprove($reviewMeeting);
+            case STAGE_ID_REVIEW_MEETING_DECIDE_PROCUREMENT_MODE: return new DecideProcurementMode($reviewMeeting);
             case STAGE_ID_REVIEW_MEETING_COMPLETE: return new Complete($reviewMeeting);
 
             default:

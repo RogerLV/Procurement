@@ -18,6 +18,7 @@ class Secretariat extends AbstractRole
         STAGE_ID_AUDIT,
         STAGE_ID_REVIEW_MEETING_INITIATE,
         STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES,
+        STAGE_ID_REVIEW_MEETING_DECIDE_PROCUREMENT_MODE,
     ];
 
     public function getCandidates()

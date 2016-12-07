@@ -15,7 +15,11 @@ class DirectorApprove extends ReviewMeetingStage implements ISimpleApprove
 
     public function getNextStage()
     {
-        return new Complete($this->referrer);
+        if ($this->referrer->topics->where('type', 'discussion')->count() == 0) {
+            return new Complete($this->referrer);
+        } else {
+            return new DecideProcurementMode($this->referrer);
+        }
     }
 
     public function renderFunctionArea()
