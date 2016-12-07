@@ -72,6 +72,7 @@ define('DOC_TYPE_PUT_RECORDS', 16);
 
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
+define('ERROR_MESSAGE_ALREADY_COMMENTED', '不能重复填写意见');
 
 // Route Names
 define('ROUTE_NAME_WELCOME', 'Welcome');
@@ -202,7 +203,7 @@ return [
         STAGE_ID_REVIEW_MEETING_INITIATE => '发起采购评审',
         STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM => '委员确认',
         STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES => '生成会议纪要',
-        STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员意见',
+        STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员填写意见',
         STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE => '审核会议纪要',
         STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE => '签发会议纪要',
         STAGE_ID_REVIEW_MEETING_COMPLETE => '完成',

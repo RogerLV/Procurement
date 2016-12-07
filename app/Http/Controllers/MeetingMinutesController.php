@@ -69,7 +69,7 @@ class MeetingMinutesController extends Controller
             $meetingMinutesContent = new MeetingMinutesContent();
         }
 
-        $meetingMinutesContent->content = $content;
+        $meetingMinutesContent->content = nl2br(htmlentities($content));
         $topicIns->meetingMinutesContent()->save($meetingMinutesContent);
 
         return response()->json(['status'=>'good']);

@@ -18,9 +18,15 @@ Route::get('dummyEntry', function () {
 
 Route::group(['middleware' => ['normal']], function () {
 
-    Route::get('test', function () {
-        $metaInfo = \App\Models\ReviewMeeting::getIns(1)->metaInfo;
-        var_dump(empty($metaInfo));
+    Route::get('test/{id}', function ($id) {
+        $reviewMeetingIns = \App\Models\ReviewMeeting::getIns($id);
+
+        $lastSubmitLog = $reviewMeetingIns->log()->where([
+            ['fromStage', '=', STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES],
+            ['toStage', '=', STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS]
+        ])->orderBy('timeAt', 'desc')->first();
+
+        echo "<pre>"; var_dump($lastSubmitLog->timeAt);
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);

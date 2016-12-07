@@ -40,4 +40,12 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
                         });
         return !empty($this->referrer->metaInfo) && $emptyTopics->isEmpty();
     }
+
+    public function operate($para = null)
+    {
+        // TODO: generate pdf and save;
+
+
+        $this->logOperation();
+    }
 }

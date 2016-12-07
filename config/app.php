@@ -149,7 +149,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         // 3rd party libraries
-        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -206,7 +205,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // 3rd party libraries
-        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

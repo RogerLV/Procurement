@@ -27,4 +27,9 @@ class SecretariatLeaderApprove extends ReviewMeetingStage implements ISimpleAppr
     {
         return null;
     }
+
+    public function getPreviousStage()
+    {
+        return new GenerateMinutes($this->referrer);
+    }
 }

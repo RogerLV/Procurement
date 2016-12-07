@@ -56,7 +56,12 @@
         <div class="page-header">
             <h5>议题{{ $idx+1 }}: {{ $topic->topicable->name }}</h5>
             <div class="input-group">
-                <textarea class="form-control" rows="10">{{ $topic->meetingMinutesContent->content or null }}</textarea>
+                @if(isset($topic->meetingMinutesContent))
+                    <?php $content = preg_replace('/<br\s?\/?>/i', "\r", $topic->meetingMinutesContent->content);?>
+                    <textarea class="form-control" rows="10">{{ $content }}</textarea>
+                @else
+                    <textarea class="form-control" rows="10" placeholder="请填写纪要"></textarea>
+                @endif
                 <span class="input-group-btn" style="vertical-align:top;">
                     <button class="btn btn-primary submit-meeting-minutes-content"
                             data-topic-id="{{ $topic->id }}" style="height: 214px; width: 60px">
@@ -108,8 +113,8 @@
                 type: 'POST',
                 success: function (data) {
                     handleReturn(data, function () {
-                        // do nothing
-                        console.log(data);
+                        setAlertText('采购评审信息添加成功。');
+                        $('#alert-modal').modal('show');
                     })
                 }
             });
@@ -133,7 +138,8 @@
                 type: 'POST',
                 success: function(data) {
                     handleReturn(data, function () {
-                        // do nothing;
+                        setAlertText('纪要添加成功。');
+                        $('#alert-modal').modal('show');
                     });
                 }
             });
