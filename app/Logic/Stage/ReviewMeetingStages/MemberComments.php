@@ -23,29 +23,10 @@ class MemberComments extends ReviewMeetingStage
         $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
         $commented = $currentRoundLogs->where('lanID', $loginUserLanID)->count() != 0;
 
-        $participants = $this->referrer->participants()->with('user.department')->get();
-
-        $committeeMembers = $participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER);
-        $committeeMemberNames = [];
-        foreach ($committeeMembers as $member) {
-            $committeeMemberNames[] = $member->user->getDualName();
-        }
-
-        $specialInvitees = $participants->where('roleID', ROLE_ID_SPECIAL_INVITE);
-        $specialInviteeNames = [];
-        foreach ($specialInvitees as $entry) {
-            $specialInviteeNames[] = $entry->user->getDualName()." (".$entry->user->department->deptCnName.")";
-        }
-
         return view('review.display.function.membercomments')
                 ->with('title', $this->getStageName())
                 ->with('commented', $commented)
-                ->with('logs', $currentRoundLogs)
-                ->with('reviewIns', $this->referrer)
-                ->with('metaInfo', $this->referrer->metaInfo)
-                ->with('topics', $this->referrer->topics()->with('topicable', 'meetingMinutesContent')->get())
-                ->with('memberNames', $committeeMemberNames)
-                ->with('inviteeNames', $specialInviteeNames);
+                ->with('logs', $currentRoundLogs);
     }
 
     public function renderInfoArea()

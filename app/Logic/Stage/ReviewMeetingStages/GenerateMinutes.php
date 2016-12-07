@@ -29,7 +29,26 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        return null;
+        $participants = $this->referrer->participants()->with('user.department')->get();
+
+        $committeeMembers = $participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER);
+        $committeeMemberNames = [];
+        foreach ($committeeMembers as $member) {
+            $committeeMemberNames[] = $member->user->getDualName();
+        }
+
+        $specialInvitees = $participants->where('roleID', ROLE_ID_SPECIAL_INVITE);
+        $specialInviteeNames = [];
+        foreach ($specialInvitees as $entry) {
+            $specialInviteeNames[] = $entry->user->getDualName()." (".$entry->user->department->deptCnName.")";
+        }
+
+        return view('review.display.info.meetingminutes')
+            ->with('reviewIns', $this->referrer)
+            ->with('metaInfo', $this->referrer->metaInfo)
+            ->with('topics', $this->referrer->topics()->with('topicable', 'meetingMinutesContent')->get())
+            ->with('memberNames', $committeeMemberNames)
+            ->with('inviteeNames', $specialInviteeNames);
     }
 
     public function canStageUp()
@@ -39,13 +58,5 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
                             return empty($ins->meetingMinutesContent);
                         });
         return !empty($this->referrer->metaInfo) && $emptyTopics->isEmpty();
-    }
-
-    public function operate($para = null)
-    {
-        // TODO: generate pdf and save;
-
-
-        $this->logOperation();
     }
 }

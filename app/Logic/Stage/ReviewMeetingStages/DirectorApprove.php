@@ -27,4 +27,9 @@ class DirectorApprove extends ReviewMeetingStage implements ISimpleApprove
     {
         return null;
     }
+
+    public function getPreviousStage()
+    {
+        return new GenerateMinutes($this->referrer);
+    }
 }

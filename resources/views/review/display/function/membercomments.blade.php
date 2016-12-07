@@ -3,11 +3,6 @@
 
 @section('stageFunction')
 
-    @include('review.display.function.meetingminutes')
-
-    <div class="page-header">
-        <h4>委员意见</h4>
-    </div>
     <table class="table">
         @foreach($logs as $log)
             <tr>

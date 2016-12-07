@@ -20,7 +20,8 @@ class SecretariatLeaderApprove extends ReviewMeetingStage implements ISimpleAppr
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('review.display.function.secretariatleaderapprove')
+            ->with('title', $this->getStageName());
     }
 
     public function renderInfoArea()
