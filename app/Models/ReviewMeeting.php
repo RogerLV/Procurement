@@ -11,7 +11,8 @@ class ReviewMeeting extends Model
 
     public static function getIns($reviewMeetingID)
     {
-        $reviewMeetingIns = self::find($reviewMeetingID);
+        // Log is heavily used throughout processing, so retrieve in advance
+        $reviewMeetingIns = self::with('log.operator')->find($reviewMeetingID);
 
         if (is_null($reviewMeetingIns)) {
             throw new AppException('RVWMDL001');

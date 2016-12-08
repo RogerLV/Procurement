@@ -145,6 +145,7 @@ define('PAGE_NAME_REVIEW_APPLY', '发起采购评审');
 
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');
+define('PRINT_PAGE', true);
 
 return [
     // Procurement Scope
@@ -207,6 +208,7 @@ return [
         STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员填写意见',
         STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE => '审核会议纪要',
         STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE => '签发会议纪要',
+        STAGE_ID_REVIEW_MEETING_DECIDE_PROCUREMENT_MODE => '采购方式讨论结果',
         STAGE_ID_REVIEW_MEETING_COMPLETE => '完成',
     ],
 

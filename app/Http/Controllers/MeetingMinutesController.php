@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\AppException;
+use App\Logic\MeetingMinutesHandler;
 use App\Models\MeetingMinutesContent;
 use App\Models\MeetingMinutesMetaInfo;
+use App\Models\Project;
 use App\Models\ReviewMeeting;
 use App\Models\ReviewTopic;
 use Gate;
@@ -73,5 +75,48 @@ class MeetingMinutesController extends Controller
         $topicIns->meetingMinutesContent()->save($meetingMinutesContent);
 
         return response()->json(['status'=>'good']);
+    }
+
+    public function reviewMeeting($id)
+    {
+        $reviewIns = ReviewMeeting::getIns($id);
+
+        // check visibility
+        if (Gate::forUser($this->loginUser)->denies('review-meeting-visible', $reviewIns)) {
+            throw new AppException('MMCTL005', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
+        // check review meeting stage
+        if ($reviewIns->stage < STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS) {
+            throw new AppException('MMCTL006', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
+        return MeetingMinutesHandler::renderReviewMeeting($reviewIns, PRINT_PAGE);
+    }
+
+    public function topic($id)
+    {
+        // get topic instance
+        $topicIns = ReviewTopic::with(
+            'meetingMinutesContent',
+            'topicable',
+            'reviewMeeting.log.operator'
+        )->find($id);
+
+        if (is_null($topicIns)) {
+            throw new AppException('MMCTL007');
+        }
+
+        // check instance type, only project type topic can be displayed
+        if (!$topicIns->topicable instanceof Project) {
+            throw new AppException('MMCTL008');
+        }
+
+        // check project
+        if (Gate::forUser($this->loginUser)->denies('project-visible', $topicIns->topicable)) {
+            throw new AppException('MMCTL009');
+        }
+
+        return MeetingMinutesHandler::renderTopic($topicIns, PRINT_PAGE);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Logic\Stage\ProjectStages;
 
 
+use App\Logic\MeetingMinutesHandler;
 use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ProjectStage;
 use App\Logic\Stage\TLogOperation;
@@ -33,8 +34,18 @@ class SelectMode extends ProjectStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        return null;
+        $topicIns = $this->referrer->topics()->with(
+            'meetingMinutesContent',
+            'topicable',
+            'reviewMeeting.log.operator'
+        )->where('type', 'discussion')->first();
+
+        if (!is_null($topicIns)) {
+            return MeetingMinutesHandler::renderTopic($topicIns);
+        }
+
     }
+
     public function canStageUp()
     {
         return !is_null($this->referrer->approach);

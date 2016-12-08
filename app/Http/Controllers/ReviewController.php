@@ -70,12 +70,11 @@ class ReviewController extends Controller
         }
 
         $stageView = ReviewMeetingStageHandler::renderReviewMeetingStageView($reviewMeetingIns);
-        $logs = $reviewMeetingIns->log()->with('operator')->get();
 
         return view('review.display')
                 ->with('reviewMeetingIns', $reviewMeetingIns)
                 ->with('stageView', $stageView)
-                ->with('logs', $logs)
+                ->with('logs', $reviewMeetingIns->log)
                 ->with('stageNames', Config::get('constants.stageNames'));
     }
 }

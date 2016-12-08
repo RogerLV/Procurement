@@ -24,7 +24,8 @@ class DirectorApprove extends ReviewMeetingStage implements ISimpleApprove
 
     public function renderFunctionArea()
     {
-        return null;
+        return view('review.display.function.directorapprove')
+            ->with('title', $this->getStageName());
     }
 
     public function renderInfoArea()
@@ -35,5 +36,21 @@ class DirectorApprove extends ReviewMeetingStage implements ISimpleApprove
     public function getPreviousStage()
     {
         return new GenerateMinutes($this->referrer);
+    }
+
+    public function operate($para = null)
+    {
+        // set review project stage to finish
+        if ('approve' == $para['operation']) {
+            $reviewTopics = $this->referrer->topics()->with('topicable')
+                ->where('type', 'review')->get();
+
+            foreach ($reviewTopics as $topic) {
+                $topic->topicable->stage = STAGE_ID_FILE_CONTRACT;
+                $topic->topicable->save();
+            }
+        }
+
+        $this->approve($para['operation'], $para['comment']);
     }
 }

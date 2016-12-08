@@ -3,6 +3,7 @@
 namespace App\Logic\Stage\ReviewMeetingStages;
 
 
+use App\Logic\MeetingMinutesHandler;
 use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ReviewMeetingStage;
 use App\Logic\Stage\TLogOperation;
@@ -29,26 +30,7 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        $participants = $this->referrer->participants()->with('user.department')->get();
-
-        $committeeMembers = $participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER);
-        $committeeMemberNames = [];
-        foreach ($committeeMembers as $member) {
-            $committeeMemberNames[] = $member->user->getDualName();
-        }
-
-        $specialInvitees = $participants->where('roleID', ROLE_ID_SPECIAL_INVITE);
-        $specialInviteeNames = [];
-        foreach ($specialInvitees as $entry) {
-            $specialInviteeNames[] = $entry->user->getDualName()." (".$entry->user->department->deptCnName.")";
-        }
-
-        return view('review.display.info.meetingminutes')
-            ->with('reviewIns', $this->referrer)
-            ->with('metaInfo', $this->referrer->metaInfo)
-            ->with('topics', $this->referrer->topics()->with('topicable', 'meetingMinutesContent')->get())
-            ->with('memberNames', $committeeMemberNames)
-            ->with('inviteeNames', $specialInviteeNames);
+        return MeetingMinutesHandler::renderReviewMeeting($this->referrer);
     }
 
     public function canStageUp()

@@ -3,6 +3,7 @@
 namespace App\Logic\Stage\ProjectStages;
 
 
+use App\Logic\MeetingMinutesHandler;
 use App\Logic\Stage\ProjectStage;
 
 class Review extends ProjectStage
@@ -21,7 +22,13 @@ class Review extends ProjectStage
 
     public function renderInfoArea()
     {
-        return null;
+        $topicIns = $this->referrer->topics()->with(
+            'meetingMinutesContent',
+            'topicable',
+            'reviewMeeting.log.operator'
+        )->where('type', 'review')->first();
+
+        return MeetingMinutesHandler::renderTopic($topicIns);
     }
 
     public function operate($para = null)

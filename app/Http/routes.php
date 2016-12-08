@@ -19,14 +19,16 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test/{id}', function ($id) {
-        $reviewMeetingIns = \App\Models\ReviewMeeting::getIns($id);
 
-        $lastSubmitLog = $reviewMeetingIns->log()->where([
-            ['fromStage', '=', STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES],
-            ['toStage', '=', STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS]
-        ])->orderBy('timeAt', 'desc')->first();
+        $projectIns = \App\Models\Project::getIns($id);
 
-        echo "<pre>"; var_dump($lastSubmitLog->timeAt);
+        $topicIns = $projectIns->topics()->with(
+            'meetingMinutesContent',
+            'topicable',
+            'reviewMeeting.log.operator'
+        )->where('type', 'review')->first();
+
+        return \App\Logic\MeetingMinutesHandler::renderTopic($topicIns);
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
@@ -85,6 +87,8 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::post('meetingMinutes/add/meta', 'MeetingMinutesController@addMetaInfo')->name('MeetingMinutesAddMeta');
     Route::post('meetingMinutes/add/content', 'MeetingMinutesController@addContent')->name('MeetingMinutesAddContent');
+    Route::get('meetingMinutes/reviewMeeting/{id}', 'MeetingMinutesController@reviewMeeting');
+    Route::get('meetingMinutes/topic/{id}', 'MeetingMinutesController@topic');
 });
 
 Route::group(['middleware' => ['welcome']], function () {
