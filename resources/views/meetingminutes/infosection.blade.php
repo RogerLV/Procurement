@@ -8,7 +8,7 @@
             <div class="panel-title">
                 <a data-toggle="collapse" data-parent="div.meeting-minutes-accordion"
                     href="#meeting-minutes-{{ $reviewIns->id }}" aria-expanded="true">
-                    采购评审会议纪要
+                    采购评审会议纪要(点击展开)
                 </a>
             </div>
         </div>

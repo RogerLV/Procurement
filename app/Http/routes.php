@@ -19,16 +19,16 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test/{id}', function ($id) {
-
-        $projectIns = \App\Models\Project::getIns($id);
-
-        $topicIns = $projectIns->topics()->with(
-            'meetingMinutesContent',
-            'topicable',
-            'reviewMeeting.log.operator'
-        )->where('type', 'review')->first();
-
-        return \App\Logic\MeetingMinutesHandler::renderTopic($topicIns);
+            var_dump(route('review/stage/decideMode')); exit;
+//        $projectIns = \App\Models\Project::getIns($id);
+//
+//        $topicIns = $projectIns->topics()->with(
+//            'meetingMinutesContent',
+//            'topicable',
+//            'reviewMeeting.log.operator'
+//        )->where('type', 'review')->first();
+//
+//        return \App\Logic\MeetingMinutesHandler::renderTopic($topicIns);
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
@@ -78,6 +78,7 @@ Route::group(['middleware' => ['normal']], function () {
 
     Route::post('review/stage/complete', 'ReviewStageController@complete')->name(ROUTE_NAME_REVIEW_STAGE_COMPLETE);
     Route::post('review/stage/approve', 'ReviewStageController@approve')->name(ROUTE_NAME_REVIEW_STAGE_APPROVE);
+    Route::post('review/stage/decideMode', 'ReviewStageController@decideMode')->name('ReviewStageDecideMode');
 
     Route::post('topic/addproject', 'TopicController@addProject')->name(ROUTE_NAME_TOPIC_ADD_PROJECT);
     Route::post('topic/addputrecord', 'TopicController@addPutRecord')->name(ROUTE_NAME_TOPIC_ADD_PUT_RECORD);

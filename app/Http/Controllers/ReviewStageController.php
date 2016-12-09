@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\AppException;
+use App\Models\Project;
 use Gate;
 use App\Models\ReviewMeeting;
+use App\Models\ReviewTopic;
 use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
 class ReviewStageController extends Controller
@@ -52,6 +54,33 @@ class ReviewStageController extends Controller
         }
 
         $para['comment'] = trim(request()->input('comment'));
+
+        $this->stageIns->operate($para);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function decideMode()
+    {
+        if (empty($para['operation'] = trim(request()->input('operation')))
+            || empty($topicID = trim(request()->input('topicID')))) {
+            throw new AppException('RVWSTGCTL006');
+        }
+
+        if (!in_array($para['operation'], ['approve', 'reject'])) {
+            throw new AppException('RVWSTGCTL007');
+        }
+
+        $para['projectIns'] = ReviewTopic::getIns($topicID)->topicable;
+        $para['comment'] = trim(request()->input('comment'));
+
+        if (! $para['projectIns'] instanceof Project) {
+            throw new AppException('RVWSTGCTL008');
+        }
+
+        if (STAGE_ID_PASS_SIGN != $para['projectIns']->stage) {
+            throw new AppException('RVWSTGCTL009');
+        }
 
         $this->stageIns->operate($para);
 
