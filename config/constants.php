@@ -146,6 +146,9 @@ define('PAGE_NAME_REVIEW_APPLY', '发起采购评审');
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');
 define('PRINT_PAGE', true);
+define('YEAR', '年');
+define('MONTH', '月');
+define('DAY', '日');
 
 return [
     // Procurement Scope

@@ -40,4 +40,14 @@ class ReviewMeeting extends Model
     {
         return $this->hasOne('App\Models\MeetingMinutesMetaInfo', 'reviewMeetingID', 'id');
     }
+
+    public function getDateAttribute($value)
+    {
+        if (is_null($value)) {
+            return $value;
+        }
+
+        $dateAry = explode('-', $value);
+        return $dateAry[0].YEAR.$dateAry[1].MONTH.$dateAry[2].DAY;
+    }
 }

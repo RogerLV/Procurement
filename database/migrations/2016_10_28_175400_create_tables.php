@@ -182,7 +182,7 @@ class CreateTables extends Migration
             $table->string('givenID')->nullable();
             $table->integer('stage');
             $table->string('lanID');
-            $table->string('date')->nullable();
+            $table->date('date')->nullable();
             $table->string('time')->nullable();
             $table->string('venue')->nullable();
 
