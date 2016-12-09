@@ -6,6 +6,7 @@ namespace App\Logic\Role;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\User;
 use App\Models\ReviewMeeting;
+use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
 class ReviewCommitteeMember extends AbstractRole
 {
@@ -36,5 +37,38 @@ class ReviewCommitteeMember extends AbstractRole
                         ->count();
 
         return parent::reviewMeetingOperable($reviewMeetingIns) && $participated !=0;
+    }
+
+    public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)
+    {
+        // check invited at last reducing chance to run query
+        return $reviewMeeting->date >= date('Y-m-d')
+                && in_array($reviewMeeting->stage, $this->stages['reviewMeetingPendingParticipate'])
+                && $this->reviewMeetingInvited($reviewMeeting);
+    }
+
+    public function pendingReviewMeetingProcess(ReviewMeeting $reviewMeeting)
+    {
+        return parent::pendingReviewMeetingProcess($reviewMeeting)
+                && $this->reviewMeetingInvited($reviewMeeting)
+                && !$this->reviewMeetingStageOperated($reviewMeeting);
+    }
+
+
+    private function reviewMeetingInvited(ReviewMeeting $reviewMeeting)
+    {
+        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+
+        return !is_null(
+            $reviewMeeting->participants()->where([
+                ['roleID', '=', ROLE_ID_REVIEW_COMMITTEE_MEMBER],
+                ['lanID', '=', $loginUserLanID]
+            ])->first()
+        );
+    }
+
+    private function reviewMeetingStageOperated(ReviewMeeting $reviewMeeting)
+    {
+        return ReviewMeetingStageHandler::getReviewMeetingStageIns($reviewMeeting)->operated();
     }
 }

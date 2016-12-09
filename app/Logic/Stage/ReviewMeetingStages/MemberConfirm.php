@@ -5,10 +5,11 @@ namespace App\Logic\Stage\ReviewMeetingStages;
 
 use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Logic\Stage\IOperated;
 use App\Logic\Stage\ReviewMeetingStage;
 use App\Models\StageLog;
 
-class MemberConfirm extends ReviewMeetingStage
+class MemberConfirm extends ReviewMeetingStage implements IOperated
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM;
 
@@ -69,7 +70,7 @@ class MemberConfirm extends ReviewMeetingStage
         $this->referrer->stage = $this->getPreviousStage()->getStageID();
         $this->referrer->save();
 
-        $toStage = $this->getPreviousStage()->getStageID();
+        $toStage = $this->referrer->stage;
         $this->logOperation($comment, $toStage);
     }
 
@@ -97,5 +98,16 @@ class MemberConfirm extends ReviewMeetingStage
     public function getPreviousStage()
     {
         return new Initiate($this->referrer);
+    }
+
+    public function operated()
+    {
+        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        return !is_null(
+            $this->referrer->participants()->where([
+                ['roleID', '=', ROLE_ID_REVIEW_COMMITTEE_MEMBER],
+                ['lanID', '=', $loginUserLanID]
+            ])->first()->willAttend
+        );
     }
 }

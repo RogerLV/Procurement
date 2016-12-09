@@ -30,4 +30,10 @@ class Secretariat extends AbstractRole
     {
         return true;
     }
+
+    public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)
+    {
+        return $reviewMeeting->date >= date('Y-m-d')
+                && in_array($reviewMeeting->stage, $this->stages['reviewMeetingPendingParticipate']);
+    }
 }

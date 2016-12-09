@@ -15,6 +15,9 @@
         font-size: 40px;
         color: #31708f;
     }
+    .list-group-item-info {
+         padding: 3px 10px
+     }
 </style>
 @endsection
 
@@ -39,17 +42,48 @@
         </div>
     <br>
 
-    <h4>我的待办:</h4>
-    <div class="list-group">
-        @foreach($pendingProjects as $project)
-            <a href="{{ url('project/display').'/'.$project->id }}" target="_blank"
-                class="list-group-item list-group-item-info">
-                <h5>{{ $project->name }}</h5>
-            </a>
-            <br>
-        @endforeach
-    </div>
-    <br>
+    @if(!$pendingReviewsMeetingsParticipate->isEmpty())
+        <h4>采购评审待参会:</h4>
+        <div class="list-group">
+            @foreach($pendingReviewsMeetingsParticipate as $review)
+                <a href="{{ url('review/display/'.$review->id) }}" target="_blank"
+                   class="list-group-item list-group-item-info">
+                    <h5>{{ $review->date }}&nbsp;{{ $review->time }}&nbsp;{{ $review->venue }}</h5>
+                </a>
+                <br>
+            @endforeach
+        </div>
+        <br>
+    @endif
+
+    @if(!$pendingReviewMeetingsProcess->isEmpty())
+        <h4>采购评审待办:</h4>
+        <div class="list-group">
+            @foreach($pendingReviewMeetingsProcess as $meeting)
+                <a href="{{ url('review/display/'.$review->id) }}" target="_blank"
+                   class="list-group-item list-group-item-info">
+                    <h5>{{ $review->date }}&nbsp;{{ $review->time }}&nbsp;{{ $review->venue }}</h5>
+                </a>
+                <br>
+            @endforeach
+        </div>
+        <br>
+    @endif
+
+    @if(!$pendingProjects->isEmpty())
+        <h4>采购项目待办:</h4>
+        <div class="list-group">
+            @foreach($pendingProjects as $project)
+                <a href="{{ url('project/display').'/'.$project->id }}" target="_blank"
+                   class="list-group-item list-group-item-info">
+                    <h5>{{ $project->name }}</h5>
+                </a>
+                <br>
+            @endforeach
+        </div>
+        <br>
+    @endif
+
 
     <h4>您可以访问以下页面:</h4>
     @foreach($pages as $pageIns)

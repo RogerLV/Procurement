@@ -4,11 +4,12 @@ namespace App\Logic\Stage\ReviewMeetingStages;
 
 
 use App\Exceptions\AppException;
+use App\Logic\Stage\IOperated;
 use App\Logic\Stage\ReviewMeetingStage;
 use App\Models\StageLog;
 use App\Logic\LoginUser\LoginUserKeeper;
 
-class MemberComments extends ReviewMeetingStage
+class MemberComments extends ReviewMeetingStage implements IOperated
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS;
 
@@ -78,17 +79,24 @@ class MemberComments extends ReviewMeetingStage
         return new GenerateMinutes($this->referrer);
     }
 
+    public function operated()
+    {
+        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $operatedLog = $this->getCurrentRoundLogs()->where('lanID', $loginUserLanID)->first();
+        return !is_null($operatedLog);
+    }
+
 
     private function getCurrentRoundLogs()
     {
-        $lastSubmitLog = $this->referrer->log()->where([
+        $lastSubmitLog = $this->referrer->log->where([
             ['fromStage', '=', STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES],
             ['toStage', '=', STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS]
         ])->orderBy('timeAt', 'desc')->first();
 
-        return $this->referrer->log()->with('operator')->where([
+        return $this->referrer->log->with('operator')->where([
             ['fromStage', '=', $this->getStageID()],
             ['timeAt', '>', $lastSubmitLog->timeAt]
-        ])->get();
+        ]);
     }
 }

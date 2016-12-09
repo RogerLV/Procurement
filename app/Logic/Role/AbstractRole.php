@@ -19,6 +19,12 @@ abstract class AbstractRole
     ];
     protected $roleSpecPages = [];
     protected $operableStages= [];
+    protected $stages = [
+        'reviewMeetingPendingParticipate' => [
+            STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM,
+            STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES
+        ],
+    ];
 
     abstract public function getCandidates();
 
@@ -84,5 +90,15 @@ abstract class AbstractRole
     public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
     {
         return false;
+    }
+
+    public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)
+    {
+        return false;
+    }
+
+    public function pendingReviewMeetingProcess(ReviewMeeting $reviewMeeting)
+    {
+        return $this->reviewMeetingOperable($reviewMeeting);
     }
 }
