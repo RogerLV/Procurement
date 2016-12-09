@@ -17,6 +17,9 @@ class ReviewCommitteeMember extends AbstractRole
         STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM,
         STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS,
     ];
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {

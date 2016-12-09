@@ -5,7 +5,7 @@
 <style type="text/css">
     button.page-link {
         height: 80px;
-        width: 80px;
+        width: 120px;
         border-radius: 10px;
         border: 1px solid #bce8f1;
         background-color: #d9edf7;
@@ -59,7 +59,7 @@
     @if(!$pendingReviewMeetingsProcess->isEmpty())
         <h4>采购评审待办:</h4>
         <div class="list-group">
-            @foreach($pendingReviewMeetingsProcess as $meeting)
+            @foreach($pendingReviewMeetingsProcess as $review)
                 <a href="{{ url('review/display/'.$review->id) }}" target="_blank"
                    class="list-group-item list-group-item-info">
                     <h5>{{ $review->date }}&nbsp;{{ $review->time }}&nbsp;{{ $review->venue }}</h5>
@@ -92,7 +92,8 @@
             {{ $pageIns->name }}
         </button>&nbsp;
     @endforeach
-
+    <br>
+    <br>
 @endsection
 
 

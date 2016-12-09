@@ -12,6 +12,9 @@ class SystemAdmin extends AbstractRole
     protected $operable = false;
     protected $displayable = false;
     protected $operableStages = [];
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {

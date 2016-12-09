@@ -12,6 +12,9 @@ class SpecialInvite extends AbstractRole
     protected $roleID = 11;
     protected $roleName = ROLE_NAME_SPECIAL_INVITE;
     protected $commonPages = [];
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {
@@ -30,7 +33,8 @@ class SpecialInvite extends AbstractRole
 
     public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
     {
-        return STAGE_ID_REVIEW_MEETING_INITIATE != $reviewMeeting->stage;
+        return STAGE_ID_REVIEW_MEETING_INITIATE != $reviewMeeting->stage
+                && $this->reviewMeetingInvited($reviewMeeting);
     }
 
     public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)

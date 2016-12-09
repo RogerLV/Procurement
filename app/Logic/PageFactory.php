@@ -24,6 +24,10 @@ class PageFactory
             'pageName' => PAGE_NAME_REVIEW_APPLY,
             'icon' => 'glyphicon-search'
         ],
+        'ReviewMeetingList' => [
+            'pageName' => PAGE_NAME_REVIEW_MEETING_LIST,
+            'icon' => 'glyphicon-list'
+        ],
     ];
     public static function create($routeName)
     {
@@ -33,6 +37,5 @@ class PageFactory
         }
 
         throw new AppException('ERR005', 'Unknown Page Name.');
-
     }
 }

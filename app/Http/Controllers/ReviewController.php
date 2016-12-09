@@ -7,6 +7,7 @@ use Config;
 use Gate;
 use App\Exceptions\AppException;
 use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
+use App\Logic\Role\RoleFactory;
 
 class ReviewController extends Controller
 {
@@ -72,9 +73,22 @@ class ReviewController extends Controller
         $stageView = ReviewMeetingStageHandler::renderReviewMeetingStageView($reviewMeetingIns);
 
         return view('review.display')
+                ->with('title', PAGE_NAME_REVIEW_MEETING_DISPLAY)
                 ->with('reviewMeetingIns', $reviewMeetingIns)
                 ->with('stageView', $stageView)
                 ->with('logs', $reviewMeetingIns->log)
                 ->with('stageNames', Config::get('constants.stageNames'));
+    }
+
+    public function listAll()
+    {
+        $roleIns = RoleFactory::create($this->loginUser->getActiveRole()->roleID);
+        $reviewMeetings = ReviewMeeting::all()->filter(function ($ins) use ($roleIns) {
+            return $roleIns->reviewMeetingVisible($ins);
+        });
+
+        return view('review.listall')
+                ->with('title', PAGE_NAME_REVIEW_MEETING_LIST)
+                ->with('reviewMeetings', $reviewMeetings);
     }
 }

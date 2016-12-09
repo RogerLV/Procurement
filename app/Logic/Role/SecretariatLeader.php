@@ -13,6 +13,9 @@ class SecretariatLeader extends AbstractRole
     protected $operableStages = [
         STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE,
     ];
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {

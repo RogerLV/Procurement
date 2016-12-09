@@ -13,6 +13,9 @@ class ReviewDirector extends AbstractRole
     protected $operableStages = [
         STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE
     ];
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {

@@ -11,6 +11,9 @@ class AppAdmin extends AbstractRole
 {
     protected $roleID = 9;
     protected $roleName = ROLE_NAME_APP_ADMIN;
+    protected $roleSpecPages = [
+        'ReviewMeetingList'
+    ];
 
     public function getCandidates()
     {

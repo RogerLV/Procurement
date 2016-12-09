@@ -133,15 +133,18 @@ define('ROUTE_NAME_REVIEW_PARTICIPANT_EDIT', 'ReviewParticipantEdit');
 
 // Page Names
 define('PAGE_NAME_ROLE_LIST', '查看角色');
-define('PAGE_NAME_PROJECT_APPLY', '发起采购');
-define('PAGE_NAME_PROJECT_LIST', '项目列表');
 
-define('PAGE_NAME_PROJECT_DISPLAY', '项目浏览');
+define('PAGE_NAME_PROJECT_APPLY', '发起采购');
+define('PAGE_NAME_PROJECT_LIST', '采购项目列表');
+define('PAGE_NAME_PROJECT_DISPLAY', '采购项目浏览');
+
 define('PAGE_NAME_SCORE_EDIT_TEMPLATE', '编辑评分模板');
 define('PAGE_NAME_SCORE_PAGE', '供应商打分');
 define('PAGE_NAME_SCORE_OVERVIEW', '供应商打分汇总');
 
 define('PAGE_NAME_REVIEW_APPLY', '发起采购评审');
+define('PAGE_NAME_REVIEW_MEETING_DISPLAY', '采购评审浏览');
+define('PAGE_NAME_REVIEW_MEETING_LIST', '采购评审列表');
 
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');

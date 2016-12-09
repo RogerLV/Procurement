@@ -75,6 +75,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('review/apply/{id?}', 'ReviewController@apply')->name(ROUTE_NAME_REVIEW_APPLY);
     Route::get('review/display/{id}', 'ReviewController@display')->name(ROUTE_NAME_REVIEW_DISPLAY);
     Route::post('review/edit', 'ReviewController@edit')->name(ROUTE_NAME_REVIEW_EDIT);
+    Route::get('review/list', 'ReviewController@listAll')->name('ReviewMeetingList');
 
     Route::post('review/stage/complete', 'ReviewStageController@complete')->name(ROUTE_NAME_REVIEW_STAGE_COMPLETE);
     Route::post('review/stage/approve', 'ReviewStageController@approve')->name(ROUTE_NAME_REVIEW_STAGE_APPROVE);

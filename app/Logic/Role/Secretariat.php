@@ -12,6 +12,7 @@ class Secretariat extends AbstractRole
     protected $roleName = ROLE_NAME_SECRETARIAT;
     protected $roleSpecPages = [
         ROUTE_NAME_REVIEW_APPLY,
+        'ReviewMeetingList'
     ];
     protected $operableStages= [
         STAGE_ID_PRETRIAL,
