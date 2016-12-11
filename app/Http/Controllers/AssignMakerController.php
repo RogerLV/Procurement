@@ -36,7 +36,7 @@ class AssignMakerController extends StageController
             throw new AppException('ASMK003', 'Data Error.');
         }
 
-        if ($this->projectIns->roles()->count() >= $this->projectIns->memberAmount) {
+        if ($projectDeptIns->role()->count() >= $projectDeptIns->memberAmount) {
             throw new AppException('ASMK006', 'Member amount reaches limit. ');
         }
 

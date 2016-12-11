@@ -67,7 +67,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -81,7 +80,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -95,7 +93,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -109,7 +106,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -139,7 +135,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -170,7 +165,6 @@ class DatabaseSeeder extends Seeder
             'background' => 'some background',
             'budget' => '80K SGD',
             'involveReview' => 1,
-            'memberAmount' => 4,
             'approach' => 'SingleSourcing',
         ]);
 
@@ -189,11 +183,6 @@ class DatabaseSeeder extends Seeder
         $log->data1 = 'reject';
         $log->lanID = 'ZLJ1';
         $project->log()->save($log);
-
-        \App\Models\ProjectRoleDepartment::insert([
-            'projectID' => 1,
-            'dept' => 'ITD',
-        ]);
 
         \App\Models\ProjectRole::insert([
             ['roleDeptID' => 1, 'lanID' => 'LUC1'],

@@ -73,7 +73,8 @@ define('DOC_TYPE_PUT_RECORDS', 16);
 
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
-define('ERROR_MESSAGE_ALREADY_COMMENTED', '不能重复填写意见');
+define('ERROR_MESSAGE_ALREADY_COMMENTED', '不能重复填写意见。');
+define('ERROR_MESSAGE_MAKER_NOT_ASSIGNED', '尚未分配采购小组成员。');
 
 // Route Names
 define('ROUTE_NAME_WELCOME', 'Welcome');
@@ -87,7 +88,7 @@ define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 
-define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
+//define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
 define('ROUTE_NAME_STAGE_SUMMARIZE', 'StageSummarize');

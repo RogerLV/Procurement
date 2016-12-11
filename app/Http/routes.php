@@ -41,12 +41,15 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
 
-    Route::post('stage/invite', 'StageController@inviteDept')->name(ROUTE_NAME_STAGE_INVITE_DEPT);
     Route::post('stage/selectmode', 'StageController@selectMode')->name(ROUTE_NAME_STAGE_SELECT_MODE);
     Route::post('stage/finishrecord', 'StageController@finishRecord')->name(ROUTE_NAME_STAGE_FINISH_RECORD);
     Route::post('stage/summarize', 'StageController@summarize')->name(ROUTE_NAME_STAGE_SUMMARIZE);
     Route::post('stage/approve', 'StageController@approve')->name(ROUTE_NAME_STAGE_APPROVE);
     Route::post('stage/complete', 'StageController@complete')->name(ROUTE_NAME_STAGE_COMPLETE);
+    Route::post('stage/assignComplete', 'StageController@assignComplete')->name('StageAssignComplete');
+
+    Route::post('memberDept/add', 'MemberDepartmentController@add')->name('MemberDepartmentAdd');
+    Route::post('memberDept/remove', 'MemberDepartmentController@remove')->name('MemberDepartmentRemove');
 
     Route::post('assignmaker/add', 'AssignMakerController@add')->name(ROUTE_NAME_ASSIGN_MAKER_ADD);
     Route::post('assignmaker/remove', 'AssignMakerController@remove')->name(ROUTE_NAME_ASSIGN_MAKER_REMOVE);

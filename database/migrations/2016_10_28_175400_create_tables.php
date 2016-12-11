@@ -24,7 +24,6 @@ class CreateTables extends Migration
             $table->string('background', env('FIELD_MAX_LENGTH'));
             $table->string('budget');
             $table->boolean('involveReview');
-            $table->integer('memberAmount')->nullable();
             $table->string('approach', 50)->nullable();
             $table->boolean('selectVendors')->nullable();
             $table->string('summary', env('FIELD_MAX_LENGTH'))->nullable();
@@ -37,6 +36,7 @@ class CreateTables extends Migration
             $table->increments('id');
             $table->integer('projectID');
             $table->string('dept', 10);
+            $table->integer('memberAmount');
 
             $table->timestamps();
             $table->softDeletes();

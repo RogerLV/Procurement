@@ -59,8 +59,19 @@ class AssignMaker extends ProjectStage implements IComplexOperation
 
     public function canStageUp()
     {
+        $stageLogCount = $this->referrer->log()->where([
+            ['fromStage', '=', STAGE_ID_ASSIGN_MAKER],
+            ['toStage', '=', STAGE_ID_ASSIGN_MAKER]
+        ])->count();
+
+        return $stageLogCount == $this->referrer->memberDepts()->count() - 1;
+    }
+
+    public function canLog()
+    {
         $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
         $roleCount = $this->referrer->memberDepts()->where('dept', $userDept)->first()->role()->count();
+
         return $roleCount !=0;
     }
 }

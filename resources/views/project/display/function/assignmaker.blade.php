@@ -2,6 +2,18 @@
 
 
 @section('stageFunction')
+    {{--group member constrain table--}}
+    <table class="table">
+        <tbody>
+            @foreach($memberDeptsWithRoles as $dept => $memberDept)
+                <tr>
+                    <td>{{ $deptInfo[$dept]->deptCnName }}</td>
+                    <td>{{ $memberDept->memberAmount }}人</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
     @if($assignable)
     <div class="input-group">
         <select class="form-control" id="project-maker-selector">
@@ -60,7 +72,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
                 },
-                url: "{{ route(ROUTE_NAME_STAGE_COMPLETE) }}",
+                url: "{{ route('StageAssignComplete') }}",
                 data: {
                     projectid: projectID
                 },

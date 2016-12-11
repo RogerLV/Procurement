@@ -32,18 +32,6 @@ class StageController extends Controller
         $this->stageIns = ProjectStageHandler::getProjectStageIns($this->projectIns);
     }
 
-    public function inviteDept()
-    {
-        if (empty($para['memberCount'] = request()->input('membercount'))) {
-            throw new AppException('STG004');
-        }
-
-        $para['invitedDepts'] = request()->input('inviteddepts');
-        $this->stageIns->operate($para);
-
-        return response()->json(['status' => 'good']);
-    }
-
     public function selectMode()
     {
         if (empty($para['procurementMethod'] = trim(request()->input('procurement-method')))) {
@@ -108,6 +96,17 @@ class StageController extends Controller
     {
         if (!$this->stageIns->canStageUp()) {
             throw new AppException('STG012', 'Stage finish conditions are not met.');
+        }
+
+        $this->stageIns->operate(null);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function assignComplete()
+    {
+        if (!$this->stageIns->canLog()) {
+            throw new AppException('STG013', ERROR_MESSAGE_MAKER_NOT_ASSIGNED);
         }
 
         $this->stageIns->operate(null);
