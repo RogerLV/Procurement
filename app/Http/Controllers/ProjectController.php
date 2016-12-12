@@ -96,14 +96,14 @@ class ProjectController extends Controller
         if ($applicantLanID != $this->loginUser->getUserInfo()->lanID) {
             throw new AppException('PRJ004', 'Incorrect User Info');
         }
-        if ($applicantDept != $this->loginUser->getDepartmentInfo()->dept) {
+        if ($applicantDept != $this->loginUser->getActiveRole()->dept) {
             throw new AppException('PRJ005', 'Incorrect User Info');
         }
 
         // create new project
         $projectIns = Project::createNew($para);
         $initStage = new Initiate($projectIns);
-        $initStage->logOperation();
+        $initStage->operate();
 
         // handle uploaded file
         Document::storeFile($signedReport, $projectIns, DOC_TYPE_SIGNED_REPORT);

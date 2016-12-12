@@ -35,13 +35,12 @@ class DeptManager extends AbstractRole
                 case STAGE_ID_INVITE_DEPT:
                 case STAGE_ID_SELECT_MODE:
                 case STAGE_ID_FILE_CONTRACT:
+                case STAGE_ID_MANAGER_APPROVE:
                     return $userDept == $projectIns->dept;
 
                 case STAGE_ID_ASSIGN_MAKER:
+                case STAGE_ID_RECORD:
                     return in_array($userDept, $projectIns->memberDepts()->pluck('dept')->toArray());
-
-                default:
-                    return true;
             }
         }
 

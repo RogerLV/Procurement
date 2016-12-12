@@ -12,4 +12,9 @@ class ScoreTemplate extends Model
     {
         return str_replace(';', '&#13;', $value);
     }
+
+    public function getDateFormat()
+    {
+        return 'Y-m-d H:i:s.u';
+    }
 }

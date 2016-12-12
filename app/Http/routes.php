@@ -19,16 +19,7 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test/{id}', function ($id) {
-            var_dump(route('review/stage/decideMode')); exit;
-//        $projectIns = \App\Models\Project::getIns($id);
-//
-//        $topicIns = $projectIns->topics()->with(
-//            'meetingMinutesContent',
-//            'topicable',
-//            'reviewMeeting.log.operator'
-//        )->where('type', 'review')->first();
-//
-//        return \App\Logic\MeetingMinutesHandler::renderTopic($topicIns);
+        var_dump(base64_encode('passDEV2015'));
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);

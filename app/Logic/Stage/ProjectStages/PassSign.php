@@ -3,9 +3,7 @@
 namespace App\Logic\Stage\ProjectStages;
 
 
-use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ProjectStage;
-use App\Logic\Stage\TLogOperation;
 use App\Models\SystemRole;
 use App\Models\StageLog;
 use App\Logic\LoginUser\LoginUserKeeper;
@@ -27,10 +25,7 @@ class PassSign extends ProjectStage
             ->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)
             ->get()
             ->keyBy('lanID');
-        $signs = $this->referrer->log()
-            ->where('fromStage', $this->getStageID())
-            ->get()
-            ->keyBy('lanID');
+        $signs = $this->getCurrentRoundLogs()->keyBy('lanID');
         $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
 
         return view('project/display/function/passsign')
@@ -50,17 +45,7 @@ class PassSign extends ProjectStage
     public function canPassSignStageUp($para = null)
     {
         if ('approve' == $para['operation']) {
-            //get last submit
-            $lastSumbitRecord = $this->referrer->log()->where([
-                ['fromStage', '=', STAGE_ID_SELECT_MODE],
-                ['toStage', '=', STAGE_ID_PRETRIAL]
-            ])->orderBy('id', 'DESC')->first();
-
-            $approveCount = $this->referrer->log()->where([
-                ['fromStage', '=', $this->getStageID()],
-                ['data1', '=', 'approve'],
-                ['timeAt', '>', $lastSumbitRecord->timeAt]
-            ])->count();
+            $approveCount = $this->getCurrentRoundLogs()->where('data1', 'approve')->count();
 
             return $approveCount ==  SystemRole::where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->count()-1;
         }
@@ -120,5 +105,19 @@ class PassSign extends ProjectStage
         $log->timeAt = date('Y-m-d H:i:s');
 
         return $log;
+    }
+
+    private function getCurrentRoundLogs()
+    {
+        //get last submit
+        $lastSumbitRecord = $this->referrer->log()->where([
+            ['fromStage', '=', STAGE_ID_SELECT_MODE],
+            ['toStage', '>', STAGE_ID_SELECT_MODE]
+        ])->orderBy('id', 'DESC')->first();
+
+        return $this->referrer->log()->where([
+            ['fromStage', '=', $this->getStageID()],
+            ['timeAt', '>', $lastSumbitRecord->timeAt]
+        ])->get();
     }
 }

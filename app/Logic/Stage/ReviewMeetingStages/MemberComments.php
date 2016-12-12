@@ -89,14 +89,15 @@ class MemberComments extends ReviewMeetingStage implements IOperated
 
     private function getCurrentRoundLogs()
     {
-        $lastSubmitLog = $this->referrer->log->where([
-            ['fromStage', '=', STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES],
-            ['toStage', '=', STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS]
-        ])->orderBy('timeAt', 'desc')->first();
+        $lastSubmitLog = $this->referrer->log
+            ->whereLoose('fromStage', STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES)
+            ->whereLoose('toStage', STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS)
+            ->sortByDesc('timeAt')->first();
 
-        return $this->referrer->log->with('operator')->where([
-            ['fromStage', '=', $this->getStageID()],
-            ['timeAt', '>', $lastSubmitLog->timeAt]
-        ]);
+        return $this->referrer->log
+                    ->whereLoose('fromStage', $this->getStageID())
+                    ->filter(function ($ins) use ($lastSubmitLog) {
+                        return $ins->id > $lastSubmitLog->id;
+                    });
     }
 }

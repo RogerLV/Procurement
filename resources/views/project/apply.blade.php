@@ -13,7 +13,7 @@
             <input type="text" class="form-control" name="applicant-name" required readonly value="{{ $applicantInfo->uEngName }} {{ $applicantInfo->uCnName }}">
         </div>
 
-        <input type="hidden" name="applicant-dept" value="{{ $applicantInfo->dept }}">
+        <input type="hidden" name="applicant-dept" value="{{ $deptInfo->dept }}">
         <input type="hidden" name="applicant-lanid" value="{{ $applicantInfo->lanID }}">
 
         <div class="form-group required">

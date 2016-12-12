@@ -52,8 +52,8 @@ class Initiate extends ReviewMeetingStage implements IComplexOperation
         return view('review/display/info/initiate')
             ->with('reviewIns', $this->referrer)
             ->with('stageNames', Config::get('constants.stageNames'))
-            ->with('members', $participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER))
-            ->with('specialInvitees', $participants->where('roleID', ROLE_ID_SPECIAL_INVITE))
+            ->with('members', $participants->whereLoose('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER))
+            ->with('specialInvitees', $participants->whereLoose('roleID', ROLE_ID_SPECIAL_INVITE))
             ->with('deptInfo', DepartmentKeeper::getDeptInfo())
             ->with('topics', $this->referrer->topics()->with('topicable')->get())
             ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
@@ -72,6 +72,6 @@ class Initiate extends ReviewMeetingStage implements IComplexOperation
         }
 
         // check committee invited
-        return 0 != $this->referrer->participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->count();
+        return 0 != $this->referrer->participants()->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->count();
     }
 }

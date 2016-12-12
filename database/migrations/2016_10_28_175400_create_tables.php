@@ -193,9 +193,9 @@ class CreateTables extends Migration
         Schema::create('ReviewTopics', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('reviewMeetingID');
-            $table->string('topicable_type');
-            $table->integer('topicable_id');
-            $table->string('type');
+            $table->string('topicable_type')->nullable();
+            $table->integer('topicable_id')->nullable();
+            $table->string('type')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

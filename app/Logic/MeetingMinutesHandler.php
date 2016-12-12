@@ -25,13 +25,13 @@ class MeetingMinutesHandler
     {
         $participants = $reviewIns->participants()->with('user.department')->get();
 
-        $committeeMembers = $participants->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER);
+        $committeeMembers = $participants->whereLoose('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER);
         $committeeMemberNames = [];
         foreach ($committeeMembers as $member) {
             $committeeMemberNames[] = $member->user->getDualName();
         }
 
-        $specialInvitees = $participants->where('roleID', ROLE_ID_SPECIAL_INVITE);
+        $specialInvitees = $participants->whereLoose('roleID', ROLE_ID_SPECIAL_INVITE);
         $specialInviteeNames = [];
         foreach ($specialInvitees as $entry) {
             $specialInviteeNames[] = $entry->user->getDualName()." (".$entry->user->department->deptCnName.")";
