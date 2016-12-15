@@ -49,26 +49,18 @@
                    value="{{ $metaInfo->footer or '中国银行新加坡分行采购评审委员会'.' '.date('Y-m-d') }}" required>
         </div>
 
-        <input type="submit" class="btn btn-block btn-primary">
+        <input type="submit" class="btn btn-block btn-primary" value="保存">
     </form>
 
     @foreach($topics as $idx => $topic)
         <div class="page-header">
             <h5>议题{{ $idx+1 }}: {{ $topic->topicable->name }}</h5>
-            <div class="input-group">
-                @if(isset($topic->meetingMinutesContent))
-                    <?php $content = preg_replace('/<br\s?\/?>/i', "\r", $topic->meetingMinutesContent->content);?>
-                    <textarea class="form-control" rows="10">{{ $content }}</textarea>
-                @else
-                    <textarea class="form-control" rows="10" placeholder="请填写纪要"></textarea>
-                @endif
-                <span class="input-group-btn" style="vertical-align:top;">
-                    <button class="btn btn-primary submit-meeting-minutes-content"
-                            data-topic-id="{{ $topic->id }}" style="height: 214px; width: 60px">
-                        提交
-                    </button>
-                </span>
-            </div>
+            @if(isset($topic->meetingMinutesContent))
+                <?php $content = preg_replace('/<br\s?\/?>/i', "\r", $topic->meetingMinutesContent->content);?>
+                <textarea class="form-control topic-content" data-topic-id="{{ $topic->id }}" rows="10">{{ $content }}</textarea>
+            @else
+                <textarea class="form-control topic-content" data-topic-id="{{ $topic->id }}" rows="10" placeholder="请填写纪要"></textarea>
+            @endif
         </div>
     @endforeach
 
@@ -120,29 +112,24 @@
             });
         });
 
-        $('button.submit-meeting-minutes-content').click(function () {
-            var content = $(this).parents('div.input-group').find('textarea').val();
-            if (0 == content.length) {
-                setAlertText('纪要内容不能为空。');
-                $('#alert-modal').modal('show');
-                return;
+        $('textarea.topic-content').blur(function () {
+            var content = $(this).val();
+            if (0 != $.trim(content).length) {
+                $.ajax({
+                    headers: headers,
+                    url: "{{ route('MeetingMinutesAddContent') }}",
+                    data: {
+                        content: content,
+                        topicID: $(this).data('topic-id')
+                    },
+                    type: "POST",
+                    success: function (data) {
+                        handleReturn(data, function () {
+                            // do nothing;
+                        });
+                    }
+                });
             }
-
-            $.ajax({
-                headers: headers,
-                url: "{{ route('MeetingMinutesAddContent') }}",
-                data: {
-                    content: content,
-                    topicID: $(this).data('topic-id')
-                },
-                type: 'POST',
-                success: function(data) {
-                    handleReturn(data, function () {
-                        setAlertText('纪要添加成功。');
-                        $('#alert-modal').modal('show');
-                    });
-                }
-            });
         });
 
         $('#confirm-finish-generating-button').click(function () {

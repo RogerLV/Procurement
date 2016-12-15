@@ -80,15 +80,33 @@ class ReviewController extends Controller
                 ->with('stageNames', Config::get('constants.stageNames'));
     }
 
+    public function remove()
+    {
+        if (Gate::forUser($this->loginUser)->denies('project-removable')) {
+            throw new AppException('RVWCTL006', ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE);
+        }
+
+        if (empty($reviewID = trim(request()->input('meetingID')))) {
+            throw new AppException('RVWCTL007');
+        }
+
+        $reviewIns = ReviewMeeting::getIns($reviewID);
+        $reviewIns->delete();
+
+        return response()->json(['status' => 'good']);
+    }
+
     public function listAll()
     {
         $roleIns = RoleFactory::create($this->loginUser->getActiveRole()->roleID);
         $reviewMeetings = ReviewMeeting::all()->filter(function ($ins) use ($roleIns) {
             return $roleIns->reviewMeetingVisible($ins);
         });
+        $removable = $this->loginUser->getActiveRole()->roleID == ROLE_ID_APP_ADMIN;
 
         return view('review.listall')
                 ->with('title', PAGE_NAME_REVIEW_MEETING_LIST)
+                ->with('removable', $removable)
                 ->with('reviewMeetings', $reviewMeetings);
     }
 }

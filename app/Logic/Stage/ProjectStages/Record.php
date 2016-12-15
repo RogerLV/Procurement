@@ -15,6 +15,10 @@ class Record extends ProjectStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_RECORD;
+    protected $executer = [
+        ROLE_NAME_PROJECT_LAUNCHER,
+        ROLE_NAME_DEPT_MAKER
+    ];
     private $instance;
 
     protected $mandatoryDocTypes = [];

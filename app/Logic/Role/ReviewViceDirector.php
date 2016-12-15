@@ -1,22 +1,21 @@
 <?php
-
 namespace App\Logic\Role;
 
 
 use App\Models\ReviewMeeting;
+use App\Models\User;
 use App\Models\Project;
 use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
-class ReviewDirector extends AbstractRole
+class ReviewViceDirector extends AbstractRole
 {
-    protected $roleID = 8;
-    protected $roleName = ROLE_NAME_REVIEW_DIRECTOR;
-    protected $operable = false;
+    protected $roleID = 12;
+    protected $roleName = ROLE_NAME_REVIEW_VICE_DIRECTOR;
+    protected $operable = true;
     protected $operableStages = [
         STAGE_ID_PASS_SIGN,
-        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM,
-        STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE
+        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM
     ];
     protected $roleSpecPages = [
         'ReviewMeetingList'
@@ -24,7 +23,7 @@ class ReviewDirector extends AbstractRole
 
     public function getCandidates()
     {
-        return [];
+        return User::inService()->orderBy('uEngName')->get();
     }
 
     public function projectOperable(Project $projectIns)
@@ -63,7 +62,7 @@ class ReviewDirector extends AbstractRole
     public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)
     {
         return $reviewMeeting->date >= date('Y-m-d')
-        && in_array($reviewMeeting->stage, $this->stages['reviewMeetingPendingParticipate']);
+            && in_array($reviewMeeting->stage, $this->stages['reviewMeetingPendingParticipate']);
     }
 
 

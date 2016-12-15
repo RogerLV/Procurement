@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\UpdateLog AS Log;
 use Config;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+    use SoftDeletes;
+
     public $table = 'Projects';
+    protected $dates = ['deleted_at'];
 
     public function conversation()
     {

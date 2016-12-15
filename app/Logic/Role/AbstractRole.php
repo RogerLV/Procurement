@@ -96,9 +96,4 @@ abstract class AbstractRole
     {
         return false;
     }
-
-    public function pendingReviewMeetingProcess(ReviewMeeting $reviewMeeting)
-    {
-        return $this->reviewMeetingOperable($reviewMeeting);
-    }
 }

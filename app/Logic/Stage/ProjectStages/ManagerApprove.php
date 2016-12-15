@@ -12,6 +12,9 @@ class ManagerApprove extends ProjectStage implements ISimpleApprove
     use TApprove;
 
     protected $stageID = STAGE_ID_MANAGER_APPROVE;
+    protected $executer = [
+        ROLE_NAME_DEPT_MANAGER
+    ];
 
     public function getNextStage()
     {

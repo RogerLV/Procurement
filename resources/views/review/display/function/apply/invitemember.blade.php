@@ -1,33 +1,33 @@
 <div class="page-header">
-    <h4>邀请委员</h4>
+    <h4>邀请委员会委员</h4>
 </div>
-@foreach($committee as $member)
-    <div class="checkbox">
-        <label>
-            <input class="invite-participants" type="checkbox" value="{{ $member->lanID }}" data-role-id="{{ $member->roleID }}"
-            @if(0 != $invited->where('lanID', $member->lanID)->where('roleID', $member->roleID)->count())
-                checked
-            @endif
-            >
-            {{ $deptInfo->get($member->dept)->deptCnName." ".$member->user->getTriName() }}
-        </label>
-    </div>
+<?php $roleID = ROLE_ID_REVIEW_COMMITTEE_MEMBER?>
+@foreach($member as $entry)
+    @include('review.display.function.apply.inviteparticipant.entry')
+@endforeach
+
+<div class="page-header">
+    <h4>邀请委员会副主任</h4>
+</div>
+<?php $roleID = ROLE_ID_REVIEW_VICE_DIRECTOR?>
+@foreach($viceDirector as $entry)
+    @include('review.display.function.apply.inviteparticipant.entry')
+@endforeach
+
+<div class="page-header">
+    <h4>邀请委员会主任</h4>
+</div>
+<?php $roleID = ROLE_ID_REVIEW_DIRECTOR?>
+@foreach($director as $entry)
+    @include('review.display.function.apply.inviteparticipant.entry')
 @endforeach
 
 <div class="page-header">
     <h4>特邀列席<small>optional</small></h4>
 </div>
-@foreach($specialInvites as $invitee)
-    <div class="checkbox">
-        <label>
-            <input class="invite-participants" type="checkbox" value="{{ $invitee->lanID }}" data-role-id="{{ $invitee->roleID }}"
-                   @if(0 != $invited->where('lanID', $invitee->lanID)->where('roleID', $invitee->roleID)->count())
-                   checked
-                    @endif
-            >
-            {{ $invitee->user->getTriName() }}
-        </label>
-    </div>
+<?php $roleID = ROLE_ID_SPECIAL_INVITE?>
+@foreach($specialInvites as $entry)
+    @include('review.display.function.apply.inviteparticipant.entry')
 @endforeach
 
 
@@ -47,7 +47,7 @@
                 success: function (data) {
                     handleReturn(data, function () {
                         // do nothing
-                    })
+                    });
                 }
             });
         });

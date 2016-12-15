@@ -30,6 +30,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('project/apply', 'ProjectController@apply')->name(ROUTE_NAME_PROJECT_APPLY);
     Route::get('project/display/{id}', 'ProjectController@display')->name(ROUTE_NAME_PROJECT_DISPLAY);
     Route::get('project/list', 'ProjectController@listPage')->name(ROUTE_NAME_PROJECT_LIST);
+    Route::post('project/remove', 'ProjectController@remove')->name('ProjectRemove');
     Route::post('project/create', 'ProjectController@create')->name(ROUTE_NAME_PROJECT_CREATE);
 
     Route::post('stage/selectmode', 'StageController@selectMode')->name(ROUTE_NAME_STAGE_SELECT_MODE);
@@ -69,6 +70,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('review/apply/{id?}', 'ReviewController@apply')->name(ROUTE_NAME_REVIEW_APPLY);
     Route::get('review/display/{id}', 'ReviewController@display')->name(ROUTE_NAME_REVIEW_DISPLAY);
     Route::post('review/edit', 'ReviewController@edit')->name(ROUTE_NAME_REVIEW_EDIT);
+    Route::post('review/remove', 'ReviewController@remove')->name('ReviewRemove');
     Route::get('review/list', 'ReviewController@listAll')->name('ReviewMeetingList');
 
     Route::post('review/stage/complete', 'ReviewStageController@complete')->name(ROUTE_NAME_REVIEW_STAGE_COMPLETE);

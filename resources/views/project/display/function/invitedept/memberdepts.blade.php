@@ -119,16 +119,16 @@
                     handleReturn(data, function () {
                         // render new member dept
                         $('#member-dept-list').prepend($('<tr>').append($('<td>', {
-                            text: data.info.department.deptCnName
+                            text: data.info.deptInfo.deptCnName
                         })).append($('<td>', {
-                            text: data.info.memberAmount + "人"
+                            text: data.info.memberDept.memberAmount + "人"
                         })).append($('<td>').append($('<button>', {
                             class: 'btn btn-danger btn-xs'
                         }).append($('<span>', {
                             class: 'glyphicon glyphicon-remove'
                         }))).bind('click', removeMemberDept).data(
                                 'member-dept-id',
-                                data.info.id
+                                data.info.memberDept.id
                         )));
                     });
                 }

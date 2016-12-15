@@ -8,6 +8,7 @@ use App\Logic\Stage\IComplexOperation;
 use App\Logic\Stage\ProjectStage;
 use App\Logic\Stage\TLogOperation;
 use App\Models\ProjectRoleDepartment;
+use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 use Config;
 
 class Initiate extends ProjectStage implements IComplexOperation
@@ -15,6 +16,9 @@ class Initiate extends ProjectStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_INITIATE;
+    protected $executer = [
+        ROLE_NAME_PROJECT_LAUNCHER
+    ];
 
     public function getNextStage()
     {
@@ -30,7 +34,8 @@ class Initiate extends ProjectStage implements IComplexOperation
     {
         return view('project/display/stage/basicinfo')
             ->with('project', $this->referrer)
-            ->with('stageNames', Config::get('constants.stageNames'));
+            ->with('stageNames', Config::get('constants.stageNames'))
+            ->with('stageIns', ProjectStageHandler::getProjectStageIns($this->referrer));
     }
 
     public function canStageUp()
@@ -43,7 +48,7 @@ class Initiate extends ProjectStage implements IComplexOperation
         // add self department
         $memberDept = new ProjectRoleDepartment();
         $memberDept->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
-        $memberDept->memberAmount = 3; //default
+        $memberDept->memberAmount = 1; //default
 
         $this->referrer->memberDepts()->save($memberDept);
 

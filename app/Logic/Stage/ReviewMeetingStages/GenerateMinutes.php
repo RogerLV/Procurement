@@ -13,6 +13,9 @@ class GenerateMinutes extends ReviewMeetingStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {

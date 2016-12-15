@@ -14,6 +14,10 @@ class DueDiligence extends ProjectStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_DUE_DILIGENCE;
+    protected $executer = [
+        ROLE_NAME_DUE_DILIGENCE_MEMBER,
+        ROLE_NAME_PROJECT_LAUNCHER
+    ];
 
     public function getNextStage()
     {

@@ -36,7 +36,10 @@ class MemberDepartmentController extends StageController
 
         return response()->json([
             'status' => 'good',
-            'info' => $memberDept->with('department')->where('dept', $dept)->first()
+            'info' => [
+                'memberDept' => $memberDept,
+                'deptInfo' => $memberDept->department
+            ]
         ]);
     }
 

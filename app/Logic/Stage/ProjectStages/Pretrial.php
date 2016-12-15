@@ -12,6 +12,9 @@ class Pretrial extends ProjectStage implements ISimpleApprove
     use TApprove;
 
     protected $stageID = STAGE_ID_PRETRIAL;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {
@@ -37,7 +40,11 @@ class Pretrial extends ProjectStage implements ISimpleApprove
 
     public function renderInfoArea()
     {
-        return null;
+        // display pass sign result only in pass sign stage
+        if (STAGE_ID_PASS_SIGN == $this->referrer->stage) {
+            $passSignIns = new PassSign($this->referrer);
+            return $passSignIns->renderResult();
+        }
     }
 
     public function getPreviousStage()

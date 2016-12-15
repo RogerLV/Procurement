@@ -13,6 +13,9 @@ use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 class DecideProcurementMode extends ReviewMeetingStage implements IComplexOperation
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_DECIDE_PROCUREMENT_MODE;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {

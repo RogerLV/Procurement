@@ -42,10 +42,6 @@ class ReviewParticipantController extends Controller
             throw new AppException('PTCPCTL004', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        if (!in_array($roleID, [ROLE_ID_REVIEW_COMMITTEE_MEMBER, ROLE_ID_SPECIAL_INVITE])) {
-            throw new AppException('PTCPCTL005');
-        }
-
         switch ($operation) {
             case 'add':
                 $participant = new ReviewParticipant();

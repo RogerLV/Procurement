@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Models\ReviewMeeting;
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
 class SpecialInvite extends AbstractRole
 {
@@ -14,6 +15,9 @@ class SpecialInvite extends AbstractRole
     protected $commonPages = [];
     protected $roleSpecPages = [
         'ReviewMeetingList'
+    ];
+    protected $operableStages = [
+        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM
     ];
 
     public function getCandidates()
@@ -45,6 +49,22 @@ class SpecialInvite extends AbstractRole
             && $this->reviewMeetingInvited($reviewMeeting);
     }
 
+    public function reviewMeetingOperable(ReviewMeeting $reviewMeetingIns)
+    {
+        if (parent::reviewMeetingOperable($reviewMeetingIns)) {
+            switch ($reviewMeetingIns->stage) {
+                case STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM:
+                    return $this->reviewMeetingInvited($reviewMeetingIns)
+                            && !$this->reviewMeetingStageOperated($reviewMeetingIns);
+
+                default:
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private function reviewMeetingInvited(ReviewMeeting $reviewMeeting)
     {
@@ -56,5 +76,10 @@ class SpecialInvite extends AbstractRole
                 ['lanID', '=', $loginUserLanID]
             ])->first()
         );
+    }
+
+    private function reviewMeetingStageOperated(ReviewMeeting $reviewMeeting)
+    {
+        return ReviewMeetingStageHandler::getReviewMeetingStageIns($reviewMeeting)->operated();
     }
 }

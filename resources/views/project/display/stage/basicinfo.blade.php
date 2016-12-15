@@ -1,16 +1,21 @@
+<div class="alert alert-info"  style="font-size: 18px">
+    <table>
+        <tr>
+            <td><strong>当前阶段:</strong></td>
+            <td>{{ $stageNames[$project->stage] }}</td>
+        </tr>
+        <tr>
+            <td><strong>当前有权执行人:&nbsp;</strong></td>
+            <td>{{ implode(', ', $stageIns->getExecuters()) }}</td>
+        </tr>
+    </table>
+</div>
+
 <table>
     <tbody>
     <tr>
-        <td width="20%" valign="top"><h4>项目编号: </h4></td>
-        <td>{{ $project->givenID }}</td>
-    </tr>
-    <tr>
         <td valign="top"><h4>项目主题: </h4></td>
         <td>{{ $project->name }}</td>
-    </tr>
-    <tr>
-        <td><h4>当前阶段:</h4></td>
-        <td>{{ $stageNames[$project->stage] }}</td>
     </tr>
     <tr>
         <td valign="top"><h4>项目背景: </h4></td>

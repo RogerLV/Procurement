@@ -10,12 +10,16 @@ use App\Logic\Stage\TLogOperation;
 use Config;
 use App\Models\Project;
 use App\Models\SystemRole;
+use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
 
 class Initiate extends ReviewMeetingStage implements IComplexOperation
 {
     use TLogOperation;
 
     protected $stageID = STAGE_ID_REVIEW_MEETING_INITIATE;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {
@@ -29,8 +33,13 @@ class Initiate extends ReviewMeetingStage implements IComplexOperation
                 return $projectIns->log->where('data1', 'reject')->count() != 0;
             });
         $topics = $this->referrer->topics()->with('topicable')->get();
-        $committee = SystemRole::with('user')->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get();
-        $specialInvite = SystemRole::with('user')->where('roleID', ROLE_ID_SPECIAL_INVITE)->get();
+        $fullParticipants = SystemRole::with('user', 'department')
+            ->whereIn('roleID', [
+                ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+                ROLE_ID_REVIEW_VICE_DIRECTOR,
+                ROLE_ID_REVIEW_DIRECTOR,
+                ROLE_ID_SPECIAL_INVITE
+            ])->get();
 
         return view('review.display.function.initiate')
                 ->with('title', PAGE_NAME_REVIEW_APPLY)
@@ -39,25 +48,33 @@ class Initiate extends ReviewMeetingStage implements IComplexOperation
                 ->with('selectModeOptions', $selectModeOptions)
                 ->with('topics', $topics)
                 ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
-                ->with('committee', $committee)
-                ->with('specialInvites', $specialInvite)
-                ->with('invited', $this->referrer->participants)
-                ->with('deptInfo', DepartmentKeeper::getDeptInfo());
+                ->with('member', $fullParticipants->whereLoose('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER))
+                ->with('viceDirector', $fullParticipants->whereLoose('roleID', ROLE_ID_REVIEW_VICE_DIRECTOR))
+                ->with('director', $fullParticipants->whereLoose('roleID', ROLE_ID_REVIEW_DIRECTOR))
+                ->with('specialInvites', $fullParticipants->whereLoose('roleID', ROLE_ID_SPECIAL_INVITE))
+                ->with('invited', $this->referrer->participants);
     }
 
     public function renderInfoArea()
     {
         $participants = $this->referrer->participants()->with('user')->get();
 
+        $participantInviteResult = '';
+        if (STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM == $this->referrer->stage) {
+            $stageIns = ReviewMeetingStageHandler::getReviewMeetingStageIns($this->referrer);
+            $participantInviteResult = $stageIns->renderResult();
+        }
+
         return view('review/display/info/initiate')
             ->with('reviewIns', $this->referrer)
+            ->with('stageIns', ReviewMeetingStageHandler::getReviewMeetingStageIns($this->referrer))
             ->with('stageNames', Config::get('constants.stageNames'))
             ->with('members', $participants->whereLoose('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER))
             ->with('specialInvitees', $participants->whereLoose('roleID', ROLE_ID_SPECIAL_INVITE))
             ->with('deptInfo', DepartmentKeeper::getDeptInfo())
             ->with('topics', $this->referrer->topics()->with('topicable')->get())
             ->with('topicTypeNames', Config::get('constants.TopicTypeNames'))
-            ->with('loginUserRoleID', LoginUserKeeper::getUser()->getActiveRole()->roleID);
+            ->with('loginUserRoleID', LoginUserKeeper::getUser()->getActiveRole()->roleID).$participantInviteResult;
     }
 
     public function canStageUp()

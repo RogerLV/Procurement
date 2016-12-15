@@ -16,6 +16,9 @@ class AssignMaker extends ProjectStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_ASSIGN_MAKER;
+    protected $executer = [
+        ROLE_NAME_DEPT_MANAGER
+    ];
 
     public function getNextStage()
     {

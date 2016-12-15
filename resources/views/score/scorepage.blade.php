@@ -13,7 +13,7 @@
                 <th width="50px">序号</th>
                 <th width="120px">打分项</th>
                 <th width="300px">具体内容</th>
-                <th width="50px">权重</th>
+                <th width="50px">权重(%)</th>
                 <th width="50px">分值</th>
                 <th>备注</th>
                 </thead>

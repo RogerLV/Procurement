@@ -62,8 +62,8 @@
             <th width="50px">序号</th>
             <th width="200px">评分项</th>
             <th width="">具体内容</th>
-            <th>权重</th>
-            <th>参考权重</th>
+            <th>权重(%)</th>
+            <th>参考权重(%)</th>
             <th>备注</th>
         </thead>
         <tbody id="template-zone">

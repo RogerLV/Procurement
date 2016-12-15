@@ -13,6 +13,9 @@ class Summarize extends ProjectStage implements IComplexOperation
     use TLogOperation;
 
     protected $stageID = STAGE_ID_SUMMARIZE;
+    protected $executer = [
+        ROLE_NAME_PROJECT_LAUNCHER
+    ];
 
     public function getNextStage()
     {

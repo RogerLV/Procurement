@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\AppException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReviewMeeting extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'ReviewMeetings';
+    protected $dates = ['deleted_at'];
 
     public static function getIns($reviewMeetingID)
     {

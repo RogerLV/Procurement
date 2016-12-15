@@ -13,6 +13,7 @@ class RoleFactory
         ROLE_ID_DEPUTY_COUNTRY_HEAD,
         ROLE_ID_REVIEW_COMMITTEE_MEMBER,
         ROLE_ID_SECRETARIAT_LEADER,
+        ROLE_ID_REVIEW_VICE_DIRECTOR,
         ROLE_ID_REVIEW_DIRECTOR,
         ROLE_ID_APP_ADMIN,
         ROLE_ID_SYSTEM_ADMIN,
@@ -29,6 +30,7 @@ class RoleFactory
             case ROLE_ID_DEPUTY_COUNTRY_HEAD: return new DeputyCountryHead();
             case ROLE_ID_REVIEW_COMMITTEE_MEMBER: return new ReviewCommitteeMember();
             case ROLE_ID_SECRETARIAT_LEADER: return new SecretariatLeader();
+            case ROLE_ID_REVIEW_VICE_DIRECTOR: return new ReviewViceDirector();
             case ROLE_ID_REVIEW_DIRECTOR: return new ReviewDirector();
             case ROLE_ID_APP_ADMIN: return new AppAdmin();
             case ROLE_ID_SYSTEM_ADMIN: return new SystemAdmin();

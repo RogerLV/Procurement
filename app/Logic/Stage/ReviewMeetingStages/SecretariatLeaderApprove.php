@@ -12,6 +12,9 @@ class SecretariatLeaderApprove extends ReviewMeetingStage implements ISimpleAppr
     use TApprove;
 
     protected $stageID = STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT_LEADER
+    ];
 
     public function getNextStage()
     {

@@ -12,6 +12,9 @@ class Audit extends ProjectStage implements ISimpleApprove
     use TApprove;
 
     protected $stageID = STAGE_ID_AUDIT;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {

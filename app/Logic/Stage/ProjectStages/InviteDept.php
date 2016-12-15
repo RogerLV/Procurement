@@ -17,6 +17,10 @@ class InviteDept extends ProjectStage implements IComplexOperation
 
     protected $stageID = STAGE_ID_INVITE_DEPT;
     protected $launchingDept;
+    protected $executer = [
+        ROLE_NAME_DEPT_MANAGER,
+        ROLE_NAME_PROJECT_LAUNCHER
+    ];
 
     public function getNextStage()
     {

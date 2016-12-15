@@ -6,7 +6,9 @@ namespace App\Logic\Role;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\User;
 use App\Models\ReviewMeeting;
+use App\Models\Project;
 use App\Logic\Stage\ReviewMeetingStages\StageHandler as ReviewMeetingStageHandler;
+use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 
 class ReviewCommitteeMember extends AbstractRole
 {
@@ -26,6 +28,19 @@ class ReviewCommitteeMember extends AbstractRole
         return User::inService()->orderBy('uEngName')->get();
     }
 
+    public function projectOperable(Project $projectIns)
+    {
+        if (parent::projectOperable($projectIns)) {
+            switch($projectIns->stage) {
+                case STAGE_ID_PASS_SIGN:
+                    $stageIns = ProjectStageHandler::getProjectStageIns($projectIns);
+                    return $stageIns->signable();
+            }
+        }
+
+        return false;
+    }
+
     public function reviewMeetingVisible(ReviewMeeting $reviewMeeting)
     {
         return STAGE_ID_REVIEW_MEETING_INITIATE != $reviewMeeting->stage;
@@ -33,13 +48,19 @@ class ReviewCommitteeMember extends AbstractRole
 
     public function reviewMeetingOperable(ReviewMeeting $reviewMeetingIns)
     {
-        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        $participated = $reviewMeetingIns->participants()
-                        ->where('roleID', $this->getRoleID())
-                        ->where('lanID', $userLanID)
-                        ->count();
+        if (parent::reviewMeetingOperable($reviewMeetingIns)) {
+            switch ($reviewMeetingIns->stage) {
+                case STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM:
+                case STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS:
+                    return $this->reviewMeetingInvited($reviewMeetingIns)
+                            && !$this->reviewMeetingStageOperated($reviewMeetingIns);
 
-        return parent::reviewMeetingOperable($reviewMeetingIns) && $participated !=0;
+                default:
+                    return false;
+            }
+        }
+
+        return false;
     }
 
     public function pendingReviewMeetingParticipate(ReviewMeeting $reviewMeeting)
@@ -48,13 +69,6 @@ class ReviewCommitteeMember extends AbstractRole
         return $reviewMeeting->date >= date('Y-m-d')
                 && in_array($reviewMeeting->stage, $this->stages['reviewMeetingPendingParticipate'])
                 && $this->reviewMeetingInvited($reviewMeeting);
-    }
-
-    public function pendingReviewMeetingProcess(ReviewMeeting $reviewMeeting)
-    {
-        return parent::pendingReviewMeetingProcess($reviewMeeting)
-                && $this->reviewMeetingInvited($reviewMeeting)
-                && !$this->reviewMeetingStageOperated($reviewMeeting);
     }
 
 

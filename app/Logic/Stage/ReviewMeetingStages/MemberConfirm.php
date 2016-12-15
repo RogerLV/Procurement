@@ -3,7 +3,6 @@
 namespace App\Logic\Stage\ReviewMeetingStages;
 
 
-use App\Logic\DepartmentKeeper;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\Stage\IOperated;
 use App\Logic\Stage\ReviewMeetingStage;
@@ -12,6 +11,12 @@ use App\Models\StageLog;
 class MemberConfirm extends ReviewMeetingStage implements IOperated
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM;
+    protected $executer = [
+        ROLE_NAME_REVIEW_COMMITTEE_MEMBER,
+        ROLE_NAME_REVIEW_DIRECTOR,
+        ROLE_NAME_REVIEW_VICE_DIRECTOR,
+        ROLE_NAME_SPECIAL_INVITE
+    ];
 
     public function getNextStage()
     {
@@ -20,15 +25,15 @@ class MemberConfirm extends ReviewMeetingStage implements IOperated
 
     public function renderFunctionArea()
     {
-        $participants = $this->referrer->participants()->with('user')
-                        ->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get()->keyBy('lanID');
-        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $loginUser = LoginUserKeeper::getUser();
+        $attendInfo = $this->referrer->participants()
+                            ->where('lanID', $loginUser->getUserInfo()->lanID)
+                            ->where('roleID', $loginUser->getActiveRole()->roleID)
+                            ->first()->willAtttend;
 
         return view('review.display.function.memberconfirm')
                 ->with('title', $this->getStageName())
-                ->with('participants', $participants)
-                ->with('loginUserLanID', $loginUserLanID)
-                ->with('deptInfo', DepartmentKeeper::getDeptInfo());
+                ->with('confirmable', is_null($attendInfo));
     }
 
     public function renderInfoArea()
@@ -47,11 +52,11 @@ class MemberConfirm extends ReviewMeetingStage implements IOperated
 
     public function approveOperation($comment)
     {
-        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $loginUser = LoginUserKeeper::getUser();
 
         $this->referrer->participants()
-            ->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)
-            ->where('lanID', $loginUserLanID)
+            ->where('roleID', $loginUser->getActiveRole()->roleID)
+            ->where('lanID', $loginUser->getUserInfo()->lanID)
             ->update(['willAttend' => true]);
 
         if ($this->canStageUp()) {
@@ -90,7 +95,6 @@ class MemberConfirm extends ReviewMeetingStage implements IOperated
     public function canStageUp()
     {
         return $this->referrer->participants()
-                     ->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)
                      ->whereNull('willAttend')
                      ->count() == 0;
     }
@@ -100,13 +104,19 @@ class MemberConfirm extends ReviewMeetingStage implements IOperated
         return new Initiate($this->referrer);
     }
 
+    public function renderResult()
+    {
+        return view('review.display.function.memberconfirm.result')
+                ->with('participants', $this->referrer->participants);
+    }
+
     public function operated()
     {
-        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $loginUser = LoginUserKeeper::getUser();
         return !is_null(
             $this->referrer->participants()->where([
-                ['roleID', '=', ROLE_ID_REVIEW_COMMITTEE_MEMBER],
-                ['lanID', '=', $loginUserLanID]
+                ['roleID', '=', $loginUser->getActiveRole()->roleID],
+                ['lanID', '=', $loginUser->getUserInfo()->lanID]
             ])->first()->willAttend
         );
     }

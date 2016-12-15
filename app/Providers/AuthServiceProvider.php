@@ -36,6 +36,10 @@ class AuthServiceProvider extends ServiceProvider
             return $loginUser->getActiveRole()->roleID == ROLE_ID_DEPT_MAKER;
         });
 
+        $gate->define('project-removable', function (LoginUser $loginUser) {
+            return $loginUser->getActiveRole()->roleID == ROLE_ID_APP_ADMIN;
+        });
+
         $gate->define('project-visible', function (LoginUser $loginUser, Project $projectIns) {
             $roleIns = RoleFactory::create($loginUser->getActiveRole()->roleID);
             return $roleIns->projectVisible($projectIns);

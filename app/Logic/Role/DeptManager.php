@@ -15,7 +15,6 @@ class DeptManager extends AbstractRole
     protected $operableStages = [
         STAGE_ID_INVITE_DEPT,
         STAGE_ID_ASSIGN_MAKER,
-        STAGE_ID_SELECT_MODE,
         STAGE_ID_RECORD,
         STAGE_ID_MANAGER_APPROVE,
         STAGE_ID_FILE_CONTRACT,
@@ -33,7 +32,6 @@ class DeptManager extends AbstractRole
             $userDept = LoginUserKeeper::getUser()->getActiveRole()->dept;
             switch ($projectIns->stage) {
                 case STAGE_ID_INVITE_DEPT:
-                case STAGE_ID_SELECT_MODE:
                 case STAGE_ID_FILE_CONTRACT:
                 case STAGE_ID_MANAGER_APPROVE:
                     return $userDept == $projectIns->dept;

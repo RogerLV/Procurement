@@ -111,7 +111,13 @@
             successHandler();
         } else if ('ERR001' == data.status) {
             location.href = "http://"+"{{ env('PLATFORM_HOST') }}"+"/platform/index.php";
-        } else {
+        } else if ('close' == data.status) {
+            setAlertText("操作成功, 页面即将关闭。");
+            $("#alert-modal").modal('show');
+
+            setTimeout("window.close()", 3000);
+        }
+        else {
             setAlertText(data.status+": "+data.errorInfo);
             $("#alert-modal").modal('show');
         }

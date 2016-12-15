@@ -43,7 +43,7 @@
     <br>
 
     @if(!$pendingReviewsMeetingsParticipate->isEmpty())
-        <h4>采购评审待参会:</h4>
+        <h4>采购评审会议邀请:</h4>
         <div class="list-group">
             @foreach($pendingReviewsMeetingsParticipate as $review)
                 <a href="{{ url('review/display/'.$review->id) }}" target="_blank"

@@ -7,12 +7,18 @@ use App\Logic\Stage\ProjectStage;
 use App\Models\SystemRole;
 use App\Models\StageLog;
 use App\Logic\LoginUser\LoginUserKeeper;
-use App\Logic\DepartmentKeeper;
+use App\Logic\MeetingMinutesHandler;
 use Config;
 
 class PassSign extends ProjectStage
 {
     protected $stageID = STAGE_ID_PASS_SIGN;
+    protected $executer = [
+        ROLE_NAME_REVIEW_COMMITTEE_MEMBER,
+        ROLE_NAME_REVIEW_VICE_DIRECTOR,
+        ROLE_NAME_REVIEW_DIRECTOR,
+    ];
+    private $currentRoundLogs;
 
     public function getNextStage()
     {
@@ -21,33 +27,36 @@ class PassSign extends ProjectStage
 
     public function renderFunctionArea()
     {
-        $fullCommittee = SystemRole::with('user', 'department')
-            ->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)
-            ->get()
-            ->keyBy('lanID');
-        $signs = $this->getCurrentRoundLogs()->keyBy('lanID');
-        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-
-        return view('project/display/function/passsign')
-            ->with('title', $this->getStageName())
-            ->with('signs', $signs)
-            ->with('fullCommittee', $fullCommittee)
-            ->with('signable', !$signs->has($userLanID))
-            ->with('deptInfo', DepartmentKeeper::getDeptInfo())
-            ->with('passSignValues', Config::get('constants.passSignValues'));
+        if ($this->signable()) {
+            return view('project/display/function/passsign')
+                    ->with('title', $this->getStageName());
+        }
     }
 
     public function renderInfoArea()
     {
-        return null;
+        $topicIns = $this->referrer->topics()->with(
+            'meetingMinutesContent',
+            'topicable',
+            'reviewMeeting.log.operator'
+        )->where('type', 'discussion')->first();
+
+        if (!is_null($topicIns)) {
+            return MeetingMinutesHandler::renderTopic($topicIns);
+        }
     }
 
     public function canPassSignStageUp($para = null)
     {
         if ('approve' == $para['operation']) {
             $approveCount = $this->getCurrentRoundLogs()->where('data1', 'approve')->count();
+            $memberCount = SystemRole::whereIn('roleID', [
+                    ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+                    ROLE_ID_REVIEW_VICE_DIRECTOR,
+                    ROLE_ID_REVIEW_DIRECTOR
+                ])->count();
 
-            return $approveCount ==  SystemRole::where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->count()-1;
+            return $approveCount ==  $memberCount-1;
         }
 
         return false;
@@ -94,6 +103,34 @@ class PassSign extends ProjectStage
         return new SelectMode($this->referrer);
     }
 
+    public function signable()
+    {
+        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
+        $userRoleID = LoginUserKeeper::getUser()->getActiveRole()->roleID;
+
+        return $this->getCurrentRoundLogs()
+                    ->where('lanID', $userLanID)
+                    ->whereLoose('roleID', $userRoleID)
+                    ->isEmpty();
+    }
+
+    public function renderResult()
+    {
+        $fullCommittee = SystemRole::with('user', 'department')
+            ->whereIn('roleID', [
+                ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+                ROLE_ID_REVIEW_VICE_DIRECTOR,
+                ROLE_ID_REVIEW_DIRECTOR
+            ])->get();
+
+        $signs = $this->getCurrentRoundLogs();
+
+        return view('project/display/stage/passsignresult')
+            ->with('signs', $signs)
+            ->with('fullCommittee', $fullCommittee)
+            ->with('passSignValues', Config::get('constants.passSignValues'));
+    }
+
     private function getBasicLogInfo($para)
     {
         $log = new StageLog();
@@ -103,21 +140,30 @@ class PassSign extends ProjectStage
         $log->lanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
         $log->comment = $para['comment'];
         $log->timeAt = date('Y-m-d H:i:s');
+        $log->roleID = LoginUserKeeper::getUser()->getActiveRole()->roleID;
 
         return $log;
     }
 
     private function getCurrentRoundLogs()
     {
-        //get last submit
-        $lastSumbitRecord = $this->referrer->log()->where([
-            ['fromStage', '=', STAGE_ID_SELECT_MODE],
-            ['toStage', '>', STAGE_ID_SELECT_MODE]
-        ])->orderBy('id', 'DESC')->first();
+        if (is_null($this->currentRoundLogs)) {
+            //get last submit
+            $lastSumbitRecord = $this->referrer->log()->where([
+                ['fromStage', '=', STAGE_ID_SELECT_MODE],
+                ['toStage', '>', STAGE_ID_SELECT_MODE]
+            ])->orderBy('id', 'DESC')->first();
 
-        return $this->referrer->log()->where([
-            ['fromStage', '=', $this->getStageID()],
-            ['timeAt', '>', $lastSumbitRecord->timeAt]
-        ])->get();
+            if (is_null($lastSumbitRecord)) {
+                $this->currentRoundLogs = collect([]);
+            } else {
+                $this->currentRoundLogs = $this->currentRoundLogs = $this->referrer->log()->where([
+                    ['fromStage', '=', $this->getStageID()],
+                    ['id', '>', $lastSumbitRecord->id]
+                ])->get();
+            }
+        }
+
+        return $this->currentRoundLogs;
     }
 }

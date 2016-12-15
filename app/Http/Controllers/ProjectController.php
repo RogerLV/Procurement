@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
+use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\Role\RoleFactory;
 use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
 use App\Logic\Stage\ProjectStages\Initiate;
@@ -30,9 +31,11 @@ class ProjectController extends Controller
     public function listPage()
     {
         $roleIns = RoleFactory::create($this->loginUser->getActiveRole()->roleID);
+        $removable = LoginUserKeeper::getUser()->getActiveRole()->roleID == ROLE_ID_APP_ADMIN;
 
         return view('project/list')
                 ->with('title', PAGE_NAME_PROJECT_LIST)
+                ->with('removable', $removable)
                 ->with('projects', $roleIns->listProject())
                 ->with('deptInfo', Department::all()->keyBy('dept'));
     }
@@ -73,6 +76,20 @@ class ProjectController extends Controller
                 ->with('conversation', $conversation)
                 ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
                 ->with('stageNames', Config::get('constants.stageNames'));
+    }
+
+    public function remove()
+    {
+        if (Gate::forUser($this->loginUser)->denies('project-removable')) {
+            throw new AppException('PRJ008', ERROR_MESSAGE_NOT_AUTHORIZED);
+        }
+
+        if (empty($projectID = trim(request()->input('projectID')))) {
+            throw new AppException('PRJ009');
+        }
+
+        $projectIns = Project::getIns($projectID);
+        $projectIns->delete();
     }
 
     public function create()

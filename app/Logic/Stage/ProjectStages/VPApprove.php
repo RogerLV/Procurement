@@ -12,6 +12,9 @@ class VPApprove extends ProjectStage implements ISimpleApprove
     use TApprove;
 
     protected $stageID = STAGE_ID_VP_APPROVE;
+    protected $executer = [
+        ROLE_NAME_DEPUTY_COUNTRY_HEAD
+    ];
 
     public function getNextStage()
     {

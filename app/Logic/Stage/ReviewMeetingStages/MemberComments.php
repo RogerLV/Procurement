@@ -12,6 +12,9 @@ use App\Logic\LoginUser\LoginUserKeeper;
 class MemberComments extends ReviewMeetingStage implements IOperated
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS;
+    protected $executer = [
+        ROLE_NAME_REVIEW_COMMITTEE_MEMBER
+    ];
 
     public function getNextStage()
     {

@@ -8,6 +8,7 @@ abstract class AbstractStage
 {
     protected $stageID;
     protected $referrer;
+    protected $executer = [];
 
     abstract public function renderFunctionArea();
     abstract public function renderInfoArea();
@@ -22,5 +23,10 @@ abstract class AbstractStage
     public function getStageID()
     {
         return $this->stageID;
+    }
+
+    public function getExecuters()
+    {
+        return $this->executer;
     }
 }

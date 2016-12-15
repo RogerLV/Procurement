@@ -39,7 +39,7 @@ class WelcomeController extends Controller
             '<>',
             STAGE_ID_REVIEW_MEETING_COMPLETE
         )->get()->filter(function ($ins) use ($userRoleIns) {
-            return $userRoleIns->pendingReviewMeetingProcess($ins);
+            return $userRoleIns->reviewMeetingOperable($ins);
         });
 
         return view('welcome')

@@ -1,3 +1,16 @@
+<div class="alert alert-info"  style="font-size: 18px">
+    <table>
+        <tr>
+            <td><strong>当前阶段:</strong></td>
+            <td>{{ $stageNames[$reviewIns->stage] }}</td>
+        </tr>
+        <tr>
+            <td><strong>当前有权执行人:&nbsp;</strong></td>
+            <td>{{ implode(', ', $stageIns->getExecuters()) }}</td>
+        </tr>
+    </table>
+</div>
+
 <table>
     <tbody>
         <tr>
@@ -11,10 +24,6 @@
         <tr>
             <td><h4>地点</h4></td>
             <td>{{ $reviewIns->venue }}</td>
-        </tr>
-        <tr>
-            <td><h4>当前阶段</h4></td>
-            <td>{{ $stageNames[$reviewIns->stage] }}</td>
         </tr>
         <tr>
             <td valign="top"><h4>参会委员</h4></td>

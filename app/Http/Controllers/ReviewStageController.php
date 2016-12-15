@@ -57,7 +57,16 @@ class ReviewStageController extends Controller
 
         $this->stageIns->operate($para);
 
-        return response()->json(['status' => 'good']);
+        switch  ($this->stageIns->getStageID()) {
+            case STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM:
+                if ('reject' == $para['operation']) {
+                    return response()->json(['status' => 'close']);
+                }
+                // else goes to default;
+
+            default:
+                return response()->json(['status' => 'good']);
+        }
     }
 
     public function decideMode()

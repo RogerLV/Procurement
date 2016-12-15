@@ -14,6 +14,9 @@ define('ROLE_NAME_REVIEW_DIRECTOR', '采购评审主任');
 define('ROLE_NAME_APP_ADMIN', '应用管理员');
 define('ROLE_NAME_SYSTEM_ADMIN', '系统管理员');
 define('ROLE_NAME_SPECIAL_INVITE', '特邀列席');
+define('ROLE_NAME_REVIEW_VICE_DIRECTOR', '采购评审副主任');
+
+define('ROLE_NAME_PROJECT_LAUNCHER', '采购项目负责人');
 
 define('ROLE_ID_DEPT_MAKER', 1);
 define('ROLE_ID_DEPT_MANAGER', 2);
@@ -26,6 +29,7 @@ define('ROLE_ID_REVIEW_DIRECTOR', 8);
 define('ROLE_ID_APP_ADMIN', 9);
 define('ROLE_ID_SYSTEM_ADMIN', 10);
 define('ROLE_ID_SPECIAL_INVITE', 11);
+define('ROLE_ID_REVIEW_VICE_DIRECTOR', 12);
 
 // Stage ID and Name
 define('STAGE_ID_INITIATE', 1);
@@ -73,8 +77,10 @@ define('DOC_TYPE_PUT_RECORDS', 16);
 
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
+define('ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE', '权限错误。');
 define('ERROR_MESSAGE_ALREADY_COMMENTED', '不能重复填写意见。');
 define('ERROR_MESSAGE_MAKER_NOT_ASSIGNED', '尚未分配采购小组成员。');
+define('ERROR_MESSAGE_LAUNCHING_DEPT_MISSING', '发起部门必须分配该部门项目参与人数。');
 
 // Route Names
 define('ROUTE_NAME_WELCOME', 'Welcome');
@@ -88,7 +94,6 @@ define('ROUTE_NAME_PROJECT_DISPLAY', 'ProjectDisplay');
 define('ROUTE_NAME_PROJECT_LIST', 'ProjectList');
 define('ROUTE_NAME_PROJECT_CREATE', 'ProjectCreate');
 
-//define('ROUTE_NAME_STAGE_INVITE_DEPT', 'StageInviteDept');
 define('ROUTE_NAME_STAGE_SELECT_MODE', 'StageSelectMode');
 define('ROUTE_NAME_STAGE_FINISH_RECORD', 'StageFinishRecord');
 define('ROUTE_NAME_STAGE_SUMMARIZE', 'StageSummarize');
@@ -210,7 +215,7 @@ return [
         STAGE_ID_COMPLETE => '完成',
 
         STAGE_ID_REVIEW_MEETING_INITIATE => '发起采购评审',
-        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM => '委员确认',
+        STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM => '参会人员确认',
         STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES => '生成会议纪要',
         STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员填写意见',
         STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE => '审核会议纪要',

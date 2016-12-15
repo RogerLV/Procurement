@@ -95,7 +95,13 @@ class StageController extends Controller
     public function complete()
     {
         if (!$this->stageIns->canStageUp()) {
-            throw new AppException('STG012', 'Stage finish conditions are not met.');
+            switch ($this->stageIns->getStageID()) {
+                case STAGE_ID_INVITE_DEPT:
+                    throw new AppException('STG014', ERROR_MESSAGE_LAUNCHING_DEPT_MISSING);
+
+                default:
+                    throw new AppException('STG012', 'Stage finish conditions are not met.');
+            }
         }
 
         $this->stageIns->operate(null);
