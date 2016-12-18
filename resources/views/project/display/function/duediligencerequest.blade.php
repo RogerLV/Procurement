@@ -141,6 +141,10 @@
                 },
                 type: "POST",
                 success: function (data) {
+
+                    // clear input content
+                    $('#add-due-diligence-request-input').val('');
+
                     handleReturn(data, function () {
                         $('#q-a-zone').append($('<div/>', {
                             class: 'request-entry'
@@ -160,6 +164,7 @@
                             class: 'btn btn-danger',
                             text: '删除'
                         }).bind('click', removeRequest).data('request-id', data.info.id)))));
+
                     });
                 }
             });

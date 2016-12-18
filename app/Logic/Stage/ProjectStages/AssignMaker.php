@@ -50,14 +50,7 @@ class AssignMaker extends ProjectStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        $memberDepts = ProjectRoleDepartment::with('role')->where('projectID', $this->referrer->id)->get();
-        $projectRoles = $this->referrer->roles()->get();
-        $userInfo = User::whereIn('lanID', $projectRoles->pluck('lanID'))->get()->keyBy('lanID');
-
-        return view('project/display/stage/assignmaker')
-            ->with('deptInfo', DepartmentKeeper::getDeptInfo())
-            ->with('memberDeptsWithRoles', $memberDepts->keyBy('dept'))
-            ->with('userInfo', $userInfo);
+        return null;
     }
 
     public function canStageUp()

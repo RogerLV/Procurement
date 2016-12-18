@@ -38,8 +38,7 @@ class InviteDept extends ProjectStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        return view('project/display/stage/memberdept')
-            ->with('deptInfo', $this->referrer->memberDepts()->with('department')->get());
+        return null;
     }
 
     public function canStageUp()

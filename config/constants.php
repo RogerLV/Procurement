@@ -75,6 +75,13 @@ define('DOC_TYPE_MEETING_MINUTES', 14);
 define('DOC_TYPE_OTHER_DOCS', 15);
 define('DOC_TYPE_PUT_RECORDS', 16);
 
+define('HYPER_DOC_NAME_PASS_SIGN', '采购方式传签');
+define('HYPER_DOC_NAME_PRICE_NEGOTIATION', '议价记录');
+define('HYPER_DOC_NAME_SCORE', '评分表');
+define('HYPER_DOC_NAME_MEETING_MINUTES', '会议纪要');
+define('HYPER_DOC_NAME_MEETING_MINUTES_REVIEW', '采购评审会议纪要');
+define('HYPER_DOC_NAME_MEETING_MINUTES_DISCUSS', '采购方式会议纪要');
+
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
 define('ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE', '权限错误。');
@@ -152,12 +159,16 @@ define('PAGE_NAME_REVIEW_APPLY', '发起采购评审');
 define('PAGE_NAME_REVIEW_MEETING_DISPLAY', '采购评审浏览');
 define('PAGE_NAME_REVIEW_MEETING_LIST', '采购评审列表');
 
+define('PAGE_NAME_NEGOTIATION', '议价记录');
+
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');
 define('PRINT_PAGE', true);
 define('YEAR', '年');
 define('MONTH', '月');
 define('DAY', '日');
+define('STRING_REVIEW_MEETING_MEMBERS', '采购评审小组成员');
+define('STRING_PROCUREMENT_TEAM', '采购小组成员');
 
 return [
     // Procurement Scope
@@ -216,7 +227,7 @@ return [
 
         STAGE_ID_REVIEW_MEETING_INITIATE => '发起采购评审',
         STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM => '参会人员确认',
-        STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES => '生成会议纪要',
+        STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES => '待开会评审',
         STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS => '委员填写意见',
         STAGE_ID_REVIEW_MEETING_SECRETARIAT_LEADER_APPROVE => '审核会议纪要',
         STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE => '签发会议纪要',

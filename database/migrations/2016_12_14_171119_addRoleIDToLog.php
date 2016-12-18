@@ -15,6 +15,10 @@ class AddRoleIDToLog extends Migration
         Schema::table('StageLogs', function ($table) {
             $table->integer('roleID')->nullable();
         });
+
+        Schema::table('Negotiations', function ($table) {
+            $table->string('lanID');
+        });
     }
 
     /**
@@ -26,6 +30,10 @@ class AddRoleIDToLog extends Migration
     {
         Schema::table('StageLogs', function ($table) {
             $table->dropColumn('roleID');
+        });
+
+        Schema::table('Negotiations', function ($table) {
+           $table->dropColumn('lanID');
         });
     }
 }

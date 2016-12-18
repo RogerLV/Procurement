@@ -30,8 +30,7 @@ class Summarize extends ProjectStage implements IComplexOperation
 
     public function renderInfoArea()
     {
-        return view('project/display/stage/summary')
-            ->with('summary', $this->referrer->summary);
+        return null;
     }
     public function canStageUp()
     {

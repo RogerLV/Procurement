@@ -35,7 +35,8 @@ class Initiate extends ProjectStage implements IComplexOperation
         return view('project/display/stage/basicinfo')
             ->with('project', $this->referrer)
             ->with('stageNames', Config::get('constants.stageNames'))
-            ->with('stageIns', ProjectStageHandler::getProjectStageIns($this->referrer));
+            ->with('stageIns', ProjectStageHandler::getProjectStageIns($this->referrer))
+            ->with('projectDeptWithRoles', $this->referrer->memberDepts()->with('role.user', 'department')->get());
     }
 
     public function canStageUp()

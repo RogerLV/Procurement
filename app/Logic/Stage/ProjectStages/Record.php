@@ -76,13 +76,7 @@ class Record extends ProjectStage implements IComplexOperation
 
     final public function renderInfoArea()
     {
-        list($a, $b, $vendorFinalScores) = ScoreHandler::getScoreDetails($this->referrer);
-        return view('project/display/stage/record')
-            ->with('toBeScore', $this->instance->toBeScored())
-            ->with('vendors', $this->referrer->vendors)
-            ->with('vendorFinalScores', $vendorFinalScores)
-            ->with('priceNegotiation', $this->instance->priceNegotiation())
-            ->with('negotiations', $this->instance->getNegotiations());
+        return null;
     }
 
     public function canStageUp()

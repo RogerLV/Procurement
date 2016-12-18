@@ -102,7 +102,8 @@ class Project extends Model
 
     public static function getIns($projectID)
     {
-        $projectIns = self::find($projectID);
+        // log is heavily used in system, so pre-load here
+        $projectIns = self::with('log.operator', 'submitter')->find($projectID);
 
         if (is_null($projectIns)) {
             throw new AppException('PRJMDL001');

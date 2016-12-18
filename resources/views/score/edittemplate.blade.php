@@ -197,6 +197,10 @@
                 },
                 type: 'POST',
                 success: function (data) {
+
+                    // clear input content
+                    $('#add-vendor-input').val('');
+
                     handleReturn(data, function () {
                         $('#vendor-list-body').append($('<tr/>').data(
                                 'vendor-id',

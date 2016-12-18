@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
+use App\Logic\DocumentHandler;
 use App\Logic\LoginUser\LoginUserKeeper;
 use App\Logic\Role\RoleFactory;
 use App\Logic\Stage\ProjectStages\StageHandler as ProjectStageHandler;
@@ -12,6 +13,7 @@ use Config;
 use App\Models\Document;
 use App\Models\Project;
 use App\Models\Department;
+use App\Models\HyperDocument;
 
 class ProjectController extends Controller
 {
@@ -52,27 +54,18 @@ class ProjectController extends Controller
             throw new AppException('PRJ007', ERROR_MESSAGE_NOT_AUTHORIZED);
         }
 
-        // By using eloquent relationships, mutiple queries would be generated which can be optimized.
+        // By using eloquent relationships, multiple queries would be generated which can be optimized.
         // But due to resource consuming is acceptable, use this elegant way for time being
         $stageView = ProjectStageHandler::renderProjectStageView($projectIns);
-        $documents = $projectIns->document()->with('uploader')->orderBy('type')->get();
+//echo "<pre>"; var_dump(DocumentHandler::getHyperDocList($projectIns)); exit;
 
-        // document visibility filter
-        if (in_array($projectIns->stage, [STAGE_ID_DUE_DILIGENCE, STAGE_ID_REVIEW])
-            && $this->loginUser->getActiveRole()->roleID == ROLE_ID_DEPT_MAKER) {
-            $documents = $documents->filter(function ($doc) {
-                return $doc->type != DOC_TYPE_DUE_DILIGENCE_REPORT;
-            });
-        }
-
-        $log = $projectIns->log()->with('operator')->get();
         $conversation = $projectIns->conversation()->with('composer')->get();
 
         return view('project/display/display')
                 ->with('project', $projectIns)
                 ->with('stageView', $stageView)
-                ->with('documents', $documents)
-                ->with('logList', $log)
+                ->with('hyperDocs', DocumentHandler::getHyperDocList($projectIns))
+                ->with('logList', $projectIns->log)
                 ->with('conversation', $conversation)
                 ->with('documentTypeNames', Config::get('constants.documentTypeNames'))
                 ->with('stageNames', Config::get('constants.stageNames'));

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AppException;
-use App\Logic\LoginUser\LoginUserKeeper;
 use App\Models\Negotiation;
 use App\Models\Project;
+use Gate;
 
 class PriceNegotiationController extends Controller
 {
@@ -21,8 +21,10 @@ class PriceNegotiationController extends Controller
 
         $project = Project::getIns($projectID);
 
-        $userLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        if ($project->lanID != $userLanID || STAGE_ID_RECORD != $project->stage) {
+        // only submitter and app admin can operate at record stage
+        if (STAGE_ID_RECORD != $project->stage
+            || (!ROLE_ID_APP_ADMIN == $this->loginUser->getActiveRole()->roleID
+            && $project->lanID != $this->loginUser->getUserInfo()->lanID)) {
             throw new AppException('NGTCTL002', 'Cannot add negotiation record at current phase.');
         }
 
@@ -32,8 +34,28 @@ class PriceNegotiationController extends Controller
         $negotiationRecord->venue = $venue;
         $negotiationRecord->participants = $participants;
         $negotiationRecord->content = nl2br(htmlentities($content));
+        $negotiationRecord->lanID = $this->loginUser->getUserInfo()->lanID;
         $project->negotiations()->save($negotiationRecord);
 
         return response()->json(['status' => 'good']);
+    }
+
+    public function showInPage($id)
+    {
+        $projectIns = Project::getIns($id);
+
+        // check project visibility
+        if (Gate::forUser($this->loginUser)->denies('project-visible', $projectIns)) {
+            throw new AppException('NGTCTL003', ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE);
+        }
+
+        $negotiations = $projectIns->negotiations;
+        if ($negotiations->isEmpty()) {
+            throw new AppException('NGTCTL004', ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE);
+        }
+
+        return view('negotiation')
+                ->with('title', PAGE_NAME_NEGOTIATION)
+                ->with('negotiations', $negotiations);
     }
 }

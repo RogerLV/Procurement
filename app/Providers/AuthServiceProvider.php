@@ -56,6 +56,9 @@ class AuthServiceProvider extends ServiceProvider
                 if (in_array($referenceIns->stage, [STAGE_ID_DUE_DILIGENCE, STAGE_ID_REVIEW])
                     && $loginUser->getActiveRole()->roleID == ROLE_ID_DEPT_MAKER) {
                     return $documentIns->type != DOC_TYPE_DUE_DILIGENCE_REPORT;
+                } elseif (in_array($documentIns->type, [DOC_TYPE_REVIEW_REPORT, DOC_TYPE_DUE_DILIGENCE_REPORT])
+                    && $loginUser->getActiveRole()->roleID == ROLE_ID_SPECIAL_INVITE) {
+                    return true;
                 }
                 return Gate::forUser($loginUser)->check('project-visible', $referenceIns);
             }

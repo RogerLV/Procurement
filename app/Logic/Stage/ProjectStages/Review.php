@@ -22,13 +22,7 @@ class Review extends ProjectStage
 
     public function renderInfoArea()
     {
-        $topicIns = $this->referrer->topics()->with(
-            'meetingMinutesContent',
-            'topicable',
-            'reviewMeeting.log.operator'
-        )->where('type', 'review')->first();
-
-        return MeetingMinutesHandler::renderTopic($topicIns);
+        return null;
     }
 
     public function operate($para = null)

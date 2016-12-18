@@ -35,15 +35,7 @@ class PassSign extends ProjectStage
 
     public function renderInfoArea()
     {
-        $topicIns = $this->referrer->topics()->with(
-            'meetingMinutesContent',
-            'topicable',
-            'reviewMeeting.log.operator'
-        )->where('type', 'discussion')->first();
-
-        if (!is_null($topicIns)) {
-            return MeetingMinutesHandler::renderTopic($topicIns);
-        }
+        return null;
     }
 
     public function canPassSignStageUp($para = null)
@@ -145,7 +137,7 @@ class PassSign extends ProjectStage
         return $log;
     }
 
-    private function getCurrentRoundLogs()
+    public function getCurrentRoundLogs()
     {
         if (is_null($this->currentRoundLogs)) {
             //get last submit
@@ -157,7 +149,7 @@ class PassSign extends ProjectStage
             if (is_null($lastSumbitRecord)) {
                 $this->currentRoundLogs = collect([]);
             } else {
-                $this->currentRoundLogs = $this->currentRoundLogs = $this->referrer->log()->where([
+                $this->currentRoundLogs = $this->currentRoundLogs = $this->referrer->log()->with('operator')->where([
                     ['fromStage', '=', $this->getStageID()],
                     ['id', '>', $lastSumbitRecord->id]
                 ])->get();

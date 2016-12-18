@@ -19,7 +19,12 @@ Route::get('dummyEntry', function () {
 Route::group(['middleware' => ['normal']], function () {
 
     Route::get('test/{id}', function ($id) {
-        var_dump(base64_encode('passDEV2015'));
+        DB::enableQueryLog();
+        $projectIns = \App\Models\Project::getIns($id);
+        $projectIns->negotiations;
+        $projectIns->negotiations;
+//        \App\Logic\DocumentHandler::getHyperDocList($projectIns);
+        echo "<pre>"; var_dump(DB::getQueryLog());
     })->name('test');
 
     Route::get('role/list', 'RoleController@listPage')->name(ROUTE_NAME_ROLE_LIST);
@@ -57,6 +62,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('vendor/remove', 'VendorController@remove')->name(ROUTE_NAME_VENDOR_REMOVE);
 
     Route::post('negotiation/add', 'PriceNegotiationController@add')->name(ROUTE_NAME_NEGOTIATION_ADD);
+    Route::get('negotiation/show/{id}', 'PriceNegotiationController@showInPage');
 
     Route::post('duediligence/addrequest', 'DueDiligenceController@addRequest')->name(ROUTE_NAME_DUE_DILIGENCE_ADD_REQUEST);
     Route::post('duediligence/removerequest', 'DueDiligenceController@removeRequest')->name(ROUTE_NAME_DUE_DILIGENCE_REMOVE_REQUEST);
@@ -87,6 +93,8 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('meetingMinutes/add/content', 'MeetingMinutesController@addContent')->name('MeetingMinutesAddContent');
     Route::get('meetingMinutes/reviewMeeting/{id}', 'MeetingMinutesController@reviewMeeting');
     Route::get('meetingMinutes/topic/{id}', 'MeetingMinutesController@topic');
+
+    Route::get('pass/sign/show/in/page/{id}', 'PassSignController@showInPage');
 });
 
 Route::group(['middleware' => ['welcome']], function () {

@@ -10,12 +10,12 @@
             </div>
             <table class="table">
                 <thead>
-                <th width="50px">序号</th>
-                <th width="120px">打分项</th>
-                <th width="300px">具体内容</th>
-                <th width="50px">权重(%)</th>
-                <th width="50px">分值</th>
-                <th>备注</th>
+                    <th width="50px">序号</th>
+                    <th width="120px">打分项</th>
+                    <th width="300px">具体内容</th>
+                    <th width="50px">权重(%)</th>
+                    <th width="50px">分值</th>
+                    <th>备注</th>
                 </thead>
                 <tbody>
                 <?php $i=1; ?>
@@ -88,12 +88,16 @@
                 setAlertText('请输入0到100的整数。');
                 $('#alert-modal').modal('show');
             }
-            var weight = parseInt($(this).parent().prev().html());
-            var sumCell = $(this).parents('tbody').find('th.sum-score');
-            var sum = parseInt(sumCell.html());
 
-            sum += value * weight / 100;
-            sumCell.html(sum);
+            sum = 0;
+            var body = $(this).parents('tbody');
+            body.find('input.score-input').each(function () {
+                var score = $(this).val();
+                var weight = parseInt($(this).parent().prev().html());
+                sum += weight * score / 100;
+            });
+
+            body.find('th.sum-score').html(sum);
         });
 
         $('#confirm-submit-score-modal').on('show.bs.modal', function () {
