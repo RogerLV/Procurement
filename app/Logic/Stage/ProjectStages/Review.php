@@ -9,6 +9,9 @@ use App\Logic\Stage\ProjectStage;
 class Review extends ProjectStage
 {
     protected $stageID = STAGE_ID_REVIEW;
+    protected $executer = [
+        ROLE_NAME_SECRETARIAT
+    ];
 
     public function getNextStage()
     {

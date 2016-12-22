@@ -18,7 +18,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td valign="top"><h4>项目主题: </h4></td>
+                    <td width="150px" valign="top"><h4>项目主题: </h4></td>
                     <td>{{ $project->name }}</td>
                 </tr>
                 <tr>
