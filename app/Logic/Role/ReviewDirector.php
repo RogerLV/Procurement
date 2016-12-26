@@ -16,6 +16,7 @@ class ReviewDirector extends AbstractRole
     protected $operableStages = [
         STAGE_ID_PASS_SIGN,
         STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM,
+        STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS,
         STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE
     ];
     protected $roleSpecPages = [
@@ -50,6 +51,7 @@ class ReviewDirector extends AbstractRole
         if (parent::reviewMeetingOperable($reviewMeetingIns)) {
             switch ($reviewMeetingIns->stage) {
                 case STAGE_ID_REVIEW_MEETING_MEMBER_CONFIRM:
+                case STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS:
                     return !$this->reviewMeetingStageOperated($reviewMeetingIns);
 
                 default:

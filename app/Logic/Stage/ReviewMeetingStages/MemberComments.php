@@ -13,7 +13,9 @@ class MemberComments extends ReviewMeetingStage implements IOperated
 {
     protected $stageID = STAGE_ID_REVIEW_MEETING_MEMBER_COMMENTS;
     protected $executer = [
-        ROLE_NAME_REVIEW_COMMITTEE_MEMBER
+        ROLE_NAME_REVIEW_COMMITTEE_MEMBER,
+        ROLE_NAME_REVIEW_VICE_DIRECTOR,
+        ROLE_NAME_REVIEW_DIRECTOR
     ];
 
     public function getNextStage()
@@ -25,11 +27,10 @@ class MemberComments extends ReviewMeetingStage implements IOperated
     {
         $currentRoundLogs = $this->getCurrentRoundLogs();
         $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        $commented = $currentRoundLogs->where('lanID', $loginUserLanID)->count() != 0;
 
         return view('review.display.function.membercomments')
                 ->with('title', $this->getStageName())
-                ->with('commented', $commented)
+                ->with('commented', $this->operated())
                 ->with('logs', $currentRoundLogs);
     }
 
@@ -46,24 +47,31 @@ class MemberComments extends ReviewMeetingStage implements IOperated
     public function logOperation($operation, $comment)
     {
         // check if already logged
-        $logs = $this->getCurrentRoundLogs();
-        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        if ($logs->where('lanID', $loginUserLanID)->count() != 0) {
+        if ($this->operated()) {
             throw new AppException('STGMMBCMT001', ERROR_MESSAGE_ALREADY_COMMENTED);
         }
+
+        $loginUser = LoginUserKeeper::getUser();
 
         $log = new StageLog();
         $log->fromStage = $this->getStageID();
         $log->dept = LoginUserKeeper::getUser()->getActiveRole()->dept;
-        $log->lanID = $loginUserLanID;
+        $log->lanID = $loginUser->getUserInfo()->lanID;
+        $log->roleID = $loginUser->getActiveRole()->roleID;
         $log->data1 = $operation;
         $log->comment = $comment;
         $log->timeAt = date('Y-m-d H:i:s');
 
         // get toStage value
-        $members = $this->referrer->participants()->where('roleID', ROLE_ID_REVIEW_COMMITTEE_MEMBER)->get();
+        $members = $this->referrer->participants()->whereIn('roleID', [
+            ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+            ROLE_ID_REVIEW_VICE_DIRECTOR,
+            ROLE_ID_REVIEW_DIRECTOR
+        ])->get();
 
         $log->toStage = $this->getStageID();
+
+        $logs = $this->getCurrentRoundLogs();
         if ($members->count() == $logs->count()+1) {
             $othersApproved = $logs->where('data1', 'reject')->count() == 0;
             $IApprove = $operation == 'approve';
@@ -84,8 +92,15 @@ class MemberComments extends ReviewMeetingStage implements IOperated
 
     public function operated()
     {
-        $loginUserLanID = LoginUserKeeper::getUser()->getUserInfo()->lanID;
-        $operatedLog = $this->getCurrentRoundLogs()->where('lanID', $loginUserLanID)->first();
+        $loginUser = LoginUserKeeper::getUser();
+        $operatedLog = $this->getCurrentRoundLogs()->where(
+            'lanID',
+            $loginUser->getUserInfo()->lanID
+        )->whereLoose(
+            'roleID',
+            $loginUser->getActiveRole()->roleID
+        )->first();
+
         return !is_null($operatedLog);
     }
 
