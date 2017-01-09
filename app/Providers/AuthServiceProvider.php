@@ -93,6 +93,15 @@ class AuthServiceProvider extends ServiceProvider
                     && $reviewMeetingIns->stage == STAGE_ID_REVIEW_MEETING_GENERATE_MINUTES;
         });
 
+        $gate->define('due-diligence-record-visible', function (LoginUser $loginUser, Project $projectIns) {
+            if ($loginUser->getActiveRole()->roleID == ROLE_ID_DUE_DILIGENCE_MEMBER
+                    && !$projectIns->duediligence->isEmpty()) {
+                return Gate::forUser($loginUser)->check('project-visible', $projectIns);
+            }
+
+            return false;
+        });
+
         $this->registerPolicies($gate);
     }
 }

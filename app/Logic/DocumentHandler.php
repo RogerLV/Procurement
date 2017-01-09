@@ -3,6 +3,7 @@
 namespace App\Logic;
 
 
+use App\Logic\DocumentType\HyperDocument\DueDiligenceRecord;
 use App\Logic\DocumentType\HyperDocument\HyperDocument;
 use App\Logic\DocumentType\HyperDocument\MeetingMinutesDoc;
 use App\Logic\DocumentType\HyperDocument\PassSignDoc;
@@ -50,6 +51,10 @@ class DocumentHandler
             if ($topicIns->reviewMeeting->stage > STAGE_ID_REVIEW_MEETING_DIRECTOR_APPROVE) {
                 $hyperDocAry->push(new MeetingMinutesDoc($topicIns));
             }
+        }
+
+        if (Gate::forUser($loginUser)->allows('due-diligence-record-visible', $projectIns)) {
+            $hyperDocAry->push(new DueDiligenceRecord($projectIns));
         }
 
         // sort and merge hyper doc array

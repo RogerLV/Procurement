@@ -57,7 +57,6 @@ class ProjectController extends Controller
         // By using eloquent relationships, multiple queries would be generated which can be optimized.
         // But due to resource consuming is acceptable, use this elegant way for time being
         $stageView = ProjectStageHandler::renderProjectStageView($projectIns);
-//echo "<pre>"; var_dump(DocumentHandler::getHyperDocList($projectIns)); exit;
 
         $conversation = $projectIns->conversation()->with('composer')->get();
 

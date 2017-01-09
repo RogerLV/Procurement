@@ -68,6 +68,9 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('duediligence/removerequest', 'DueDiligenceController@removeRequest')->name(ROUTE_NAME_DUE_DILIGENCE_REMOVE_REQUEST);
     Route::post('duediligence/answer', 'DueDiligenceController@answer')->name(ROUTE_NAME_DUE_DILIGENCE_ANSWER);
 
+    Route::get('hyper/doc/due/diligence/{id}', 'HyperDocController@dueDiligence');
+    Route::get('pass/sign/show/in/page/{id}', 'HyperDocController@passSign');
+
     Route::get('document/display/{id}/{name}', 'DocumentController@display')->name(ROUTE_NAME_DOCUMENT_DISPLAY);
     Route::post('document/upload', 'DocumentController@upload')->name(ROUTE_NAME_DOCUMENT_UPLOAD);
 
@@ -94,7 +97,6 @@ Route::group(['middleware' => ['normal']], function () {
     Route::get('meetingMinutes/reviewMeeting/{id}', 'MeetingMinutesController@reviewMeeting');
     Route::get('meetingMinutes/topic/{id}', 'MeetingMinutesController@topic');
 
-    Route::get('pass/sign/show/in/page/{id}', 'PassSignController@showInPage');
 });
 
 Route::group(['middleware' => ['welcome']], function () {

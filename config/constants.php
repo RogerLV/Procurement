@@ -81,6 +81,7 @@ define('HYPER_DOC_NAME_SCORE', '评分表');
 define('HYPER_DOC_NAME_MEETING_MINUTES', '会议纪要');
 define('HYPER_DOC_NAME_MEETING_MINUTES_REVIEW', '采购评审会议纪要');
 define('HYPER_DOC_NAME_MEETING_MINUTES_DISCUSS', '采购方式会议纪要');
+define('HYPER_DOC_NAME_DUE_DILIGENCE_RECORD', '尽职调查记录');
 
 // Error Messages
 define('ERROR_MESSAGE_NOT_AUTHORIZED', 'You are not authorized to view the page.');
@@ -160,6 +161,8 @@ define('PAGE_NAME_REVIEW_MEETING_DISPLAY', '采购评审浏览');
 define('PAGE_NAME_REVIEW_MEETING_LIST', '采购评审列表');
 
 define('PAGE_NAME_NEGOTIATION', '议价记录');
+define('PAGE_NAME_DUE_DILIGENCE_RECORD', '尽职调查记录');
+define('PAGE_NAME_PASS_SIGN_TABLE', '采购方式传签');
 
 // Others
 define('PROCUREMENT_METHOD_NOT_SELECTED', '尚未选择');
