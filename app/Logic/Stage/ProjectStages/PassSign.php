@@ -7,7 +7,6 @@ use App\Logic\Stage\ProjectStage;
 use App\Models\SystemRole;
 use App\Models\StageLog;
 use App\Logic\LoginUser\LoginUserKeeper;
-use App\Logic\MeetingMinutesHandler;
 use Config;
 
 class PassSign extends ProjectStage

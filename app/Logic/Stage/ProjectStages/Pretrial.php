@@ -18,7 +18,7 @@ class Pretrial extends ProjectStage implements ISimpleApprove
 
     public function getNextStage()
     {
-        if ('OpenTender' == $this->referrer->approach) {
+        if ('OpenTender' == $this->referrer->approach || $this->referrer->skipPassSign) {
             return new Record($this->referrer);
         } else {
             return new PassSign($this->referrer);
@@ -45,6 +45,12 @@ class Pretrial extends ProjectStage implements ISimpleApprove
             $passSignIns = new PassSign($this->referrer);
             return $passSignIns->renderResult();
         }
+    }
+
+    public function trialPass($skipPassSign, $comment)
+    {
+        $this->referrer->skipPassSign = $skipPassSign;
+        $this->approve('approve', $comment);
     }
 
     public function getPreviousStage()

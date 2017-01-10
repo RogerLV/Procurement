@@ -10,6 +10,7 @@ use App\Logic\DocumentType\HyperDocument\PassSignDoc;
 use App\Logic\DocumentType\HyperDocument\PriceNegotiationDoc;
 use App\Logic\DocumentType\HyperDocument\ScoreDoc;
 use App\Logic\LoginUser\LoginUserKeeper;
+use App\Logic\Stage\ProjectStages\PassSign;
 use App\Models\Project;
 use Gate;
 
@@ -32,7 +33,14 @@ class DocumentHandler
         }
 
         // add pass sign hyper link
-        if ($projectIns->involveReview && $projectIns->stage > STAGE_ID_PASS_SIGN) {
+        $passSignStage = new PassSign($projectIns);
+        $passSignRecords = $passSignStage->getCurrentRoundLogs()->whereIn('roleID', [
+            ROLE_ID_REVIEW_COMMITTEE_MEMBER,
+            ROLE_ID_REVIEW_VICE_DIRECTOR,
+            ROLE_ID_REVIEW_DIRECTOR
+        ]);
+
+        if (!$passSignRecords->isEmpty()) {
             $hyperDocAry->push(new PassSignDoc($projectIns));
         }
 

@@ -44,6 +44,7 @@ Route::group(['middleware' => ['normal']], function () {
     Route::post('stage/approve', 'StageController@approve')->name(ROUTE_NAME_STAGE_APPROVE);
     Route::post('stage/complete', 'StageController@complete')->name(ROUTE_NAME_STAGE_COMPLETE);
     Route::post('stage/assignComplete', 'StageController@assignComplete')->name('StageAssignComplete');
+    Route::post('stage/pretrial', 'StageController@pretrial')->name('StagePretrial');
 
     Route::post('memberDept/add', 'MemberDepartmentController@add')->name('MemberDepartmentAdd');
     Route::post('memberDept/remove', 'MemberDepartmentController@remove')->name('MemberDepartmentRemove');

@@ -89,6 +89,7 @@ define('ERROR_MESSAGE_NOT_AUTHORIZED_OPERATE', '权限错误。');
 define('ERROR_MESSAGE_ALREADY_COMMENTED', '不能重复填写意见。');
 define('ERROR_MESSAGE_MAKER_NOT_ASSIGNED', '尚未分配采购小组成员。');
 define('ERROR_MESSAGE_LAUNCHING_DEPT_MISSING', '发起部门必须分配该部门项目参与人数。');
+define('ERROR_MESSAGE_SKIP_REASON_MANDATORY', '不需传签原因必须填写');
 
 // Route Names
 define('ROUTE_NAME_WELCOME', 'Welcome');

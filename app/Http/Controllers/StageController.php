@@ -74,7 +74,7 @@ class StageController extends Controller
         return response()->json(['status' => 'good']);
     }
 
-    // for stage pretrail, pass sign, manager approve
+    // for stage pretrial reject, pass sign, manager approve
     public function approve()
     {
         if (empty($para['operation'] = trim(request()->input('operation')))) {
@@ -97,10 +97,10 @@ class StageController extends Controller
         if (!$this->stageIns->canStageUp()) {
             switch ($this->stageIns->getStageID()) {
                 case STAGE_ID_INVITE_DEPT:
-                    throw new AppException('STG014', ERROR_MESSAGE_LAUNCHING_DEPT_MISSING);
+                    throw new AppException('STG016', ERROR_MESSAGE_LAUNCHING_DEPT_MISSING);
 
                 default:
-                    throw new AppException('STG012', 'Stage finish conditions are not met.');
+                    throw new AppException('STG017', 'Stage finish conditions are not met.');
             }
         }
 
@@ -112,10 +112,27 @@ class StageController extends Controller
     public function assignComplete()
     {
         if (!$this->stageIns->canLog()) {
-            throw new AppException('STG013', ERROR_MESSAGE_MAKER_NOT_ASSIGNED);
+            throw new AppException('STG018', ERROR_MESSAGE_MAKER_NOT_ASSIGNED);
         }
 
         $this->stageIns->operate(null);
+
+        return response()->json(['status' => 'good']);
+    }
+
+    public function pretrial()
+    {
+        if (empty($skipPassSign = trim(request()->input('skipPassSign')))) {
+            throw new AppException('STG019');
+        }
+
+        $skipPassSign = $skipPassSign == 'true';
+        $comment = trim(request()->input('comment'));
+        if ($skipPassSign && empty($comment)) {
+            throw new AppException('STG020', ERROR_MESSAGE_SKIP_REASON_MANDATORY);
+        }
+
+        $this->stageIns->trialPass($skipPassSign, $comment);
 
         return response()->json(['status' => 'good']);
     }

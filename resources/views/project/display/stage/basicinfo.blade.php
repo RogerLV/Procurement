@@ -26,6 +26,10 @@
                     <td>{{ $project->background }}</td>
                 </tr>
                 <tr>
+                    <td valign="top"><h4>项目金额: </h4></td>
+                    <td>{{ $project->budget }}</td>
+                </tr>
+                <tr>
                     <td><h4>项目发起部门:</h4></td>
                     <td>{{ $project->department->deptCnName }}</td>
                 </tr>
